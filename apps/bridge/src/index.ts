@@ -73,12 +73,10 @@ const server = Bun.serve<TwilioSocketData>({
       const callSid = String(form.get("CallSid") ?? "");
       console.log(`[teaser] incoming call from=${from}`);
       void recordTeaserCall(callSid, from);
-      // Ring first (an operator has to pick up), then let the audio path
-      // settle before anyone speaks. The whole VO plays inside <Gather> so
-      // "press one at any time" works via barge-in. teaser.mp3 also carries
-      // ~0.7s of leading silence so Twilio's connect-clip eats nothing.
+      // teaser.mp3 is the full produced master: ringback + real-phone pickup
+      // + operator VO over the living-switchboard bed, already telephone-
+      // mastered. Plays inside <Gather> so "press one at any time" barges in.
       return twiml(`
-  <Play>https://${host}/audio/ringback.mp3</Play>
   <Gather numDigits="1" action="/teaser-key" method="POST" timeout="4">
     <Play>https://${host}/audio/teaser.mp3</Play>
   </Gather>

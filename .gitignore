@@ -7,3 +7,7 @@ dist/
 *.log
 .supabase/
 supabase/.temp
+
+# Derived audio working files (stems for local mixing)
+audio snippets/teaser-stems/
+*.wav

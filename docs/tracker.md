@@ -43,7 +43,8 @@ The IP: prompts, canon, lore, the transcript flywheel.
 
 - 🟢 Persona format + 4 stubs; design process v1; design notes (calls 1-3)
 - 🟢 Devil dark-bait deflection added
-- 🟢 Teaser script DECIDED — Draft B (Sven edited: "since 1666", subscribers list, eternal ledger)
+- 🟢 **Teaser SHIPPED (final production)** — ElevenLabs "Elsewhere Operator" (smoky-2 Voice Design) reading v2 script, over living-switchboard bed (eerie drone + chatter + laugh + weep + dial tone), intro'd by real vintage-phone pickup foley (Sven's recording) + synth ringback. Mixed in Audacity by Sven, telephone-mastered. confirm + goodbye also in operator voice. Live on (806) 666-1212
+- 🟢 Teaser script DECIDED v2 — depth pass: elsewhere-as-universe, agency, scale, ambience
 - 🟡 Devil bible — waiting on canon (see 2.0a)
 - ⚪ Canon v1 (`canon.md`) — postcard: Exchange, Management, Devil personnel file — waiting on redlines
 - ⚪ Weekly transcript-review loop (lore harvest → ratify → canon)
