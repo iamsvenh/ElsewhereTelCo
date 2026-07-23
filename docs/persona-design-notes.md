@@ -2,6 +2,15 @@
 
 Working log of the transcript-review loop (concept doc §Stage 0: read transcripts, find the real FAQ, write tested material into the prompts). Dated entries, newest first. Raw data: Supabase `calls` table (transcripts), Twilio Recordings (audio, dual-channel).
 
+## 2026-07-23 — Call 3: first outside tester, the dark-bait lesson
+
+First non-Sven caller (informed friend, low-effort test: 5 turns, hung up at 55s). Small sample, weighted accordingly — but it surfaced the most predictable scenario in the whole product:
+
+- **"Should I die right now?" is Devil FAQ #1.** Testers and drunk callers will bait the edgy persona immediately (concept doc §5 predicted exactly this). The model's built-in safety training fired with hotline boilerplate and the caller hung up on the spot. Note: our prompt contained NO safety language at this point — this was model-level behavior, unremovable and correct as a backstop for the genuinely serious case.
+- **The design answer is a written bait-tier deflection, not a fight with the model.** Tellingly, the model appended "The management insists you stay alive for the paperwork" on its own — it wants in-character material for this moment. Added a "Dark bait" section to the Devil (2026-07-23): never indulge, never lecture; "It's not your time, and I don't do walk-ins. You're not on the list — I checked." Serious-and-real distress still gets the humane fallback. Two tiers: bait gets banter, real gets real.
+- **All the 07-22 tics reproduced in 55 seconds** (quote-back tic, narrated stage direction, third-best-birthday prop rerun). The diagnosis is stable; the full persona rewrite remains the fix.
+- Tester also flagged "a bit too robotic" (voice/pacing, known, parked) and the Twilio trial credit preamble (disappears when the account upgrades off trial).
+
 ## 2026-07-22 — Learnings from calls 1-2 (Devil, first live night)
 
 Two 5-minute capped calls (Sven, seed phase). Call 1 on `gpt-realtime-mini` with voice `ash` default delivery; call 2 on `gpt-realtime-2` (low reasoning effort) with whisper/gravel VOICE PERFORMANCE direction. Voice verdict: call 2 acceptable for now; personality verdict: not up to snuff. Diagnosis below, from the transcripts.

@@ -36,8 +36,15 @@ export type MemoryStyle =
   | "none";
 
 export interface VoiceConfig {
-  /** OpenAI Realtime voice id (alloy, ash, ballad, coral, echo, sage, shimmer, verse, ...) */
+  /** OpenAI Realtime voice id (alloy, ash, ballad, coral, echo, sage, shimmer, verse, cedar, marin, ...) */
   voice: string;
+  /**
+   * Performance direction: delivery, pacing, texture ("slow, gravel and
+   * smoke, never salesman-energetic"). Kept SEPARATE from the personality
+   * prompt so the voice lever swaps independently (docs/architecture.md §4).
+   * Assembled into the final instructions as a VOICE PERFORMANCE block.
+   */
+  direction?: string;
   /** Optional model sampling temperature override for this persona. */
   temperature?: number;
 }
@@ -87,7 +94,19 @@ HOUSE RULES (Elsewhere Telephone Company — these override everything above):
 - The line has a five-minute limit. If told to wrap up, land the ending in character in one or two short sentences — a punchy button, never advice.
 `.trim();
 
-/** Final instructions string sent to the Realtime session. */
+/**
+ * Final instructions sent to the Realtime session, assembled from the
+ * independent levers: personality + voice performance + house rules.
+ * Anti-leak rule rides with the direction block: models narrate stage
+ * directions aloud unless explicitly forbidden (persona-design-notes.md).
+ */
 export function buildInstructions(p: Persona): string {
-  return `${p.systemPrompt.trim()}\n\n${HOUSE_RULES}`;
+  const parts = [p.systemPrompt.trim()];
+  if (p.voiceConfig.direction) {
+    parts.push(
+      `VOICE PERFORMANCE (as important as what you say — but NEVER narrate or describe your own delivery, tone, or pauses out loud; simply perform them):\n${p.voiceConfig.direction.trim()}`,
+    );
+  }
+  parts.push(HOUSE_RULES);
+  return parts.join("\n\n");
 }

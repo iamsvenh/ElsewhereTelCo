@@ -16,22 +16,32 @@
 import type { ServerWebSocket } from "bun";
 import { buildInstructions, getPersona, type Persona } from "@elsewhere/personas";
 import { env } from "./env";
-import { insertCall, finalizeCall, type TranscriptEntry } from "./db";
+import {
+  insertCall,
+  finalizeCall,
+  fetchPersonaOverride,
+  type PersonaOverride,
+  type TranscriptEntry,
+} from "./db";
 
 const CALL_CAP_MS = 5 * 60_000; // hard cap (rule 4)
 const WRAP_NUDGE_MS = CALL_CAP_MS - 30_000; // "please deposit another coin" moment
 const CACHE_CHECK_MIN_TURNS = 3; // cache can't warm up before a few turns
 
 /**
- * Rough per-token pricing for cost_estimate (USD per token, gpt-realtime-mini
- * audio rates). Verify against the pricing page when the model changes —
- * this is a logging aid, not billing.
+ * Rough per-token audio pricing for cost_estimate (USD per token), selected
+ * by model. Verify against the pricing page when models change — this is a
+ * logging aid, not billing. (Learned 2026-07-23: a flat mini table under-
+ * reported gpt-realtime-2 calls ~3x vs the real dashboard spend.)
  */
-const PRICE = {
-  audioIn: 10 / 1e6,
-  audioInCached: 0.3 / 1e6,
-  audioOut: 20 / 1e6,
+const PRICE_BY_MODEL: Record<string, { audioIn: number; audioInCached: number; audioOut: number }> = {
+  mini: { audioIn: 10 / 1e6, audioInCached: 0.3 / 1e6, audioOut: 20 / 1e6 },
+  full: { audioIn: 32 / 1e6, audioInCached: 0.4 / 1e6, audioOut: 64 / 1e6 },
 };
+
+function priceFor(model: string) {
+  return model.includes("mini") ? PRICE_BY_MODEL.mini! : PRICE_BY_MODEL.full!;
+}
 
 export interface TwilioSocketData {
   session?: CallSession;
@@ -43,6 +53,9 @@ export class CallSession {
   private twilio: TwilioWS;
   private openai: WebSocket | null = null;
   private persona: Persona;
+  /** Effective values after applying persona_config overrides (arch §4). */
+  private model: string;
+  private effective: Persona;
   private streamSid: string;
   private callerNumber: string;
   private calledNumber: string;
@@ -91,6 +104,8 @@ export class CallSession {
     const persona = getPersona(opts.persona) ?? getPersona(env.defaultPersona);
     if (!persona) throw new Error(`Unknown persona: ${opts.persona}`);
     this.persona = persona;
+    this.effective = persona; // replaced by resolveConfig() before connect
+    this.model = env.model;
 
     console.log(
       `[call] start persona=${persona.id} from=${this.callerNumber} stream=${this.streamSid}`,
@@ -109,7 +124,35 @@ export class CallSession {
 
     if (env.recordCalls && this.callSid) void this.startRecording();
 
-    this.connectOpenAI();
+    // Resolve runtime config, then connect. On any failure fall back to
+    // code defaults — config must never be able to kill a call.
+    void this.resolveConfig().finally(() => {
+      if (!this.closed) this.connectOpenAI();
+    });
+  }
+
+  /** Apply persona_config overrides (three levers) over code defaults. */
+  private async resolveConfig(): Promise<void> {
+    const ov: PersonaOverride | null = await fetchPersonaOverride(this.persona.id);
+    if (ov) {
+      this.model = ov.model ?? env.model;
+      this.effective = {
+        ...this.persona,
+        systemPrompt: ov.system_prompt ?? this.persona.systemPrompt,
+        coldOpener: ov.cold_opener ?? this.persona.coldOpener,
+        voiceConfig: {
+          ...this.persona.voiceConfig,
+          voice: ov.voice ?? this.persona.voiceConfig.voice,
+          direction: ov.voice_direction ?? this.persona.voiceConfig.direction,
+        },
+      };
+    }
+    const src = (o: unknown) => (o != null ? "db" : "code");
+    console.log(
+      `[config] ${this.persona.id}: model=${this.model} (${src(ov?.model)}), ` +
+        `voice=${this.effective.voiceConfig.voice} (${src(ov?.voice)}), ` +
+        `prompt=${src(ov?.system_prompt)}, opener=${src(ov?.cold_opener)}`,
+    );
   }
 
   /**
@@ -147,7 +190,7 @@ export class CallSession {
   // ---------- OpenAI side ----------
 
   private connectOpenAI(): void {
-    const url = `wss://api.openai.com/v1/realtime?model=${encodeURIComponent(env.model)}`;
+    const url = `wss://api.openai.com/v1/realtime?model=${encodeURIComponent(this.model)}`;
     // Bun's WebSocket client supports custom headers (non-standard extension).
     this.openai = new WebSocket(url, {
       headers: { Authorization: `Bearer ${env.openaiApiKey}` },
@@ -169,7 +212,7 @@ export class CallSession {
     // caller-side transcription ON (transcripts are the flywheel).
     // gpt-realtime-2+ supports configurable reasoning effort; run LOW —
     // personas need wit and speed, not chain-of-thought (concept doc).
-    const reasoning = env.model.includes("realtime-2")
+    const reasoning = this.model.includes("realtime-2")
       ? { reasoning: { effort: "low" } }
       : {};
     this.sendOpenAI({
@@ -177,7 +220,7 @@ export class CallSession {
       session: {
         type: "realtime",
         ...reasoning,
-        instructions: buildInstructions(this.persona),
+        instructions: buildInstructions(this.effective),
         output_modalities: ["audio"],
         audio: {
           input: {
@@ -187,7 +230,7 @@ export class CallSession {
           },
           output: {
             format: { type: "audio/pcmu" },
-            voice: this.persona.voiceConfig.voice,
+            voice: this.effective.voiceConfig.voice,
           },
         },
       },
@@ -197,7 +240,7 @@ export class CallSession {
     this.sendOpenAI({
       type: "response.create",
       response: {
-        instructions: `Open the call by saying exactly this, then stop and wait: "${this.persona.coldOpener}"`,
+        instructions: `Open the call by saying exactly this, then stop and wait: "${this.effective.coldOpener}"`,
       },
     });
   }
@@ -364,10 +407,11 @@ export class CallSession {
     clearTimeout(this.capTimer);
 
     const durationS = Math.round((Date.now() - this.startedAt) / 1000);
+    const price = priceFor(this.model);
     const cost =
-      (this.audioTokensIn - this.cachedAudioTokensIn) * PRICE.audioIn +
-      this.cachedAudioTokensIn * PRICE.audioInCached +
-      this.audioTokensOut * PRICE.audioOut;
+      (this.audioTokensIn - this.cachedAudioTokensIn) * price.audioIn +
+      this.cachedAudioTokensIn * price.audioInCached +
+      this.audioTokensOut * price.audioOut;
 
     console.log(
       `[call] end persona=${this.persona.id} reason=${reason} duration=${durationS}s ` +
@@ -393,6 +437,7 @@ export class CallSession {
         cached_tokens: this.cachedTokens,
         cost_estimate: Number(cost.toFixed(4)),
         recording_sid: this.recordingSid,
+        model: this.model,
       });
     }
   }

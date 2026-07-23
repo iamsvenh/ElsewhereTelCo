@@ -51,5 +51,6 @@ docs/               concept.md (source of truth), future specs/decisions
 ## Reference
 
 - Concept + roadmap + economics: `docs/concept.md`
+- System architecture (incl. runtime persona config, three levers): `docs/architecture.md`
 - OpenAI publishes a Twilio ↔ Realtime reference implementation (Node) — crib the wire protocol, port to Bun.
 - Related shelved idea: `~/git/ops/ideas/private-voice-journal/` (someday-funnel, not part of current plan).

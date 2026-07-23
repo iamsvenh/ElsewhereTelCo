@@ -25,6 +25,37 @@ if (env.supabaseUrl && env.supabaseSecretKey) {
   console.warn("[db] SUPABASE_URL / SUPABASE_SECRET_KEY not set — call logging disabled");
 }
 
+/** Runtime persona overrides (docs/architecture.md §4). All fields nullable. */
+export interface PersonaOverride {
+  model: string | null;
+  voice: string | null;
+  voice_direction: string | null;
+  system_prompt: string | null;
+  cold_opener: string | null;
+}
+
+// Last-good cache: a DB blip degrades to the previous override (or code
+// defaults), never a dead line.
+const overrideCache = new Map<string, PersonaOverride | null>();
+
+export async function fetchPersonaOverride(persona: string): Promise<PersonaOverride | null> {
+  if (!client) return null;
+  try {
+    const { data, error } = await client
+      .from("persona_config")
+      .select("model, voice, voice_direction, system_prompt, cold_opener")
+      .eq("persona", persona)
+      .abortSignal(AbortSignal.timeout(1_500))
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    overrideCache.set(persona, data);
+    return data;
+  } catch (err) {
+    console.warn(`[config] fetch failed for ${persona} (${err}); using last-good/defaults`);
+    return overrideCache.get(persona) ?? null;
+  }
+}
+
 export async function insertCall(row: {
   called_number: string;
   caller_number: string;
@@ -56,6 +87,7 @@ export async function finalizeCall(
     cached_tokens: number;
     cost_estimate: number;
     recording_sid: string | null;
+    model: string;
   },
 ): Promise<void> {
   if (!client) return;
