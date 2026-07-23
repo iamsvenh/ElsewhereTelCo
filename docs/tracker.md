@@ -9,7 +9,8 @@ The working board until we move to a real ticketing system. Updated as things mo
 ## A. Infra & ops
 Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 
-- 🟢 Teaser line **(806) 666-1212** live — routes, signups table, placeholder audio, deployed
+- 🟢 Teaser flow reworked — ringback (2 rings) + settle-pause + lead-silence fix Sven's clipping/no-ring feedback; barge-in "press one at any time"
+- 🟢 Teaser line **(806) 666-1212** live — routes, signups table, deployed
 - 🟢 Devil line **(505) 551-3551** live (bridge, guardrails, logging, recording)
 - 🟢 Railway bridge, Supabase (new keys), Twilio upgraded off trial
 - 🟢 Domain **elsewheretel.co** purchased
@@ -41,7 +42,7 @@ The IP: prompts, canon, lore, the transcript flywheel.
 
 - 🟢 Persona format + 4 stubs; design process v1; design notes (calls 1-3)
 - 🟢 Devil dark-bait deflection added
-- 🔴 **Teaser script pick** (`teaser-script.md`): A / B / A+graft
+- 🟢 Teaser script DECIDED — Draft B (Sven edited: "since 1666", subscribers list, eternal ledger)
 - 🟡 Devil bible — waiting on canon (see 2.0a)
 - ⚪ Canon v1 (`canon.md`) — postcard: Exchange, Management, Devil personnel file — waiting on redlines
 - ⚪ Weekly transcript-review loop (lore harvest → ratify → canon)
@@ -49,10 +50,9 @@ The IP: prompts, canon, lore, the transcript flywheel.
 ---
 
 ## Open for Sven (consolidated decision queue)
-1. **Teaser script:** A / B / A+graft (`teaser-script.md`) — unblocks final teaser
-2. **ElevenLabs \$5/mo:** yes/no — unblocks teaser VO + character voices
-3. **Vision redlines:** Management cosmology · Mrs. Devil · terminology · Underworld exchange name — unblocks ALL canon/Devil-bible work
-4. (minor) Teaser SFX + "press one" phrasing questions in `teaser-script.md`
+1. **ElevenLabs \$5/mo:** yes/no — unblocks final teaser VO (+ pickup foley) + character voices. Teaser is send-ready the moment this lands
+2. **Vision redlines:** Management cosmology · Mrs. Devil · terminology · Underworld exchange name — unblocks ALL canon/Devil-bible work
+3. (verify) Call (806) 666-1212 — does the ring/timing feel right now?
 
 ## Cadence
 Commit per change set; push in intervals; this tracker updated each working session. Real hygiene (branches/CI/PRs) when we exit prototype phase.

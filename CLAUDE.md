@@ -47,6 +47,7 @@ docs/               concept.md (source of truth), future specs/decisions
 - Doc conventions follow the ops repo: lowercase-hyphen filenames, escape `$` as `\$` in markdown (Sven's reader renders `$...$` as math).
 - Brand voice everywhere (docs, landing copy, error messages): deadpan telco officialese. The company never acknowledges anything is unusual.
 - Decisions worth keeping go in `docs/` as dated notes; `docs/concept.md` stays the index of record.
+- **Keep `docs/tracker.md` current — always.** It is the live board across all four workstreams (infra/ops, strategy/concept, MVP build, persona/world writing). Update it as part of any work: mark items done, add new tasks as they arise, keep the "Open for Sven" decision queue accurate. Update it in the SAME change set as the work it describes, not as an afterthought. This is non-optional.
 
 ## Reference
 
