@@ -41,6 +41,33 @@ Districts are tonally independent (Hell runs bureaucratic comedy; 2036 runs mela
 | **Secrets** | Easter eggs native to the medium | unlisted extensions, a number the Devil mutters once, magic words, cross-line references. In this medium, an Easter egg IS a phone number |
 | **The frame** | The company itself as diegetic UI | rate cards, disclaimers, tariff notices, the Operator. The brand is inside the fiction |
 
+## 4b. The IRL axis (added from Sven's reactions, 2026-07-23)
+
+Every object has a location: **in-world**, **IRL**, or **both**. "Both" is where the magic and the merch live — nostalgic physical artifacts that are simultaneously game surfaces:
+
+| Object | In-world | IRL |
+|---|---|---|
+| Vintage phone | the subscriber's terminal | the portal artifact (already core) |
+| Switchboard | the world map | future admin/atlas view |
+| **Yellow Pages of Elsewhere** | the directory inhabitants reference | printed book chained beside the phone — numbers, "disconnected" lore entries, a few live Easter eggs |
+| Classified ads | how inhabitants advertise | print/posters with callable numbers ("LOST: one horse. Ask for the DEVIL.") |
+| Rate card / tariff notices | the Management's pricing | the pricing page and venue placards |
+| Calling cards | long-distance payment | prepaid gift cards |
+
+Design rule: high-tech experience, nostalgic interface — on BOTH sides of the portal.
+
+## 4c. Production layers (the cost architecture)
+
+The vision multiplies engagement hours; inference cannot scale linearly with them. Three layers, cheapest carrying most of the time:
+
+1. **Live AI personas** — the boss encounters. Scarce, premium, capped. The 5-minute cap is *fiction now*, not just a guardrail: an audience with the Devil is rationed, of course it is. Highest cost (\$0.04-0.11/min), highest magic.
+2. **Pre-produced audio** — the overworld, near-zero marginal cost, and period-authentic by nature: haunted IVR trees ("press 6 if you have already been damned"), hold music from Hell, supporting-cast voicemail boxes, disconnected-number recordings ("...since the incident"), time-and-temperature for 2036. Full character voices (ElevenLabs et al.) are available here precisely because latency doesn't matter for clips. Callers should be able to explore this layer for many minutes per session.
+3. **Print/web lore** — the atlas layer. Yellow Pages, tariff documents, the map artifact. Zero marginal cost, infinite depth.
+
+Diegetic cost control (the frame's unfair advantage): busy signals ARE rate limiting, "please deposit 25 cents" IS metering, off-peak rates ARE load shaping. No cost mechanism ever needs to break the fourth wall.
+
+**Economics sketch:** heavy player at 10 hrs/mo pure-live ≈ \$25-65 inference (unworkable). Same hours at 20-30% live ratio ≈ \$6-18 (workable under subscription). Pricing fiction: **you don't buy AI minutes, you get a phone plan** — subscriber plans, prepaid calling cards, long-distance rates to the Beyond; the claim code is your account number. Venue/event economics (short capped calls, \$/block) are untouched and remain the near-term revenue per concept.md.
+
 ## 5. Craft blueprints borrowed from adjacent media
 
 - **TV writers' rooms:** the *show bible* (our canon file) + showrunner authority (Sven as editor-in-chief) + writers who pitch (LLM drafting pipeline).
