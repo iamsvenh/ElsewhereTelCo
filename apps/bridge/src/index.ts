@@ -127,17 +127,25 @@ const server = Bun.serve<TwilioSocketData>({
       return new Response("", { status: 204 });
     }
 
-    // Deadpan status page. The company never acknowledges anything is unusual.
-    return new Response(
-      [
-        "ELSEWHERE TELEPHONE COMPANY",
-        "Switching office: operational.",
-        "All lines are monitored for quality by the management.",
-        "",
-        "Please limit calls to five minutes. Other customers are waiting.",
-      ].join("\n"),
-      { headers: { "Content-Type": "text/plain" } },
-    );
+    // Landing page + its static assets (served from apps/web).
+    const webDir = join(import.meta.dir, "..", "..", "web");
+    if (url.pathname === "/" || url.pathname === "/index.html") {
+      return new Response(Bun.file(join(webDir, "index.html")), {
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
+    }
+    // favicon.svg/.ico/.png, apple-touch-icon.png — allowlisted static files.
+    const staticAsset = url.pathname.slice(1);
+    if (/^(favicon(-16|-32)?\.(svg|png|ico)|apple-touch-icon\.png|logo-seal\.svg)$/.test(staticAsset)) {
+      const file = Bun.file(join(webDir, staticAsset));
+      if (await file.exists()) {
+        const ext = staticAsset.split(".").pop()!;
+        const ct = ext === "svg" ? "image/svg+xml" : ext === "ico" ? "image/x-icon" : "image/png";
+        return new Response(file, { headers: { "Content-Type": ct } });
+      }
+    }
+
+    return new Response("Not found", { status: 404 });
   },
 
   websocket: {

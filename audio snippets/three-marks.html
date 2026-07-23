@@ -1,152 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Elsewhere Telephone Company</title>
-<meta name="description" content="Now connecting calls to elsewhere. Rates apply." />
-<link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Special+Elite&family=Oswald:wght@500;600&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    --bg: #0c0b0d;
-    --cream: #f2ead8;
-    --dim: #9a8f77;
-    --chrome: #cfc9bb;
-    --neon: #ff7a3c;
-    --neon-soft: #ffb27a;
-    --line: rgba(242,234,216,0.16);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 32%, rgba(255,122,60,0.08), transparent 62%),
-      radial-gradient(ellipse at 50% 120%, rgba(0,0,0,0.65), transparent 70%),
-      var(--bg);
-    color: var(--cream);
-    font-family: 'Playfair Display', Georgia, serif;
-    min-height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: space-between;
-    padding: clamp(2rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem);
-    text-align: center;
-    overflow-x: hidden;
-  }
-  body::after {
-    content: ""; position: fixed; inset: 0; pointer-events: none;
-    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
-    mix-blend-mode: overlay; opacity: 0.6; z-index: 2;
-  }
-  header, main, footer { width: 100%; max-width: 44rem; z-index: 3; }
-
-  /* ---- seal logo ---- */
-  header { display: flex; justify-content: center; }
-  .seal {
-    width: clamp(9.5rem, 36vw, 13rem);
-    height: auto; display: block;
-    filter: drop-shadow(0 0 9px rgba(255,122,60,0.28));
-    user-select: none; cursor: pointer;
-  }
-
-  /* ---- center ---- */
-  main { margin: auto 0; display: flex; flex-direction: column; align-items: center; }
-  .tagline {
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(1.25rem, 5vw, 1.9rem);
-    line-height: 1.5;
-    margin-bottom: clamp(2.4rem, 8vw, 3.6rem);
-    color: var(--cream);
-  }
-  .tagline em { font-style: italic; color: var(--neon-soft); text-shadow: 0 0 18px rgba(255,122,60,0.35); }
-
-  .cta-label {
-    font-family: 'Special Elite', monospace;
-    font-size: clamp(0.72rem, 2.6vw, 0.9rem);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 1.1rem;
-  }
-
-  .number {
-    display: flex; align-items: center; justify-content: center; gap: 0.5em;
-    width: fit-content; margin: 0 auto;
-    font-family: 'Oswald', 'Arial Narrow', sans-serif;
-    font-weight: 600;
-    font-size: clamp(2.4rem, 11vw, 4.6rem);
-    letter-spacing: 0.03em;
-    color: var(--neon-soft);
-    text-decoration: none;
-    line-height: 1.15;
-    padding: 0.22em 0.7em 0.42em;
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    background: rgba(255,122,60,0.03);
-    text-shadow: 0 0 8px rgba(255,122,60,0.55), 0 0 26px rgba(255,122,60,0.3);
-    animation: flicker 8s infinite;
-    transition: color 0.2s, text-shadow 0.2s, border-color 0.2s;
-    white-space: nowrap;
-  }
-  .number .rcv { font-size: 0.6em; filter: drop-shadow(0 0 6px rgba(255,122,60,0.6)); }
-  .number:hover, .number:focus {
-    color: #fff; border-color: rgba(255,122,60,0.5);
-    text-shadow: 0 0 10px rgba(255,122,60,0.95), 0 0 34px rgba(255,122,60,0.55), 0 0 70px rgba(255,122,60,0.3);
-    outline: none;
-  }
-  @keyframes flicker { 0%,17%,21%,24%,55%,58%,100%{opacity:1} 19%,23%,56%{opacity:0.82} }
-
-  /* status line — FIXED height so rotating copy never shifts layout */
-  .callhint {
-    margin-top: 1.4rem;
-    min-height: 1.4em;
-    font-family: 'Special Elite', monospace;
-    font-size: 0.82rem;
-    letter-spacing: 0.14em;
-    color: var(--dim);
-  }
-  .status { color: var(--neon-soft); opacity: 0.85; transition: opacity 0.4s; }
-
-  /* ---- footer ---- */
-  footer {
-    font-family: 'Special Elite', monospace;
-    color: var(--dim); font-size: 0.72rem; line-height: 2; padding-top: 2.5rem;
-  }
-  footer .rule { width: 46px; height: 1px; background: var(--line); margin: 0 auto 1.2rem; }
-  footer a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted rgba(154,143,119,0.5); cursor: pointer; }
-  footer a:hover { color: var(--chrome); border-bottom-color: var(--chrome); }
-
-  /* toast for the badge easter egg — distinct from the status line */
-  .toast {
-    position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%) translateY(1rem);
-    max-width: 90vw;
-    font-family: 'Special Elite', monospace; font-size: 0.74rem; letter-spacing: 0.06em;
-    color: var(--cream); background: rgba(20,18,20,0.95); border: 1px solid var(--line);
-    padding: 0.7rem 1.1rem; border-radius: 2px;
-    opacity: 0; pointer-events: none; transition: opacity 0.4s, transform 0.4s; z-index: 5;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-</style>
-</head>
-<body>
-
-<header>
-<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" class="seal" id="badge">
-  <circle cx="150.0" cy="150.0" r="142.0" fill="none" stroke="#9a8f77" stroke-width="1.5"/>
-  <circle cx="150.0" cy="150.0" r="130.0" fill="none" stroke="#f2ead8" stroke-width="2"/>
-  <defs>
-    <path id="seal-top" d="M 51.0,150.0 A 99.0,99.0 0 1 1 249.0,150.0"/>
-    <path id="seal-bot" d="M 37.0,150.0 A 113.0,113.0 0 0 0 263.0,150.0"/>
-  </defs>
-  <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="20" letter-spacing="0.5"><textPath href="#seal-top" startOffset="50%" text-anchor="middle">ELSEWHERE TELEPHONE CO.</textPath></text>
-  <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="20" letter-spacing="1.5"><textPath href="#seal-bot" startOffset="50%" text-anchor="middle">EST · 1666</textPath></text>
-  <g fill="#ffb27a"><g transform="translate(75.0,104.7) scale(0.07812)"><g transform="translate(0.000000,1160.000000) scale(0.100000,-0.100000)"
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<style>body{background:#0c0b0d;margin:0;padding:50px;font-family:'Special Elite',monospace;color:#9a8f77}
+.grid{display:flex;gap:44px;justify-content:center;align-items:start;flex-wrap:wrap}
+.cell{text-align:center} .lab{margin-top:14px;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+svg{filter:drop-shadow(0 0 7px rgba(255,122,60,0.30))}
+h2{text-align:center;color:#f2ead8;letter-spacing:4px;font-size:13px;margin-bottom:34px;font-weight:400}</style></head>
+<body><h2>THREE MARKS</h2><div class="grid">
+  <div class="cell"><svg viewBox="0 0 300 300" width="240" height="240" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="150.0" cy="150.0" r="142.0" fill="none" stroke="#9a8f77" stroke-width="1.5"/>
+      <circle cx="150.0" cy="150.0" r="130.0" fill="none" stroke="#f2ead8" stroke-width="2"/>
+      <defs>
+        <path id="tt300" d="M 46.0,150.0 A 104.0,104.0 0 1 1 254.0,150.0"/>
+        <path id="tb300" d="M 46.0,150.0 A 104.0,104.0 0 0 0 254.0,150.0"/>
+      </defs>
+      <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="12.5" letter-spacing="3"><textPath href="#tt300" startOffset="50%" text-anchor="middle">ELSEWHERE TELEPHONE CO.</textPath></text>
+      <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="12.5" letter-spacing="3"><textPath href="#tb300" startOffset="50%" text-anchor="middle">· EST · 1666 ·</textPath></text>
+      <g transform="translate(75.0,104.7) scale(0.07812)" fill="#ffb27a"><g transform="translate(0.000000,1160.000000) scale(0.100000,-0.100000)"
  stroke="none">
 <path d="M9930 11589 c-63 -4 -212 -13 -330 -19 -180 -9 -483 -32 -620 -46
 -19 -2 -127 -13 -240 -24 -113 -12 -234 -25 -270 -31 -36 -5 -135 -18 -220
@@ -351,89 +220,147 @@ c118 -31 215 -90 215 -131 0 -34 -61 -90 -144 -130 -159 -78 -353 -80 -511 -6
 -48 370 -89 485 -118 88 -23 126 -27 235 -27 121 1 135 3 205 31 191 76 336
 224 514 524 74 123 91 167 82 203 -12 48 58 27 -911 267 -507 125 -2409 599
 -3119 777 -46 12 -152 13 -169 2z"/>
-</g></g></g>
-</svg>
-</header>
-
-<main>
-  <p class="tagline">Now connecting calls to <em>elsewhere.</em></p>
-
-  <div class="cta-label">Lift the receiver</div>
-  <a class="number" href="tel:+18066661212" id="number">
-    <span class="rcv">&#9742;</span><span>(806)&nbsp;666&nbsp;1212</span>
-  </a>
-
-  <p class="callhint"><span class="status" id="status">the board is quiet tonight</span></p>
-</main>
-
-<footer>
-  <div class="rule"></div>
-  Rates apply. Calls may be monitored for quality by the Management.<br />
-  The company is not responsible for what you hear. &nbsp;&middot;&nbsp;
-  <a id="directory">Directory</a>
-</footer>
-
-<div class="toast" id="toast"></div>
-
-<script>
-  const statusEl = document.getElementById("status");
-  const toastEl = document.getElementById("toast");
-
-  // Egg 1 — the board status rotates (coy)
-  const statuses = [
-    "the board is quiet tonight",
-    "all lines are presently engaged",
-    "one moment — connecting",
-    "the far trunk is experiencing delays",
-    "several parties are holding",
-    "reception is better after dark",
-    "please do not whistle into the receiver",
-  ];
-  let si = 0;
-  setInterval(() => {
-    si = (si + 1) % statuses.length;
-    statusEl.style.opacity = 0;
-    setTimeout(() => { statusEl.textContent = statuses[si]; statusEl.style.opacity = 0.85; }, 400);
-  }, 4600);
-
-  // Egg 2 — click the badge → a distinct notice toast (not the status line)
-  const notices = [
-    "The Company was incorporated in 1666. The paperwork is still processing.",
-    "There is no complaints department. There is a complaints line. It rings elsewhere.",
-    "The Management has been notified of your interest.",
-    "Long distance is very long.",
-  ];
-  let ni = 0, toastTimer;
-  document.getElementById("badge").addEventListener("click", () => {
-    toastEl.textContent = notices[ni++ % notices.length];
-    toastEl.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 4200);
-  });
-
-  // Egg 3 — the Directory is mostly disconnected
-  document.getElementById("directory").addEventListener("click", (e) => {
-    e.preventDefault();
-    alert(
-      "ELSEWHERE TELEPHONE COMPANY — DIRECTORY\n\n" +
-      "Most numbers in this directory have been disconnected.\n" +
-      "Several were never connected at all.\n" +
-      "One of them answers.\n\n" +
-      "You already have it."
-    );
-  });
-
-  // Egg 4 — a notice for the curious (console)
-  console.log("%c ELSEWHERE TELEPHONE COMPANY ",
-    "background:#0c0b0d;color:#ff7a3c;font-size:14px;letter-spacing:3px;padding:4px;");
-  console.log("%cThis line is monitored. If you have come this far, you are the curious sort.\nThe curious sort makes the best subscribers. Dial (806) 666-1212. — The Management",
-    "color:#9a8f77;font-style:italic;line-height:1.6;");
-
-  // Egg 5 — the phone wants you back
-  const realTitle = document.title;
-  document.addEventListener("visibilitychange", () => {
-    document.title = document.hidden ? "☎ your call is holding…" : realTitle;
-  });
-</script>
-</body>
-</html>
+</g></g>
+    </svg><div class="lab">1 · full rotary phone</div></div>
+  <div class="cell"><svg viewBox="0 0 300 300" width="240" height="240" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="150.0" cy="150.0" r="142.0" fill="none" stroke="#9a8f77" stroke-width="1.5"/>
+      <circle cx="150.0" cy="150.0" r="130.0" fill="none" stroke="#f2ead8" stroke-width="2"/>
+      <defs>
+        <path id="tt300" d="M 46.0,150.0 A 104.0,104.0 0 1 1 254.0,150.0"/>
+        <path id="tb300" d="M 46.0,150.0 A 104.0,104.0 0 0 0 254.0,150.0"/>
+      </defs>
+      <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="12.5" letter-spacing="3"><textPath href="#tt300" startOffset="50%" text-anchor="middle">ELSEWHERE TELEPHONE CO.</textPath></text>
+      <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="12.5" letter-spacing="3"><textPath href="#tb300" startOffset="50%" text-anchor="middle">· EST · 1666 ·</textPath></text>
+      <g transform="translate(90.0,92.1) scale(0.03000)" fill="#ffb27a"><g transform="translate(0.000000,3863.000000) scale(0.100000,-0.100000)"
+ stroke="none">
+<path d="M5390 38600 c-214 -15 -541 -52 -672 -75 -284 -49 -318 -157 -160
+-507 11 -23 84 -194 162 -378 154 -363 254 -598 275 -645 7 -16 70 -165 140
+-330 70 -165 160 -376 200 -470 40 -93 130 -305 200 -470 70 -165 146 -345
+170 -400 23 -55 73 -172 110 -260 37 -88 86 -205 110 -260 24 -55 80 -188 125
+-295 45 -107 101 -240 125 -295 43 -101 97 -229 220 -520 37 -88 107 -252 155
+-365 48 -113 125 -293 170 -400 45 -107 115 -271 155 -365 40 -93 109 -258
+155 -365 45 -107 102 -240 125 -295 24 -55 73 -172 110 -260 37 -88 87 -205
+110 -260 24 -55 73 -172 110 -260 37 -88 86 -205 110 -260 23 -55 72 -170 108
+-255 36 -85 79 -189 97 -230 18 -41 61 -145 96 -230 36 -85 71 -168 79 -185
+16 -37 60 -141 90 -215 13 -30 69 -163 125 -295 56 -132 113 -265 125 -295 13
+-30 54 -131 93 -225 124 -303 221 -502 285 -585 59 -76 133 -114 204 -106 117
+14 236 88 578 362 549 440 840 773 980 1123 78 196 100 330 92 556 -9 272 -75
+496 -275 935 -11 25 -107 243 -213 485 -105 242 -210 481 -231 530 -22 50 -51
+116 -64 147 -13 31 -37 85 -53 120 -15 35 -50 113 -76 173 -26 61 -55 128 -65
+150 -10 22 -42 94 -70 160 -29 66 -68 153 -86 193 -19 41 -34 75 -34 78 0 2
+-16 38 -35 80 -19 41 -35 77 -35 79 0 3 -11 28 -24 57 -13 29 -67 152 -121
+273 -53 121 -102 234 -110 250 -7 17 -29 66 -48 110 -65 151 -205 471 -487
+1115 -156 355 -297 679 -315 720 -38 91 -351 810 -406 933 -21 48 -39 89 -39
+91 0 3 -13 33 -29 68 -16 35 -88 200 -161 366 -82 189 -157 346 -198 414 -194
+320 -473 548 -817 668 -165 57 -294 85 -510 111 -114 13 -519 19 -655 9z"/>
+<path d="M3971 38235 c-69 -32 -122 -71 -301 -220 -473 -392 -945 -846 -1320
+-1270 -29 -33 -66 -75 -82 -93 -64 -72 -348 -415 -432 -522 -307 -391 -623
+-850 -916 -1335 -73 -120 -300 -512 -300 -518 0 -2 -29 -56 -64 -120 -85 -154
+-321 -623 -386 -767 -85 -188 -123 -339 -141 -558 -10 -115 -9 -166 5 -323 51
+-576 151 -1243 277 -1859 73 -355 226 -1018 310 -1345 213 -824 433 -1607 594
+-2105 197 -612 317 -972 410 -1230 23 -63 106 -295 198 -550 25 -69 50 -136
+56 -150 5 -14 44 -115 85 -225 375 -1004 934 -2296 1444 -3335 270 -552 317
+-644 610 -1205 277 -532 619 -1147 977 -1760 246 -423 678 -1129 910 -1490
+998 -1553 1627 -2448 2708 -3851 171 -223 390 -495 742 -926 113 -138 359
+-433 434 -521 42 -49 94 -110 116 -137 22 -26 67 -78 100 -116 33 -38 141
+-161 239 -274 339 -387 825 -925 1021 -1130 56 -58 188 -197 295 -310 201
+-212 1153 -1168 1339 -1345 461 -436 478 -452 996 -921 538 -485 998 -880
+1600 -1373 44 -36 82 -68 85 -72 8 -9 627 -501 826 -656 414 -322 1088 -818
+1544 -1138 113 -79 230 -161 260 -182 81 -58 711 -479 810 -542 169 -108 226
+-145 305 -196 281 -182 1072 -666 1250 -765 22 -12 108 -62 190 -110 271 -158
+718 -408 1005 -560 107 -57 231 -124 275 -147 441 -239 865 -410 1320 -532
+260 -70 562 -116 874 -131 552 -28 1169 75 1696 285 136 54 205 69 292 62 136
+-10 220 -46 548 -240 83 -49 339 -191 585 -324 30 -17 163 -89 295 -160 132
+-72 319 -172 415 -223 96 -51 200 -108 230 -126 103 -63 217 -82 268 -45 15
+10 56 34 92 52 59 30 73 33 150 33 99 -1 129 -10 320 -99 121 -56 406 -178
+551 -235 341 -135 805 -242 1149 -266 688 -48 1274 129 1788 543 57 46 124
+103 148 125 83 78 144 108 218 108 23 0 122 -15 221 -34 477 -91 857 -77 1230
+45 395 129 742 385 1063 782 154 191 195 207 530 207 473 -1 759 57 1108 225
+286 138 562 368 785 655 44 57 167 239 204 304 38 65 128 161 179 191 81 47
+112 55 371 90 468 63 883 264 1202 580 56 56 103 107 103 112 0 5 -35 37 -78
+71 -148 116 -350 342 -423 472 -13 22 -26 40 -29 40 -4 0 -56 -50 -116 -111
+-152 -154 -282 -238 -534 -344 -141 -59 -238 -71 -284 -34 -55 44 -67 83 -131
+459 -48 285 -123 528 -230 745 -202 411 -539 729 -940 888 -138 54 -225 70
+-363 65 -95 -4 -133 -10 -202 -33 -315 -108 -513 -430 -525 -855 -3 -91 1
+-154 15 -232 112 -638 475 -1156 1049 -1496 175 -103 221 -150 221 -225 0
+-114 -271 -424 -493 -564 -278 -175 -752 -285 -869 -202 -69 50 -77 105 -57
+426 27 429 -41 800 -209 1138 -204 412 -651 800 -1007 876 -101 21 -277 16
+-370 -10 -226 -63 -414 -232 -529 -475 -78 -164 -123 -420 -112 -631 21 -408
+220 -912 480 -1220 141 -167 303 -318 447 -416 93 -63 136 -106 155 -155 15
+-39 15 -46 0 -91 -13 -38 -36 -68 -104 -135 -246 -242 -527 -370 -900 -409
+-138 -14 -303 -8 -354 14 -83 35 -93 117 -34 307 87 287 111 431 111 685 0
+196 -4 247 -29 375 -33 171 -109 391 -186 535 -50 93 -191 304 -255 381 -189
+226 -328 332 -535 405 -57 21 -84 24 -215 24 -130 0 -160 -3 -225 -23 -247
+-78 -424 -232 -548 -479 -69 -136 -133 -361 -162 -572 -26 -186 -7 -495 41
+-682 22 -85 26 -97 74 -224 87 -227 290 -537 478 -730 78 -80 142 -170 157
+-222 33 -110 -28 -177 -272 -299 -250 -126 -586 -183 -1008 -171 -464 14 -861
+101 -1224 269 -139 65 -187 93 -306 179 -156 112 -158 115 -171 221 -16 126
+-82 213 -245 325 -49 33 -150 105 -225 159 -76 54 -252 177 -393 273 -141 96
+-256 178 -256 182 0 4 73 45 163 90 89 45 197 101 239 125 43 24 79 44 81 44
+4 0 162 89 307 172 397 229 844 535 1140 781 206 171 238 236 177 353 -21 40
+-56 71 -262 230 -99 76 -185 143 -191 149 -6 5 -145 114 -309 240 -163 127
+-323 250 -355 275 -32 25 -125 97 -206 160 -82 62 -230 178 -329 255 -99 78
+-269 211 -379 296 -362 280 -1023 797 -1461 1139 -273 214 -605 473 -941 735
+-148 115 -271 212 -274 215 -3 4 -108 86 -235 184 -126 98 -246 190 -265 206
+-91 72 -200 158 -364 286 -398 309 -695 541 -1410 1103 -271 214 -495 389
+-772 606 -171 133 -242 189 -328 259 -170 137 -389 300 -425 317 -63 29 -123
+27 -166 -5 -49 -37 -82 -89 -169 -265 -257 -518 -504 -797 -866 -977 -137 -68
+-307 -128 -465 -163 -193 -43 -228 -46 -455 -46 -190 1 -244 4 -343 23 -195
+37 -429 120 -607 214 -115 61 -337 208 -480 318 -228 174 -323 169 -592 -31
+-137 -102 -268 -173 -388 -210 -89 -28 -269 -33 -360 -10 -171 43 -361 178
+-514 365 -91 112 -1028 1356 -1093 1451 -101 150 -157 257 -200 386 -37 112
+-39 268 -5 369 59 175 188 329 449 539 57 45 119 102 139 126 64 78 64 158 2
+262 -30 51 -477 669 -758 1048 -57 77 -196 266 -309 420 -112 154 -262 357
+-331 450 -70 94 -329 442 -575 775 -247 333 -530 713 -630 845 -100 132 -448
+596 -775 1030 -489 650 -973 1288 -1365 1800 -34 44 -225 296 -425 560 -200
+264 -439 577 -530 695 -177 229 -495 643 -595 774 -92 121 -216 248 -271 276
+-38 19 -64 25 -114 24 -85 -1 -162 -40 -325 -163 -309 -235 -547 -284 -801
+-167 -157 73 -278 186 -483 451 -265 341 -938 1240 -1001 1336 -137 207 -207
+384 -217 539 -15 258 119 467 507 791 169 141 197 185 187 292 -5 49 -20 92
+-75 207 -102 213 -161 381 -211 605 -41 184 -52 513 -26 740 42 357 185 705
+398 970 80 99 242 255 339 327 257 190 611 326 973 373 245 32 305 62 305 154
+0 67 -30 143 -360 911 -48 113 -145 340 -215 505 -70 165 -135 318 -145 340
+-10 22 -75 175 -145 340 -70 165 -146 345 -170 400 -23 55 -80 188 -125 295
+-79 186 -137 322 -255 600 -29 69 -104 244 -165 390 -62 146 -145 342 -185
+435 -40 94 -103 242 -140 330 -37 88 -93 221 -125 295 -32 74 -88 207 -125
+295 -37 88 -75 178 -85 200 -10 22 -68 159 -130 305 -61 146 -138 326 -170
+400 -31 74 -88 207 -125 295 -37 88 -86 205 -110 260 -24 55 -80 188 -125 295
+-45 107 -101 240 -125 295 -81 191 -379 898 -512 1215 -19 47 -54 130 -78 185
+-23 55 -102 242 -175 415 -73 173 -151 360 -175 415 -24 55 -59 141 -80 190
+-20 50 -43 104 -50 120 -7 17 -32 74 -55 127 -73 170 -147 248 -232 248 -18 0
+-57 -11 -87 -25z m33052 -32886 c309 -158 501 -444 547 -814 26 -216 25 -220
+-52 -180 -108 56 -195 119 -270 196 -93 96 -144 169 -203 292 -63 129 -85 224
+-92 390 -7 156 -7 155 70 116z m-2318 -1127 c48 -24 112 -82 179 -162 160
+-190 254 -380 301 -605 30 -139 33 -555 5 -555 -5 0 -62 49 -127 108 -354 325
+-496 599 -519 997 -8 148 3 197 49 225 33 21 59 19 112 -8z m-2302 -846 c85
+-36 240 -257 306 -436 53 -144 84 -335 75 -461 -25 -357 -30 -386 -77 -425
+-54 -45 -110 -44 -156 4 -29 31 -162 221 -188 267 -72 135 -123 271 -155 420
+-18 86 -15 350 5 452 22 110 39 149 79 173 39 23 67 25 111 6z"/>
+<path d="M23630 12194 c-232 -37 -435 -102 -642 -205 -139 -69 -209 -111 -477
+-283 -170 -108 -230 -154 -350 -264 -80 -74 -187 -167 -237 -207 -142 -115
+-174 -158 -174 -234 0 -55 42 -106 157 -191 245 -183 355 -267 603 -465 146
+-116 305 -242 355 -281 49 -38 99 -76 110 -86 20 -16 296 -231 713 -555 123
+-95 265 -206 315 -246 51 -41 200 -157 332 -260 241 -186 490 -381 965 -752
+140 -109 365 -285 500 -389 135 -105 247 -193 250 -196 3 -3 86 -68 185 -145
+202 -156 225 -173 594 -463 315 -247 747 -585 921 -721 430 -335 1205 -942
+1260 -986 36 -29 243 -191 460 -360 217 -170 427 -333 466 -364 39 -31 88 -69
+109 -86 21 -16 77 -60 124 -97 110 -87 187 -128 239 -128 84 0 130 77 298 492
+276 682 373 1158 324 1585 -31 279 -140 537 -326 778 -121 157 -184 212 -799
+700 -110 88 -308 245 -440 350 -132 105 -316 252 -410 326 -93 74 -303 241
+-465 370 -162 129 -349 277 -415 329 -66 52 -122 97 -125 101 -3 3 -81 66
+-174 139 -93 73 -318 253 -500 399 -182 146 -761 609 -1286 1029 -525 420
+-973 778 -994 796 -503 407 -646 489 -965 557 -131 27 -372 34 -501 13z"/>
+</g></g>
+    </svg><div class="lab">2 · handset (current)</div></div>
+  <div class="cell"><svg viewBox="0 0 300 300" width="240" height="240" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="150.0" cy="150.0" r="142.0" fill="none" stroke="#9a8f77" stroke-width="1.5"/>
+      <circle cx="150.0" cy="150.0" r="130.0" fill="none" stroke="#f2ead8" stroke-width="2"/>
+      <defs>
+        <path id="tt300" d="M 46.0,150.0 A 104.0,104.0 0 1 1 254.0,150.0"/>
+        <path id="tb300" d="M 46.0,150.0 A 104.0,104.0 0 0 0 254.0,150.0"/>
+      </defs>
+      <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="12.5" letter-spacing="3"><textPath href="#tt300" startOffset="50%" text-anchor="middle">ELSEWHERE TELEPHONE CO.</textPath></text>
+      <text fill="#f2ead8" font-family="'Special Elite',monospace" font-size="12.5" letter-spacing="3"><textPath href="#tb300" startOffset="50%" text-anchor="middle">· EST · 1666 ·</textPath></text>
+      <text x="150.0" y="176.0" fill="#ffb27a" font-size="86" text-anchor="middle" font-family="Arial">&#9742;</text>
+    </svg><div class="lab">3 · page ☎ glyph</div></div>
+</div></body></html>

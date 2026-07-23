@@ -15,9 +15,9 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 - 🟢 Devil line **(505) 551-3551** live (bridge, guardrails, logging, recording)
 - 🟢 Railway bridge, Supabase (new keys), Twilio upgraded off trial
 - 🟢 Domain **elsewheretel.co** purchased
-- 🔴 **ElevenLabs Starter (\$5/mo)?** — decision gates final teaser VO + future character voices
-- ⚪ Landing page at elsewheretel.co (static tariff card) — build after teaser VO
-- ⚪ Point elsewheretel.co DNS (Vercel) — with landing page
+- 🟢 ElevenLabs Starter active — "Elsewhere Operator" voice saved to library; key uncapped
+- 🟢 **Landing page LIVE** — served by the bridge from apps/web (not Vercel; one-system decision). Seal logo (vectorized rotary phone + Special Elite curved text), favicons, click-to-call number, 5 easter eggs. brand-voice tariff card
+- 🔴 **Point elsewheretel.co DNS** → Railway (records below / in chat)
 - ⚪ Signup notification mechanism (outbound SMS/call = A2P/TCPA) — defer, manual round at friend-scale
 
 ## B. Strategy & concept
@@ -26,7 +26,7 @@ The vision, positioning, business model, pitch. Mostly docs.
 - 🟢 Vision doc complete (`vision-world-company.md`) — world company, districts, ontology, production layers, economics
 - 🟢 World One locked: the Underworld
 - 🟢 Pitch drafted (one-liner / 30s / 90s) — tested informally, "good"
-- 🔴 **Vision redlines** (`vision-world-company.md` §8): Management cosmology · Mrs. Devil · terminology table · in-world name for the Underworld exchange
+- 🔴 **Vision redlines** (`vision-world-company.md` §8): Management cosmology · Mrs. Devil · terminology table · in-world name for the Underworld exchange — still open, gates all canon/Devil work
 - ⚪ Artizen framing (art-drop launch, funding, AR/VR collaborators) — later
 
 ## C. MVP build (World One)
@@ -52,9 +52,9 @@ The IP: prompts, canon, lore, the transcript flywheel.
 ---
 
 ## Open for Sven (consolidated decision queue)
-1. **ElevenLabs \$5/mo:** yes/no — unblocks final teaser VO (+ pickup foley) + character voices. Teaser is send-ready the moment this lands
+1. **Landing page** — approve the proposed approach (see below / chat), then I build
 2. **Vision redlines:** Management cosmology · Mrs. Devil · terminology · Underworld exchange name — unblocks ALL canon/Devil-bible work
-3. (verify) Call (806) 666-1212 — does the ring/timing feel right now?
+3. **Send the teaser** — text (806) 666-1212 to a few people, watch `/teaser-stats` (the pitch test)
 
 ## Cadence
 Commit per change set; push in intervals; this tracker updated each working session. Real hygiene (branches/CI/PRs) when we exit prototype phase.

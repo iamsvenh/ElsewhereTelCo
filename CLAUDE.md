@@ -17,7 +17,7 @@
 - **AI:** OpenAI Realtime API, `gpt-realtime-mini` first, upgrade to `gpt-realtime-2` at LOW reasoning effort if persona quality lags. Transcription events ON. Hard \$25/mo budget cap on the OpenAI project.
 - **Telephony:** Twilio Media Streams (inbound only)
 - **DB:** Supabase (Studio doubles as the transcript-review UI)
-- **Landing:** Vercel (static only — nothing stateful on Vercel)
+- **Landing:** served by the bridge itself from `apps/web/` (decision 2026-07-23: keep it on one system rather than a separate Vercel deploy). Static HTML + inline SVG seal logo + favicons. `elsewheretel.co` points at the bridge's Railway domain.
 - **Payments (stage 2+, not now):** Stripe checkout → 4-digit codes
 
 ## Repo layout
