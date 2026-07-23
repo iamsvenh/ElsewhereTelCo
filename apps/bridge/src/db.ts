@@ -56,6 +56,16 @@ export async function fetchPersonaOverride(persona: string): Promise<PersonaOver
   }
 }
 
+/** Teaser-line press-1: add a number to the subscriber ledger (idempotent). */
+export async function insertSignup(number: string): Promise<void> {
+  if (!client) return;
+  const { error } = await client
+    .from("signups")
+    .upsert({ number }, { onConflict: "number", ignoreDuplicates: true });
+  if (error) console.error("[db] insertSignup failed:", error.message);
+  else console.log(`[signup] ${number} entered in the subscriber ledger`);
+}
+
 export async function insertCall(row: {
   called_number: string;
   caller_number: string;

@@ -11,11 +11,20 @@ import { env, assertRequiredEnv } from "./env";
 import { connectStreamTwiml } from "./twiml";
 import { CallSession, type TwilioSocketData } from "./session";
 import { personas } from "@elsewhere/personas";
+import { insertSignup } from "./db";
+import { join } from "node:path";
 
 assertRequiredEnv();
 
 function personaForNumber(to: string): string {
   return env.personaNumberMap[to] ?? env.defaultPersona;
+}
+
+function twiml(body: string): Response {
+  return new Response(
+    `<?xml version="1.0" encoding="UTF-8"?>\n<Response>${body}\n</Response>`,
+    { headers: { "Content-Type": "text/xml" } },
+  );
 }
 
 const server = Bun.serve<TwilioSocketData>({
@@ -47,6 +56,40 @@ const server = Bun.serve<TwilioSocketData>({
       return new Response(connectStreamTwiml({ host, persona, from, to, callSid }), {
         headers: { "Content-Type": "text/xml" },
       });
+    }
+
+    // ---- Stage T: the teaser line (806) 666-1212 ----
+    // Pure pre-recorded TwiML: zero AI cost. See docs/mvp-2-plan.md Stage T.
+    if (url.pathname === "/teaser" && req.method === "POST") {
+      const host = env.publicHost || req.headers.get("host") || url.host;
+      console.log("[teaser] incoming call");
+      return twiml(`
+  <Gather numDigits="1" action="/teaser-key" method="POST" timeout="6">
+    <Play>https://${host}/audio/teaser.mp3</Play>
+  </Gather>
+  <Play>https://${host}/audio/teaser-goodbye.mp3</Play>`);
+    }
+
+    if (url.pathname === "/teaser-key" && req.method === "POST") {
+      const form = await req.formData();
+      const digit = String(form.get("Digits") ?? "");
+      const from = String(form.get("From") ?? "unknown");
+      const host = env.publicHost || req.headers.get("host") || url.host;
+      if (digit === "1") {
+        void insertSignup(from);
+        return twiml(`\n  <Play>https://${host}/audio/teaser-confirm.mp3</Play>`);
+      }
+      console.log(`[teaser] non-1 digit: ${digit}`);
+      return twiml(`\n  <Play>https://${host}/audio/teaser-goodbye.mp3</Play>`);
+    }
+
+    // Pre-recorded audio assets (teaser VO, future overworld clips).
+    if (url.pathname.startsWith("/audio/")) {
+      const name = url.pathname.slice("/audio/".length);
+      if (!/^[\w-]+\.mp3$/.test(name)) return new Response("Not found", { status: 404 });
+      const file = Bun.file(join(import.meta.dir, "..", "assets", "audio", name));
+      if (!(await file.exists())) return new Response("Not found", { status: 404 });
+      return new Response(file, { headers: { "Content-Type": "audio/mpeg" } });
     }
 
     if (url.pathname === "/health") {
