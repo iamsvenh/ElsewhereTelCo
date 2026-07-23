@@ -9,7 +9,7 @@ The working board until we move to a real ticketing system. Updated as things mo
 ## A. Infra & ops
 Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 
-- 🟢 Teaser flow reworked — ringback (2 rings) + settle-pause + lead-silence fix Sven's clipping/no-ring feedback; barge-in "press one at any time"
+- 🟢 Teaser timing tuned to Sven's ear — one ring, minimal gap (dropped `<Pause>`, 0.35s lead silence), barge-in "press one at any time"
 - 🟢 Teaser line **(806) 666-1212** live — routes, signups table, deployed
 - 🟢 Devil line **(505) 551-3551** live (bridge, guardrails, logging, recording)
 - 🟢 Railway bridge, Supabase (new keys), Twilio upgraded off trial

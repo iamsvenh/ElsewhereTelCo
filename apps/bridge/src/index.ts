@@ -69,7 +69,6 @@ const server = Bun.serve<TwilioSocketData>({
       // ~0.7s of leading silence so Twilio's connect-clip eats nothing.
       return twiml(`
   <Play>https://${host}/audio/ringback.mp3</Play>
-  <Pause length="1"/>
   <Gather numDigits="1" action="/teaser-key" method="POST" timeout="4">
     <Play>https://${host}/audio/teaser.mp3</Play>
   </Gather>
