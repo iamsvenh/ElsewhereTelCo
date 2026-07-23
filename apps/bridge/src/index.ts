@@ -11,7 +11,13 @@ import { env, assertRequiredEnv } from "./env";
 import { connectStreamTwiml } from "./twiml";
 import { CallSession, type TwilioSocketData } from "./session";
 import { personas } from "@elsewhere/personas";
-import { insertSignup } from "./db";
+import {
+  insertSignup,
+  recordTeaserCall,
+  setTeaserOutcome,
+  setTeaserCallDetail,
+  teaserStats,
+} from "./db";
 import { join } from "node:path";
 
 assertRequiredEnv();
@@ -62,7 +68,11 @@ const server = Bun.serve<TwilioSocketData>({
     // Pure pre-recorded TwiML: zero AI cost. See docs/mvp-2-plan.md Stage T.
     if (url.pathname === "/teaser" && req.method === "POST") {
       const host = env.publicHost || req.headers.get("host") || url.host;
-      console.log("[teaser] incoming call");
+      const form = await req.formData();
+      const from = String(form.get("From") ?? "unknown");
+      const callSid = String(form.get("CallSid") ?? "");
+      console.log(`[teaser] incoming call from=${from}`);
+      void recordTeaserCall(callSid, from);
       // Ring first (an operator has to pick up), then let the audio path
       // settle before anyone speaks. The whole VO plays inside <Gather> so
       // "press one at any time" works via barge-in. teaser.mp3 also carries
@@ -79,12 +89,15 @@ const server = Bun.serve<TwilioSocketData>({
       const form = await req.formData();
       const digit = String(form.get("Digits") ?? "");
       const from = String(form.get("From") ?? "unknown");
+      const callSid = String(form.get("CallSid") ?? "");
       const host = env.publicHost || req.headers.get("host") || url.host;
       if (digit === "1") {
         void insertSignup(from);
+        void setTeaserOutcome(callSid, "signup");
         return twiml(`\n  <Play>https://${host}/audio/teaser-confirm.mp3</Play>`);
       }
       console.log(`[teaser] non-1 digit: ${digit}`);
+      void setTeaserOutcome(callSid, "other-key");
       return twiml(`\n  <Play>https://${host}/audio/teaser-goodbye.mp3</Play>`);
     }
 
@@ -99,6 +112,21 @@ const server = Bun.serve<TwilioSocketData>({
 
     if (url.pathname === "/health") {
       return Response.json({ ok: true, personas: Object.keys(personas) });
+    }
+
+    if (url.pathname === "/teaser-stats") {
+      return Response.json((await teaserStats()) ?? { error: "logging disabled" });
+    }
+
+    // Twilio status callback (call completion) — carries CallDuration.
+    if (url.pathname === "/teaser-status" && req.method === "POST") {
+      const form = await req.formData();
+      const callSid = String(form.get("CallSid") ?? "");
+      const duration = Number(form.get("CallDuration") ?? 0);
+      const status = String(form.get("CallStatus") ?? "");
+      console.log(`[teaser] call ${callSid} ${status} duration=${duration}s`);
+      void setTeaserCallDetail(callSid, duration, status);
+      return new Response("", { status: 204 });
     }
 
     // Deadpan status page. The company never acknowledges anything is unusual.

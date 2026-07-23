@@ -9,6 +9,7 @@ The working board until we move to a real ticketing system. Updated as things mo
 ## A. Infra & ops
 Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 
+- 🟢 Teaser analytics — logs EVERY call (teaser_calls: outcome, duration, status, repeat callers via caller_number+created_at). Twilio status callback → duration for dropoff analysis. `/teaser-stats` = calls · unique · repeat · signups · conversion% · avg duration
 - 🟢 Teaser timing tuned to Sven's ear — one ring, minimal gap (dropped `<Pause>`, 0.35s lead silence), barge-in "press one at any time"
 - 🟢 Teaser line **(806) 666-1212** live — routes, signups table, deployed
 - 🟢 Devil line **(505) 551-3551** live (bridge, guardrails, logging, recording)

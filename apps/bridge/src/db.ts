@@ -66,6 +66,77 @@ export async function insertSignup(number: string): Promise<void> {
   else console.log(`[signup] ${number} entered in the subscriber ledger`);
 }
 
+/** Log a teaser-line call at pickup (before we know the outcome). */
+export async function recordTeaserCall(callSid: string, from: string): Promise<void> {
+  if (!client || !callSid) return;
+  const { error } = await client
+    .from("teaser_calls")
+    .upsert({ call_sid: callSid, caller_number: from }, { onConflict: "call_sid", ignoreDuplicates: true });
+  if (error) console.error("[db] recordTeaserCall failed:", error.message);
+}
+
+/** Set the outcome once the caller presses a key. */
+export async function setTeaserOutcome(callSid: string, outcome: string): Promise<void> {
+  if (!client || !callSid) return;
+  const { error } = await client.from("teaser_calls").update({ outcome }).eq("call_sid", callSid);
+  if (error) console.error("[db] setTeaserOutcome failed:", error.message);
+}
+
+/** Record call duration + final status from Twilio's status callback. */
+export async function setTeaserCallDetail(
+  callSid: string,
+  durationS: number,
+  status: string,
+): Promise<void> {
+  if (!client || !callSid) return;
+  // Row may not exist yet if the status callback races the /teaser hit; upsert.
+  const { error } = await client
+    .from("teaser_calls")
+    .upsert(
+      { call_sid: callSid, duration_s: durationS, call_status: status },
+      { onConflict: "call_sid" },
+    );
+  if (error) console.error("[db] setTeaserCallDetail failed:", error.message);
+}
+
+/** Quick funnel + engagement overview for the teaser line. */
+export async function teaserStats(): Promise<Record<string, unknown> | null> {
+  if (!client) return null;
+  const { data, error } = await client
+    .from("teaser_calls")
+    .select("outcome, caller_number, duration_s, created_at");
+  if (error) {
+    console.error("[db] teaserStats failed:", error.message);
+    return { error: error.message };
+  }
+  const total = data.length;
+  const signups = data.filter((r) => r.outcome === "signup").length;
+  const durations = data.map((r) => r.duration_s).filter((d): d is number => d != null);
+  const avgDuration = durations.length
+    ? Math.round(durations.reduce((a, b) => a + b, 0) / durations.length)
+    : null;
+
+  // Repeat callers: numbers that appear more than once.
+  const byCaller = new Map<string, number>();
+  for (const r of data) {
+    const n = r.caller_number ?? "unknown";
+    byCaller.set(n, (byCaller.get(n) ?? 0) + 1);
+  }
+  const uniqueCallers = byCaller.size;
+  const repeatCallers = [...byCaller.values()].filter((c) => c > 1).length;
+
+  return {
+    total_calls: total,
+    unique_callers: uniqueCallers,
+    repeat_callers: repeatCallers,
+    signups,
+    other_key: data.filter((r) => r.outcome === "other-key").length,
+    no_press: data.filter((r) => r.outcome == null).length,
+    conversion_pct: total ? Math.round((signups / total) * 100) : 0,
+    avg_duration_s: avgDuration,
+  };
+}
+
 export async function insertCall(row: {
   called_number: string;
   caller_number: string;
