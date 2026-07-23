@@ -68,6 +68,15 @@ Diegetic cost control (the frame's unfair advantage): busy signals ARE rate limi
 
 **Economics sketch:** heavy player at 10 hrs/mo pure-live ≈ \$25-65 inference (unworkable). Same hours at 20-30% live ratio ≈ \$6-18 (workable under subscription). Pricing fiction: **you don't buy AI minutes, you get a phone plan** — subscriber plans, prepaid calling cards, long-distance rates to the Beyond; the claim code is your account number. Venue/event economics (short capped calls, \$/block) are untouched and remain the near-term revenue per concept.md.
 
+## 4d. Decisions and refinements (Sven, 2026-07-23, round 2)
+
+- **Metered depth, unmetered breadth.** The meter gates only the premium live-AI layer, never the overworld. Scarcity of the premium layer is a retention ritual, not a damper (Wordle's one-per-day; appointment mechanics; long-distance-as-event is period-authentic). "The Devil takes one audience per day on the basic plan."
+- **Identity is load-bearing (MVP 2.0 core, no longer parking lot).** Two layers: caller ID as passive identity (own-phone returners recognized frictionlessly), claim codes as portable identity (venue/desert phones, future web). Onboarding is in-fiction: the Exchange opens a subscriber file; personas issue codes in character (contract numbers etc.). Never voiceprints (BIPA — absolute). Requires: `subscribers` table, per-world memory summaries, recognition on both paths.
+- **Business model:** venue B2B remains the revenue floor; the deep game trends toward subscription dressed as a phone plan (per-minute stays as *fiction* on the rate card regardless of what's underneath). The fundraising artifact is retention evidence + the video, not lore volume. Artizen: testing pool AND funding fit (match rounds, art-drop launch framing) AND future collaborators (multimodal/AR/VR community) for the eventual visual layer.
+- **World One: LOCKED — the Underworld.** The Devil's line is the door; the Operator runs the underworld trunk first but stays company-level in fiction ("tonight only the down trunk is open"), keeping future worlds one-line additions. Mom and Future You go dormant as stubs (doors "closed for maintenance"). Depth-first beats breadth-first.
+- **Terminology (proposed):** **Elsewhere** = the universe · **the Exchange** = the connecting company/infrastructure fiction · **world** = a district (the Underworld, the Kitchen, 2036) · **line** = a phone number/doorway · **subscriber** = a caller with an account.
+- **Stage 0's question, amended:** not only "do they share it" but "*did the caller understand there's a world to explore, or did they experience a novelty conversation?*" Measurable now: lore-probe rate (unprompted world questions in transcripts), repeat-call rate within days, sharing. A caller asking "what's the Management?" has understood the product.
+
 ## 5. Craft blueprints borrowed from adjacent media
 
 - **TV writers' rooms:** the *show bible* (our canon file) + showrunner authority (Sven as editor-in-chief) + writers who pitch (LLM drafting pipeline).
