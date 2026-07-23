@@ -1,0 +1,17 @@
+{
+  "name": "elsewhere-telco",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --watch apps/bridge/src/index.ts",
+    "start": "bun run apps/bridge/src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "typescript": "^5.6.0"
+  }
+}

@@ -334,6 +334,8 @@ Branch on what actually pulled:
 
 Check trademarks/domains before attaching to any of these.
 
+**Name decided (2026-07-28): Elsewhere Telephone Company.** Domain pick: **elsewheretel.co** — the TLD completes the name ("ElsewhereTel.Co" = ElsewhereTelCo), matches the GitHub repo, short enough to say at a bar. RDAP-checked available 2026-07-28, as were these (grab defensively/for lore as budget allows): `elsewheretelco.com` (boring .com), `elsewhere.tel` (the telephone TLD), `elsewhere.exchange` (period-perfect switchboard lore), `elsewhere.directory` (persona directory page), `elsewhere.support` (deadpan ToS/complaints page), `callelsewhere.com` / `dialelsewhere.com` (campaign CTAs). Taken: elsewhere.works/.network/.world/.international/.company. Caveats: registrar may price any of these as premium at checkout; run a quick USPTO search on "Elsewhere Telephone" before printing signage/neon.
+
 **Visual style:** 1950s-70s Bell System Americana, parodied with love — engraved phenolic instruction cards, period typography (think Western Electric manuals), enamel-badge logo, and neon as the night signature. Palette: telco black/chrome/cream + one neon accent. The desert-arrow night shot is the brand image; everything else derives from it.
 
 **Voice:** deadpan official. The company never acknowledges anything is unusual. "Please limit calls to the deceased to five minutes. Other customers are waiting."

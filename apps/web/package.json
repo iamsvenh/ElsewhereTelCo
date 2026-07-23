@@ -1,0 +1,6 @@
+{
+  "name": "@elsewhere/web",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Landing page — static only, deployed to Vercel. Placeholder until Stage 0 polish session."
+}
