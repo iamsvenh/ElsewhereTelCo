@@ -63,8 +63,14 @@ const server = Bun.serve<TwilioSocketData>({
     if (url.pathname === "/teaser" && req.method === "POST") {
       const host = env.publicHost || req.headers.get("host") || url.host;
       console.log("[teaser] incoming call");
+      // Ring first (an operator has to pick up), then let the audio path
+      // settle before anyone speaks. The whole VO plays inside <Gather> so
+      // "press one at any time" works via barge-in. teaser.mp3 also carries
+      // ~0.7s of leading silence so Twilio's connect-clip eats nothing.
       return twiml(`
-  <Gather numDigits="1" action="/teaser-key" method="POST" timeout="6">
+  <Play>https://${host}/audio/ringback.mp3</Play>
+  <Pause length="1"/>
+  <Gather numDigits="1" action="/teaser-key" method="POST" timeout="4">
     <Play>https://${host}/audio/teaser.mp3</Play>
   </Gather>
   <Play>https://${host}/audio/teaser-goodbye.mp3</Play>`);

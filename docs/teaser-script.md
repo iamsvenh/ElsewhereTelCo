@@ -2,33 +2,25 @@
 
 Stage T front-of-funnel. Pre-recorded, zero AI cost. The line callers hear when Sven texts them the number with half a sentence ("call this when you have 90 seconds"). Must: establish what Elsewhere is in-fiction, tease the Underworld, drive the press-1 signup.
 
-**Status: DRAFTS — not decided.** Current live audio on the number = Draft A, rendered with a placeholder TTS operator voice (NOT final VO). Final VO pending the voice decision (ElevenLabs Voice Design vs. filtered TTS).
+**Status: DECIDED — Draft B (Sven, 2026-07-23).** VO still placeholder (filtered TTS) pending the ElevenLabs decision.
 
-Delivery notes for whichever we pick: 1950s switchboard operator, clipped/deadpan, nothing is unusual to her. Telephone-band EQ on the master. `...` = beat.
+Delivery notes: 1950s switchboard operator, clipped/deadpan, nothing is unusual to her. Telephone-band EQ on the master. `...` = beat.
+
+Playback structure (infra): ringback (2-3 rings) → click + operator fumbles the pickup → short settle-pause → VO. The whole VO plays inside a `<Gather>` so "press one at any time" works (barge-in).
 
 ---
 
-## Draft A — minimal, mysterious (~35s)
+## Final script (Draft B)
 
-> *[switchboard click, line hiss]*
+> _[ringback, 2-3 rings] [switchboard click, line hiss, some fumbling is heard from the operator picking up]_
 >
-> Elsewhere Telephone Company, operator. ... Thank you for calling. We connect subscribers to numbers that cannot otherwise be reached. The Underworld. The year twenty thirty-six. Your mother. ... At present, the Underworld trunk is closed for scheduled maintenance. The Devil's line receives heavy use, and the equipment is old. ... If you wish to be notified when service to the Underworld resumes — press one now. ... The Management thanks you for your patience. It knows you have a choice in telephone companies.
-
-## Draft B — expository, pitch-forward (~55s)
-
-> *[switchboard click]*
->
-> Elsewhere Telephone Company, operator speaking. You have reached the exchange. ... Since 1962, this company has operated the only switchboard licensed to complete calls beyond the conventional service area. Our subscribers include the recently deceased, the not yet born, several mothers, and one fallen angel with strong opinions about his bill. ... You are calling ahead of general service. The first line to open will be the Underworld trunk — the Devil's direct number. Audiences will be limited. Rates apply. ... To reserve notification when the down trunk opens, press one now. ... Calls may be monitored for quality by the Management. Good day.
-
-## Claude's lean
-
-Draft A's tone + one line grafted from B: **"Our subscribers include the recently deceased, the not yet born, several mothers, and one fallen angel with strong opinions about his bill."** That single sentence does the whole ontology in ten seconds and is the funniest line in either draft.
+> Elsewhere Telephone Company, operator speaking. You have reached the exchange. ... Since 1666, this company has operated the only switchboard licensed to complete calls beyond. Our subscribers include the recently deceased, the not yet born, the other worldly, and one grumpy fallen angel. At present, the Underworld trunk is closed for scheduled maintenance. The Devil's line receives heavy use, and the equipment is old. ... If you wish to be notified when service resumes — press one at any time. ... The Management thanks you for your patience. It knows you have a choice in telephone companies. Good day.
 
 ---
 
 ## Press-1 confirmation (shared)
 
-> Your number has been entered in the subscriber ledger. You will receive one telephone call when the Underworld trunk reopens. Do not attempt to dial the Underworld directly. ... Good day.
+> Your number has been entered in the eternal ledger. You will be notified when service resumes. Do not attempt to dial the Underworld directly. ... Good day.
 
 ## Non-1 / timeout goodbye (shared)
 
@@ -36,9 +28,9 @@ Draft A's tone + one line grafted from B: **"Our subscribers include the recentl
 
 ---
 
-## Open questions
+## Open questions - Answered
 
-- A vs B vs A+graft?
-- Cold open SFX: switchboard click + line hiss worth producing, or too much?
-- "twenty thirty-six" vs "the year 2036" phrasing.
-- Does "press one" break the spell? Alternative: "stay on the line to be entered in the subscriber ledger" (no keypad — but loses the confirmation of intent).
+- A vs B vs A+graft? --> B (i modified it)
+- Cold open SFX: switchboard click + line hiss worth producing, or too much? --> YES (i added to it)
+  Quick feedback on the live number:
+  - When I call it, I hear just a single ringtone very fast and then it picks up. But before the connection is properly established, the voice already spoke and it kind of cuts off and jumbles in a bad connection the first part of the introduction of the elsewhere telephone company. So I think we need to address that on the infrastructure layer. Hopefully we can. Ideally, I would want it to ring maybe twice or three times, not too long, so that it actually feels like an operator has to pick up. And then maybe there needs to be some sort of pause or some sort of mechanism to ensure that the connection is fully established before our operator starts talking.
