@@ -57,6 +57,7 @@ The IP: prompts, canon, lore, the transcript flywheel.
 - 🟢 **Teaser SHIPPED (final production)** — ElevenLabs "Elsewhere Operator" (smoky-2 Voice Design) reading v2 script, over living-switchboard bed (eerie drone + chatter + laugh + weep + dial tone), intro'd by real vintage-phone pickup foley (Sven's recording) + synth ringback. Mixed in Audacity by Sven, telephone-mastered. confirm + goodbye also in operator voice. Live on (806) 666-1212
 - 🟢 Teaser script DECIDED v2 — depth pass: elsewhere-as-universe, agency, scale, ambience
 - 🟡 Devil bible — UNBLOCKED (vision v2 ratified). Core/registers/mood; resolve reachable-cast roster (secretary? notary?) here; Mrs. Devil stays an undefined slot
+- 🟢 Worlds register started (`world/worlds.md`) — all districts (Underworld/Kitchen/2036/divine/Phreak) + NEW seed: **the Philosophical realm** (Sven's — big questions, philosophers as sparring Residents; flagged: modern names Camus/Sartre legally out, flavor via invented Residents). Needs a proper brainstorm later
 - 🔴 Canon v1 DRAFTED (`world/canon.md`) — postcard: universe (Exchange/Management/Ledger/monitored) + Underworld + Devil personnel file + cast seeds. Structured entries w/ links. Awaiting Sven's redline: down-trunk name · "Devil cannot lie" · secretary in/out · add/cut. Unblocks the bible
 - ⚪ Weekly transcript-review loop (lore harvest → thin-wall detection → ratify → canon)
 
