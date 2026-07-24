@@ -21,23 +21,22 @@ The ESLint config divergence from Borker (we dropped its React/Next rules) is a 
 | --- | --- | --- |
 | config | `.env.local` (gitignored; Bun loads it, wins over `.env`) | Railway service variables (no file) |
 | Supabase | local (`supabase start`, 127.0.0.1) | prod project `mtvlkjcdfluocapoyvdc` |
-| OpenAI | a **dev** project with its own budget cap | prod key, hard \$25/mo cap |
-| Twilio | a **dev** number → your tunnel | live (505)/(806) |
-| host | tunnel URL (dev:all writes `PUBLIC_HOST`) | the Railway domain |
+| OpenAI | prod key is fine (never exercised locally — no tunnel) | prod key, hard \$25/mo cap |
+| Twilio | not exercised locally | live (505)/(806) |
+| host | `localhost:8080` | the Railway domain |
 
-`bun run dev:all` **refuses to start** unless `SUPABASE_URL` is local — the seatbelt against running dev against prod data.
+**The separation that matters right now is Supabase** — dev must never write prod data. `bun run dev:all` **refuses to start** unless `SUPABASE_URL` is local. The tunnel + separate dev Twilio/OpenAI accounts are deferred (see "Not doing yet"), so **live phone calls are validated against production after deploy, not locally.**
 
 ## Local development
 
 One-time per machine:
 1. Docker running.
 2. `supabase start` (or `bun run db:start`) — boots local Postgres + Studio. Applies `supabase/migrations/`.
-3. `cp .env.example .env.local`, then fill LOCAL values: the `supabase status` URL + keys, a dev Twilio number, a dev OpenAI project key.
-4. `brew install cloudflared` (for inbound call testing).
+3. `cp .env.example .env.local`, then set the LOCAL Supabase URL + keys (from `supabase status`). OpenAI/Twilio creds can stay the prod values or placeholders — they aren't invoked locally.
 
 Each session:
-- `bun run dev:all` — guards the local-DB check, verifies Supabase is up, opens a cloudflared tunnel, writes its URL into `.env.local` as `PUBLIC_HOST`, prints the webhook to paste into the dev Twilio number, and boots the bridge with `--watch`.
-- Call the **dev** number → real phone → your laptop → OpenAI → back. That's the true end-to-end local test. (It uses real OpenAI/Twilio — cheap per call, and on the dev project/number so it never touches prod's budget or the live lines.)
+- `bun run dev:all` — guards the local-DB check, verifies Supabase is up, and boots the bridge with `--watch` on `localhost:8080`.
+- Develop + eyeball the web pages (`/`, `/directory`, `/legal`) and HTTP routes locally; `bun run check` for the automated suite. Live-call behavior is validated on prod after deploy (until the tunnel lands).
 
 Handy: `bun run db:status`, `bun run db:reset` (re-applies migrations to local), `bun run db:stop`.
 
@@ -81,5 +80,6 @@ Until these exist, CI runs on PRs but `deploy.yml` will fail at the stage whose 
 
 ## Not doing yet (deliberately)
 
-- **No separate always-on staging env.** For telephony it would need its own number + OpenAI project — i.e. the same as the local dev tunnel, which already serves as pre-prod. Add later if the team grows or we want automated E2E against a deployed env.
+- **No local-call tunnel + no separate dev Twilio/OpenAI accounts** (Sven, 2026-07-24 — skip for now). What they'd unlock: calling a **dev** number that rings your laptop (`cloudflared` tunnel → `PUBLIC_HOST`), so you could E2E a real call locally against a dev OpenAI project with its own budget cap. Until then, local dev = Supabase + web + logic + tests, and live-call validation is a call to the prod number after deploy. Re-add when local call-testing is worth it: install `cloudflared`, provision a dev number + dev OpenAI project, and restore the tunnel step in `scripts/dev-all.ts` (it's in git history).
+- **No separate always-on staging env.** For telephony it would need its own number + OpenAI project. Add later if the team grows or we want automated E2E against a deployed env.
 - **No PR migration-lint** (`supabase db lint --linked`) yet — it needs prod DB creds on PR runs. Add when migrations get complex.
