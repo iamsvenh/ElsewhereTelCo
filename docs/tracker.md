@@ -28,6 +28,7 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 ## B. Strategy & concept
 The vision, positioning, business model, pitch. Mostly docs.
 
+- 🟢 **Doc-structure discipline ENFORCED** (2026-07-24) — standing rule: on every new doc, review the docs/ tree + add structure if needed + update all READMEs/refs in the same change set. Three layers: CLAUDE.md rule, memory, and a PostToolUse(Write) hook (`.claude/hooks/new-doc-structure-check.sh`) that reminds on any new `.md` under docs/
 - 🟢 **Docs: per-world subfolders** (2026-07-24) — `world/` root = generic cross-world docs (worlds/canon/persona-design ×2); each world gets its own folder (`world/switchboard/` = World Zero, holds switchboard + teaser docs). READMEs per folder; refs updated. Also standardized the connection lead-in to **one ring** everywhere (was 2-3)
 - 🟢 **Docs restructured by domain** — `docs/{strategy,engineering,world}/` + README index in each; `docs/README.md` is the front door; `tracker.md` stays at root. All cross-refs (CLAUDE.md, README, code comments) updated
 - 🟢 **Business model + economics** captured (`strategy/business-model.md`) — revenue streams, pricing fiction, unit economics; **in-lore native sponsorship** idea recorded (the Devil shills Pepsi, resents it)

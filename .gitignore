@@ -11,3 +11,6 @@ supabase/.temp
 # Derived audio working files (stems for local mixing)
 audio snippets/teaser-stems/
 *.wav
+
+# Claude Code personal/local overrides (permission grants) — keep out of the repo
+.claude/settings.local.json
