@@ -22,7 +22,9 @@ const perCaller = new Map<string, number[]>();
 
 function prune(arr: number[], now: number, windowMs: number): number[] {
   const cutoff = now - windowMs;
-  while ((arr[0] ?? Infinity) < cutoff) {arr.shift();}
+  while ((arr[0] ?? Infinity) < cutoff) {
+    arr.shift();
+  }
   return arr;
 }
 
@@ -48,10 +50,14 @@ export function activeCalls(): number {
 export function admitCall(caller: string): string | null {
   const now = Date.now();
   prune(dayLog, now, DAY_MS);
-  if (dayLog.length >= env.maxCallsPerDay) {return "daily-cap";}
+  if (dayLog.length >= env.maxCallsPerDay) {
+    return "daily-cap";
+  }
 
   const hist = prune(perCaller.get(caller) ?? [], now, env.callerWindowMs);
-  if (hist.length >= env.maxCallsPerCallerPerWindow) {return "caller-rate";}
+  if (hist.length >= env.maxCallsPerCallerPerWindow) {
+    return "caller-rate";
+  }
 
   dayLog.push(now);
   hist.push(now);

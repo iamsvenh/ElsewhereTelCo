@@ -9,6 +9,15 @@
  *
  * The server validates the signature against candidate hosts including
  * PUBLIC_HOST, so we sign against https://${PUBLIC_HOST}/incoming-call.
+ *
+ * NO EXTERNAL SERVICES ARE CONTACTED. The routes exercised here do only local
+ * work (HMAC check, TwiML string-building, static files, health). OpenAI +
+ * Twilio are reached ONLY when a CallSession is constructed, which needs a
+ * /media-stream WS "start" event this test never sends; Supabase is disabled
+ * via empty SUPABASE_* below. All keys are fakes. If a future test ever drives
+ * a live call, add an OpenAI/Twilio base-URL seam (pointing at a local fake)
+ * FIRST — those URLs are currently hardcoded, so the no-spend guarantee here is
+ * architectural, not a redirect.
  */
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { createHmac } from "node:crypto";
@@ -24,7 +33,9 @@ const entry = join(import.meta.dir, "..", "..", "apps", "bridge", "src", "index.
 let proc: ReturnType<typeof Bun.spawn>;
 
 function twilioSignature(fullUrl: string, params: Record<string, string>): string {
-  const data = Object.keys(params).sort().reduce((a, k) => a + k + params[k], fullUrl);
+  const data = Object.keys(params)
+    .sort()
+    .reduce((a, k) => a + k + params[k], fullUrl);
   return createHmac("sha1", TOKEN).update(data, "utf8").digest("base64");
 }
 
@@ -51,7 +62,9 @@ beforeAll(async () => {
   for (let i = 0; i < 50; i++) {
     try {
       const r = await fetch(`${BASE}/health`);
-      if (r.ok) {return;}
+      if (r.ok) {
+        return;
+      }
     } catch {}
     await Bun.sleep(100);
   }

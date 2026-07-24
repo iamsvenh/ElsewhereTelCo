@@ -90,13 +90,16 @@ export class CallSession {
   private wrapTimer: ReturnType<typeof setTimeout>;
   private capTimer: ReturnType<typeof setTimeout>;
 
-  constructor(twilio: TwilioWS, opts: {
-    streamSid: string;
-    persona: string;
-    from: string;
-    to: string;
-    callSid: string;
-  }) {
+  constructor(
+    twilio: TwilioWS,
+    opts: {
+      streamSid: string;
+      persona: string;
+      from: string;
+      to: string;
+      callSid: string;
+    },
+  ) {
     this.twilio = twilio;
     this.streamSid = opts.streamSid;
     this.callerNumber = opts.from;
@@ -104,7 +107,9 @@ export class CallSession {
     this.callSid = opts.callSid;
 
     const persona = getPersona(opts.persona) ?? getPersona(env.defaultPersona);
-    if (!persona) {throw new Error(`Unknown persona: ${opts.persona}`);}
+    if (!persona) {
+      throw new Error(`Unknown persona: ${opts.persona}`);
+    }
     this.persona = persona;
     this.effective = persona; // replaced by resolveConfig() before connect
     this.model = env.model;
@@ -125,12 +130,16 @@ export class CallSession {
     });
     this.dbIdReady.then((id) => (this.dbId = id)).catch(() => {});
 
-    if (env.recordCalls && this.callSid) {this.recordingReady = this.startRecording();}
+    if (env.recordCalls && this.callSid) {
+      this.recordingReady = this.startRecording();
+    }
 
     // Resolve runtime config, then connect. On any failure fall back to
     // code defaults — config must never be able to kill a call.
     void this.resolveConfig().finally(() => {
-      if (!this.closed) {this.connectOpenAI();}
+      if (!this.closed) {
+        this.connectOpenAI();
+      }
     });
   }
 
@@ -171,8 +180,7 @@ export class CallSession {
         {
           method: "POST",
           headers: {
-            Authorization:
-              "Basic " + btoa(`${env.twilioAccountSid}:${env.twilioAuthToken}`),
+            Authorization: "Basic " + btoa(`${env.twilioAccountSid}:${env.twilioAuthToken}`),
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: new URLSearchParams({ RecordingChannels: "dual" }),
@@ -200,9 +208,7 @@ export class CallSession {
     } as unknown as string[]);
 
     this.openai.addEventListener("open", () => this.configureSession());
-    this.openai.addEventListener("message", (ev) =>
-      this.handleOpenAIMessage(String(ev.data)),
-    );
+    this.openai.addEventListener("message", (ev) => this.handleOpenAIMessage(String(ev.data)));
     this.openai.addEventListener("close", () => this.close("openai-closed"));
     this.openai.addEventListener("error", (ev) => {
       console.error("[openai] socket error", ev);
@@ -215,15 +221,19 @@ export class CallSession {
     // caller-side transcription ON (transcripts are the flywheel).
     // gpt-realtime-2+ supports configurable reasoning effort; run LOW —
     // personas need wit and speed, not chain-of-thought (concept doc).
-    const reasoning = this.model.includes("realtime-2")
-      ? { reasoning: { effort: "low" } }
-      : {};
+    const reasoning = this.model.includes("realtime-2") ? { reasoning: { effort: "low" } } : {};
     // server_vad, optionally tuned to ignore background chatter. Fields are
     // added only when the env knob is set, so the default stays the API default.
     const turnDetection: Record<string, unknown> = { type: "server_vad" };
-    if (env.vadThreshold != null) {turnDetection.threshold = env.vadThreshold;}
-    if (env.vadSilenceMs != null) {turnDetection.silence_duration_ms = env.vadSilenceMs;}
-    if (env.vadPrefixMs != null) {turnDetection.prefix_padding_ms = env.vadPrefixMs;}
+    if (env.vadThreshold != null) {
+      turnDetection.threshold = env.vadThreshold;
+    }
+    if (env.vadSilenceMs != null) {
+      turnDetection.silence_duration_ms = env.vadSilenceMs;
+    }
+    if (env.vadPrefixMs != null) {
+      turnDetection.prefix_padding_ms = env.vadPrefixMs;
+    }
     this.sendOpenAI({
       type: "session.update",
       session: {
@@ -359,7 +369,9 @@ export class CallSession {
 
   /** Rule 8: verify cached_tokens on every turn — cache failure is silent. */
   private recordUsage(usage: RealtimeUsage | undefined): void {
-    if (!usage) {return;}
+    if (!usage) {
+      return;
+    }
     this.turns += 1;
     this.tokensIn += usage.input_tokens ?? 0;
     this.tokensOut += usage.output_tokens ?? 0;
@@ -385,10 +397,14 @@ export class CallSession {
 
   private addTranscript(role: "caller" | "persona", text: string): void {
     const trimmed = text.trim();
-    if (!trimmed) {return;}
+    if (!trimmed) {
+      return;
+    }
     this.transcript.push({ role, text: trimmed, at: Date.now() - this.startedAt });
     // F7: transcript is persisted to Supabase above; the stdout copy is gated.
-    if (env.logTranscripts) {console.log(`[${role}] ${trimmed}`);}
+    if (env.logTranscripts) {
+      console.log(`[${role}] ${trimmed}`);
+    }
   }
 
   // ---------- Twilio side ----------
@@ -449,11 +465,15 @@ export class CallSession {
   // ---------- Lifecycle ----------
 
   close(reason: string): void {
-    if (this.closed) {return;}
+    if (this.closed) {
+      return;
+    }
     this.closed = true;
     clearTimeout(this.wrapTimer);
     clearTimeout(this.capTimer);
-    if (this.configAckTimer) {clearTimeout(this.configAckTimer);}
+    if (this.configAckTimer) {
+      clearTimeout(this.configAckTimer);
+    }
     releaseCall(); // F33: free the concurrency slot
 
     const durationS = Math.round((Date.now() - this.startedAt) / 1000);
@@ -486,7 +506,9 @@ export class CallSession {
 
   private async finalize(durationS: number, cost: number): Promise<void> {
     const id = this.dbId ?? (await this.dbIdReady.catch(() => null));
-    if (!id) {return;}
+    if (!id) {
+      return;
+    }
     await this.recordingReady.catch(() => {});
     await finalizeCall(id, {
       ended_at: new Date().toISOString(),

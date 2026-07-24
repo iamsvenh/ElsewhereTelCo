@@ -1,0 +1,17 @@
+node_modules
+bun.lock
+dist
+
+# Hand-formatted, deliberately left alone:
+# - docs use tables + the `\$` math-escape convention (Sven's reader)
+# - apps/web is hand-crafted HTML/CSS with inline SVG
+# - audio working files
+**/*.md
+apps/web
+audio snippets
+supabase/.temp
+*.wav
+*.mp3
+*.png
+*.ico
+*.svg

@@ -46,9 +46,13 @@ export function isValidTwilioRequest(
   url: URL,
   params: Record<string, string>,
 ): boolean {
-  if (!env.validateTwilio || !env.twilioAuthToken) {return true;}
+  if (!env.validateTwilio || !env.twilioAuthToken) {
+    return true;
+  }
   const sig = req.headers.get("x-twilio-signature");
-  if (!sig) {return false;}
+  if (!sig) {
+    return false;
+  }
   const hosts = [
     env.publicHost,
     req.headers.get("x-forwarded-host"),
@@ -57,7 +61,9 @@ export function isValidTwilioRequest(
   ].filter((h): h is string => !!h);
   const path = url.pathname + url.search;
   for (const h of new Set(hosts)) {
-    if (safeEqual(sig, webhookSignature(`https://${h}${path}`, params))) {return true;}
+    if (safeEqual(sig, webhookSignature(`https://${h}${path}`, params))) {
+      return true;
+    }
   }
   // Diagnostic for a live-line mismatch: the signature is host-exact, so if a
   // real Twilio request 403s, the reconstructed host is the usual culprit —
@@ -74,7 +80,11 @@ export function streamToken(callSid: string): string {
 }
 
 export function isValidStreamToken(callSid: string, token: string): boolean {
-  if (!env.validateTwilio || !env.twilioAuthToken) {return true;}
-  if (!token) {return false;}
+  if (!env.validateTwilio || !env.twilioAuthToken) {
+    return true;
+  }
+  if (!token) {
+    return false;
+  }
   return safeEqual(token, streamToken(callSid));
 }

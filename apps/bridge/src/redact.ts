@@ -6,6 +6,8 @@
 
 /** Mask a phone number for logs: keep the last 2 digits, e.g. "••••67". */
 export function maskNumber(n: string): string {
-  if (!n || n === "unknown") {return n;}
+  if (!n || n === "unknown") {
+    return n;
+  }
   return "••••" + n.slice(-2);
 }

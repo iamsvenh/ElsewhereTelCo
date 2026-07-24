@@ -8,7 +8,11 @@
  * in Twilio's documented vector.
  */
 import { describe, test, expect } from "bun:test";
-import { isValidTwilioRequest, isValidStreamToken, streamToken } from "../../apps/bridge/src/twilio-auth";
+import {
+  isValidTwilioRequest,
+  isValidStreamToken,
+  streamToken,
+} from "../../apps/bridge/src/twilio-auth";
 
 // Twilio's published validateRequest vector.
 const VECTOR_URL = "https://mycompany.com/myapp.php?foo=1&bar=2";

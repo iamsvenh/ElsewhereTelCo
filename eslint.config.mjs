@@ -5,6 +5,7 @@
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import unusedImports from "eslint-plugin-unused-imports";
+import prettier from "eslint-config-prettier/flat";
 
 export default tseslint.config(
   {
@@ -51,4 +52,7 @@ export default tseslint.config(
     files: ["tests/**/*.ts"],
     rules: { "@typescript-eslint/no-non-null-assertion": "off" },
   },
+  // MUST be last: turns off every stylistic rule Prettier owns, so ESLint and
+  // Prettier never fight. Formatting is Prettier's job; lint is correctness.
+  prettier,
 );

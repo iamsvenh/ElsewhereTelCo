@@ -2,6 +2,10 @@
 
 **Status: v1, 2026-07-24.** The living doc for how we test this repo. Modelled on Borker's (`~/git/social-automation/tests/TESTING_STRATEGY.md`) — Bun's native runner, a layered pyramid, real dependencies over stubs where feasible, and strong assertions — scaled to a ~1k-LOC bridge. Update this in the same change set as any test-shape change.
 
+## No test spends money
+
+Every test is hermetic — **no OpenAI, Twilio, or Supabase call is ever made.** Unit tests are pure. The integration test boots the real bridge but only hits routes that do local work (HMAC signature check, TwiML building, static files, health); OpenAI + Twilio are reached only when a `CallSession` is constructed (a `/media-stream` WS `start` event no test sends), Supabase is disabled via empty `SUPABASE_*`, and all keys are fakes with the repo `.env` excluded (`cwd=tmpdir`). The guarantee for the live-call path is currently *architectural* (no session is built) rather than a redirect-to-fake-server seam — because the OpenAI/Twilio URLs are hardcoded. **If we ever add a test that drives a live call, make those base URLs env-configurable and point them at a local fake first** (Borker's `ANTHROPIC_BASE_URL` fixture-server pattern).
+
 ## The rule (from now on)
 
 **New code is written test-first, or with its test in the same change set.** A behavior that isn't asserted is a behavior that will silently regress. This started the day we noticed we were writing throwaway checks in the scratchpad — those belong here instead, as durable tests.

@@ -32,15 +32,16 @@ function personaForNumber(to: string): string {
 /** Flatten a Twilio POST body into a plain record (also used for signature check). */
 async function formParams(req: Request): Promise<Record<string, string>> {
   const p: Record<string, string> = {};
-  for (const [k, v] of (await req.formData()).entries()) {p[k] = String(v);}
+  for (const [k, v] of (await req.formData()).entries()) {
+    p[k] = String(v);
+  }
   return p;
 }
 
 function twiml(body: string): Response {
-  return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?>\n<Response>${body}\n</Response>`,
-    { headers: { "Content-Type": "text/xml" } },
-  );
+  return new Response(`<?xml version="1.0" encoding="UTF-8"?>\n<Response>${body}\n</Response>`, {
+    headers: { "Content-Type": "text/xml" },
+  });
 }
 
 const server = Bun.serve<TwilioSocketData>({
@@ -74,7 +75,9 @@ const server = Bun.serve<TwilioSocketData>({
       // F33: back off before opening a paid session if we're over a limit.
       // In-fiction, a busy signal IS the rate limit (vision §8) — <Reject busy>.
       if (!callSlotAvailable()) {
-        console.warn(`[guard] busy: ${activeCalls()} concurrent calls, refusing ${maskNumber(from)}`);
+        console.warn(
+          `[guard] busy: ${activeCalls()} concurrent calls, refusing ${maskNumber(from)}`,
+        );
         return twiml(`\n  <Reject reason="busy" />`);
       }
       const deny = admitCall(from);
@@ -83,7 +86,9 @@ const server = Bun.serve<TwilioSocketData>({
         return twiml(`\n  <Reject reason="busy" />`);
       }
 
-      console.log(`[webhook] incoming call to=${maskNumber(to)} from=${maskNumber(from)} -> persona=${persona}`);
+      console.log(
+        `[webhook] incoming call to=${maskNumber(to)} from=${maskNumber(from)} -> persona=${persona}`,
+      );
       return new Response(
         connectStreamTwiml({ host, persona, from, to, callSid, token: streamToken(callSid) }),
         { headers: { "Content-Type": "text/xml" } },
@@ -139,9 +144,13 @@ const server = Bun.serve<TwilioSocketData>({
     // Pre-recorded audio assets (teaser VO, future overworld clips).
     if (url.pathname.startsWith("/audio/")) {
       const name = url.pathname.slice("/audio/".length);
-      if (!/^[\w-]+\.mp3$/.test(name)) {return new Response("Not found", { status: 404 });}
+      if (!/^[\w-]+\.mp3$/.test(name)) {
+        return new Response("Not found", { status: 404 });
+      }
       const file = Bun.file(join(import.meta.dir, "..", "assets", "audio", name));
-      if (!(await file.exists())) {return new Response("Not found", { status: 404 });}
+      if (!(await file.exists())) {
+        return new Response("Not found", { status: 404 });
+      }
       return new Response(file, { headers: { "Content-Type": "audio/mpeg" } });
     }
 
@@ -192,7 +201,9 @@ const server = Bun.serve<TwilioSocketData>({
     }
     // favicon.svg/.ico/.png, apple-touch-icon.png — allowlisted static files.
     const staticAsset = url.pathname.slice(1);
-    if (/^(favicon(-16|-32)?\.(svg|png|ico)|apple-touch-icon\.png|logo-seal\.svg)$/.test(staticAsset)) {
+    if (
+      /^(favicon(-16|-32)?\.(svg|png|ico)|apple-touch-icon\.png|logo-seal\.svg)$/.test(staticAsset)
+    ) {
       const file = Bun.file(join(webDir, staticAsset));
       if (await file.exists()) {
         const ext = staticAsset.split(".").pop() ?? "";

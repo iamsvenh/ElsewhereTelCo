@@ -29,11 +29,7 @@
  * - none: no memory at all (the Operator treats every caller as new)
  */
 export type MemoryStyle =
-  | "petty-perfect-recall"
-  | "fond-misremembering"
-  | "omniscient-clerk"
-  | "summary-only"
-  | "none";
+  "petty-perfect-recall" | "fond-misremembering" | "omniscient-clerk" | "summary-only" | "none";
 
 export interface VoiceConfig {
   /** OpenAI Realtime voice id (alloy, ash, ballad, coral, echo, sage, shimmer, verse, cedar, marin, ...) */
