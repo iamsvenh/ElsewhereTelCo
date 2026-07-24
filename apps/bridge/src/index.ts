@@ -76,11 +76,16 @@ const server = Bun.serve<TwilioSocketData>({
       // teaser.mp3 is the full produced master: ringback + real-phone pickup
       // + operator VO over the living-switchboard bed, already telephone-
       // mastered. Plays inside <Gather> so "press one at any time" barges in.
+      // Two Gathers: "press 1" counts during the teaser (barge-in) AND during
+      // the goodbye. Erick pressed 1 during the goodbye — outside the old single
+      // Gather window (56s audio + 4s) — so it never recorded. Now it does.
       return twiml(`
-  <Gather numDigits="1" action="/teaser-key" method="POST" timeout="4">
+  <Gather numDigits="1" action="/teaser-key" method="POST" timeout="6">
     <Play>https://${host}/audio/teaser.mp3</Play>
   </Gather>
-  <Play>https://${host}/audio/teaser-goodbye.mp3</Play>`);
+  <Gather numDigits="1" action="/teaser-key" method="POST" timeout="4">
+    <Play>https://${host}/audio/teaser-goodbye.mp3</Play>
+  </Gather>`);
     }
 
     if (url.pathname === "/teaser-key" && req.method === "POST") {

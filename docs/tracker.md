@@ -9,7 +9,8 @@ The working board until we move to a real ticketing system. Updated as things mo
 ## A. Infra & ops
 Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 
-- 🟢 Signup funnel VERIFIED live — press-1 records correctly (`signups` + `teaser_calls.outcome=signup` both landing; confirmed via Sven's own test call). NO external signup yet: first friend listened to the full 67s teaser twice but didn't press 1 (watch whether the in-audio CTA lands). Hardened `setTeaserOutcome` to upsert (was update) so outcome records even if the pickup insert races/fails
+- 🟢 Signup capture window FIXED — teaser is 56s but the old single `<Gather>` window was 56+4s, so a "press 1" during the ~7s goodbye (outside the Gather) never recorded (this is why Erick's press was lost). Now the goodbye is wrapped in its own `<Gather>` + main timeout widened to 6s → late presses count
+- 🟢 Signup funnel VERIFIED live — press-1 records correctly (`signups` + `teaser_calls.outcome=signup` both landing; confirmed via Sven's own test call). Hardened `setTeaserOutcome` to upsert (was update) so outcome records even if the pickup insert races/fails
 - 🟢 Teaser analytics — logs EVERY call (teaser_calls: outcome, duration, status, repeat callers via caller_number+created_at). Twilio status callback → duration for dropoff analysis. `/teaser-stats` = calls · unique · repeat · signups · conversion% · avg duration
 - 🟢 Teaser timing tuned to Sven's ear — one ring, minimal gap (dropped `<Pause>`, 0.35s lead silence), barge-in "press one at any time"
 - 🟢 Teaser line **(806) 666-1212** live — routes, signups table, deployed
