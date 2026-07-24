@@ -31,9 +31,15 @@ export const env = {
   publicHost: process.env.PUBLIC_HOST ?? "",
 
   // Dual-channel Twilio call recording for persona/voice analysis.
-  // ON during the informed-seed-tester phase (decision 2026-07-22).
-  // Revisit before any public sharing: default stance is transcripts yes,
-  // audio off (or move into ToS) — see docs/strategy/concept.md §8.
+  // RATIFIED ON for the seed phase (2026-07-24) — supersedes concept.md §8
+  // "default off" while callers are all personally-invited testers and
+  // recordings are used only internally to verify the system works.
+  // This ratification EXPIRES at the first of: a caller not on the seed list,
+  // the community/Artizen post, unsolicited press, payment, or hardware in a
+  // venue. Before that trigger, ship the TwiML "recorded" pre-roll so notice
+  // precedes capture (RECORD_CALLS=false is NOT the fix — the live transcript
+  // + audio relay to OpenAI are the interception surface). See tracker A + the
+  // 2026-07-24 review adjudication addendum.
   recordCalls: process.env.RECORD_CALLS === "true",
 };
 

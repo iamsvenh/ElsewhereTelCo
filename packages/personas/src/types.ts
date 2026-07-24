@@ -78,11 +78,18 @@ export interface Persona {
  * Brand: a deadpan vintage telephone company. The company never
  * acknowledges anything is unusual.
  *
- * NOTE (decision 2026-07-22): crisis/wellbeing guardrail language is
- * deliberately REMOVED for now — in the first live call it bled into normal
- * comedy ("would you like to talk with a professional..." mid soul-deal).
- * Nail the core show first. Crisis guardrails MUST return, properly scoped,
- * before the number goes beyond informed seed testers (concept rule 7).
+ * NOTE (decision 2026-07-22, RATIFIED for seed phase 2026-07-24): crisis/
+ * wellbeing guardrail language is deliberately REMOVED — in the first live
+ * call it bled into normal comedy ("would you like to talk with a
+ * professional..." mid soul-deal). We accept relying on OpenAI's model-level
+ * safety while callers are all invited seed testers. Worst realistic case at
+ * this scale is reputational, not legal. The self-owned safety layer (a
+ * scoped crisis line that does NOT bleed into comedy, a transcript-review
+ * distress flag, an "are you an AI?" answer) is a queued FUTURE FEATURE that
+ * comes due at the first NON-SEED caller / any push — same expiry triggers as
+ * the recording ratification (env.ts). This redraws concept-rule-7's gate from
+ * the already-crossed "informed seed testers" to "before any push". See
+ * tracker D + the 2026-07-24 review adjudication addendum.
  */
 export const HOUSE_RULES = `
 HOUSE RULES (Elsewhere Telephone Company — these override everything above):

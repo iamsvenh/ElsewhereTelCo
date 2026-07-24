@@ -1,12 +1,36 @@
 # Full-repo review — 2026-07-24
 
-**Status:** findings only. No fixes applied, no decisions made. Sven decides what gets actioned.
+**Status:** original findings intact below; **triaged 2026-07-24** — see the Adjudication addendum for what was ratified, overstated, deferred, or left open. No code fixes applied.
 **Trigger:** pre-World-0 checkpoint. Review everything (code, concept, plans, storylines, in-world logic) before the switchboard build.
 **Method:** seven parallel reviewers over the whole repo (code+schema, docs consistency, strategy/economics, world/canon/personas, compliance vs the 8 rules, World 0 build-readiness, in-world logic and fallacies), plus direct build/hygiene checks.
 
 **Verification legend.** ✓ = verified directly against the repo during this session. Unmarked findings are as reported by a reviewer with a cited file:line; they are well-evidenced but were not independently re-run. Where reviewers disagreed, the disagreement is recorded rather than resolved (see [Notes on reviewer disagreement](#notes-on-reviewer-disagreement)).
 
 **Severity:** 🔴 breached / blocking · 🟠 high · 🟡 medium · ⚪ low.
+
+---
+
+## Adjudication addendum — 2026-07-24 (post-review)
+
+The findings below are the original snapshot, left intact. After filing, four verifier passes (decision-provenance, adversarial code verification, pragmatic legal posture, creative/world-logic) plus Sven's own knowledge re-checked them. Net outcome — read this before acting on any single finding:
+
+**Ratified as accepted-risk for the seed phase (Sven, 2026-07-24)** — these were *time-boxed deferrals whose expiry conditions were crossed unnoticed*, now consolidated as explicit decisions with expiry triggers (recorded in `env.ts`, `types.ts:80-86`, `concept.md:345`, and `../tracker.md` A/D):
+- **F2 (recording on before disclosure)** and **F1 (crisis guardrails off)** — accepted while callers are all invited seed testers and recordings are internal-QA-only. **Expiry = first of:** a non-seed caller · the Artizen/community post · unsolicited press · payment · hardware in a venue. The community post is the true event horizon (after it, `concept.md:241`'s "consent can't be retrofitted" becomes true). Legal read: at this caller base, exposure is low-probability implied-consent territory; but the pre-roll fix is ~20 min, so the ratification is only coherent as "ship the pre-roll before any push." F3/F4 (ToS/privacy, publish opt-in + delete path) bundle with the production/payment gate; a *minimal* `/privacy` + pre-roll + scoped crisis line come earlier, before the community post.
+
+**Overstated in whole or part** (do not action as written):
+- **F12/F13** — juxtaposed a Stage-1+ planning figure with the Stage-0 cap (different stages; the dashboard cap *is* the recorded kill switch), and counted one pricing decision's own recorded flex range as self-contradiction. The four *cost* numbers across docs remain genuine drift.
+- **F22** — the unreachable-doors Operator is a doubly-recorded deliberate stub, and its number isn't live, so no caller hits it. Only the "no refunds, the call was free" line is a real defect.
+- **F23** — attacked the doc author's menu *lean* (A1), not a ratification; the menu set is explicitly open (decision A). It's input to that brainstorm, not a conflict.
+- **F42** — `memoryStyle`/`familySafe` are recorded forward-declarations, not dead code (the review concedes nothing is violated). `voiceConfig.temperature` and the `[[ ]]` sweep are valid.
+
+**Recorded 2.0a work, not present-tense gaps** (the sequence is the plan; canon v2 only ratified 2026-07-24):
+- **F25 (opener rotation)** — the bridge-rotated opener kit is `mvp-2-plan.md` Stage 2.0a.
+- **F27 (canon layer)** — the shared canon module in `packages/personas` is 2.0a's first bullet.
+- **F24** partial — the full Devil rewrite is deferred 2.0a work; the one live exception is the diagnosed loops at `devil.ts:17,28` (socks list + notary gag), a cheap one-line hotfix worth doing while numbers are public.
+
+**Code findings re-ranked for *current* reality** (seed phase, tens of calls, unpromoted) by the adversarial pass — this order supersedes the P4 severity tags for prioritization: (1) **F29** barge-in tail — the only bug on every live call, degrading the persona-feel Stage 0 measures; (2) **F30** recordingSid/never-retried finalize — corrupting the small evidence base (the "loses the calls that matter most" framing was overstated: only sub-300ms setup-drops are lost); (3) **F5** `/teaser-key` signup forgery — latent TCPA shape, trivially exploitable; (4) **F5** `/media-stream` hijack **+ F33** — budget-blowout path, zero floor, matters once a number circulates. All P4 bugs CONFIRMED against code; both re-checked "verified clean" claims (RLS, schema/code parity) held.
+
+**Genuinely open decisions for Sven** (neither ratified nor overstated): **F8** switchboard-vs-Devil *sequence* (the LLM-free-v0 decision is settled; the order was never decided, and the repo contradicts itself) · **F17** Devil-wall voice Glenda-vs-Operator (canon says Glenda; under lean B2 the teaser master survives, so the VO cost is ~15s of new script, not a re-produce) · **F16** Operator knowledge boundary (one redline paragraph). All three fold into the queued A–E switchboard redline.
 
 ---
 
