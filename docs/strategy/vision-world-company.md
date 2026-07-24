@@ -70,6 +70,7 @@ This gives us a **diegetic changelog**: every product decision becomes lore. Cos
 | **Reachable cast**      | a secondary Resident you can actually be connected to. Shallower bible, cheaper model, latency-tolerant | the Devil's secretary; the notary you can call. Gatekeepers and stepping-stones in the quest (§8)                       |
 | **Off-stage entities**  | load-bearing mysteries. NEVER voiced, never explained                              | the Management                                                                                                                            |
 | **Interaction model**   | telephony verbs — the switchboard is the world map                                 | dial, ask, hold (Hell's hold music), transfer, extensions, busy signals, wrong numbers, deposit coin, call back                           |
+| **The establishing layer** | pre-produced scene-setting that stages the threshold _into_ a Resident: ambient bed + short narration. Voice-only's answer to a play's stage directions | the smoky Left-Bank café you _hear_ before the philosopher picks up; Hell's typewriters + hold music. Zero live cost; bookends the live encounter (§8, §5c) |
 | **The back-channel**    | contact the world initiates back toward the subscriber (async, world→you)          | the Devil texts "you up?" at 4am; a voicemail from 2036 on a Tuesday. Re-engagement loop (§5b)                                            |
 | **Objects / artifacts** | speakable, persistent things                                                       | contract numbers, form 666-B, appointment slips — anything a subscriber can say back later                                                |
 | **State & memory**      | what persists                                                                      | per-subscriber (the Ledger + summaries = progression), per-district (the world clock: audit season, outages), global (canon)              |
@@ -83,6 +84,16 @@ Not canonized as a wife. A feminine presence adjacent to the Devil exists as a s
 ### 5b. The back-channel (async, world → subscriber)
 
 The first mechanic that reaches _out_ of the call. Between sessions, the world can text, leave a voicemail, or call back. This is the re-engagement / lead-magnet loop that turns a one-off call into a relationship: you called Hell once, and at 4am the Devil texts. It works to **any** device (a subscriber's cell included), so it is not exclusive to hardware phones. **Consent-gated:** outbound SMS/calls are A2P/TCPA-regulated (same bucket as signup-notify). The fiction carries the opt-in ("may the Exchange reach you on this line?"). Lands post-Stage-0 with the A2P work.
+
+### 5c. The establishing layer (scene-setting — Sven, 2026-07-24)
+
+Voice-only has no set. A play sets the stage in stage directions; a text adventure describes the room; we have neither a screen nor a live budget to narrate every scene. So the world is staged by a **pre-produced establishing beat** on the threshold _into_ a Resident: an **ambient bed** (you _hear_ the smoky Left-Bank café — murmur, an accordion, a cup set down) plus, optionally, a few lines of **scene-setting narration** ("A café off a wet alley. Someone has been nursing the same coffee for three hours."). Then the live Resident picks up.
+
+Three tools, sound doing the heavy lifting: (1) **ambient bed** — the most immersive and most diegetic (hearing the place beats being told about it); (2) **narration** — the play's stage-direction instinct, a light seasoning; (3) the **Resident's own dialogue** implying setting. All pre-produced (Sven's call, and correct): zero live cost, authored/consistent, reusable every visit.
+
+**Narrator register is per-world, not one universal voice** (the café is literary; Hell is bureaucratic ambient — typewriters, hold music). The **Operator** does the deadpan telco handoff ("connecting you to the Left Bank, hold please"); the establishing beat is the world's threshold. _Open:_ whether a single **signature narrator** (Night-Vale-style recurring brand voice) ever unifies it — powerful but centralizing; decided per world for now.
+
+Why it's load-bearing beyond atmosphere (see §8): pre-produced staging **bookends** the expensive live minutes, so a 3-minute live encounter _feels_ like a whole visit (you arrived through a place and leave through one). Short live time reads as rich — it directly serves metered-depth / unmetered-breadth, and it fixes the cold "pickup" into an actual threshold (the vintage-phone-as-portal thesis made audible).
 
 ## 6. The IRL axis, and what a hardware phone actually is
 
@@ -139,6 +150,8 @@ With that established, delivery is a **spectrum**, and the key insight is that *
 2. **Budget live** (mini or cheaper, latency-tolerant) — the secretary, minor Residents. Slowness baked in as character: "the notary takes his time." Carries more interaction hours cheaply.
 3. **Pre-produced audio** — the overworld, near-zero marginal cost, period-authentic: haunted IVR trees ("press 6 if you have already been damned"), hold music from Hell, voicemail boxes, disconnected-number recordings ("...since the incident"), time-and-temperature for 2036. Full character voices (ElevenLabs et al.) live here because latency doesn't matter for clips. Explorable for many minutes per session.
 4. **Print/web lore** — the atlas. Yellow Pages, tariff documents, the map artifact. Zero marginal cost, infinite depth.
+
+**Pre-produced staging amplifies the live layers.** Layer 3 isn't only a standalone overworld — it also _stages_ the live encounters. The establishing beat (§5c) bookends a Resident: the threshold in (ambient bed + scene-setting) before the live minutes, a closing beat after. Voice-only has no set; this is how we build one, and it makes a short, cheap live encounter feel like a full scene — the cleanest lever for "short live time, rich experience."
 
 **Diegetic cost control (the frame's unfair advantage):** busy signals ARE rate limiting, "please deposit 25 cents" IS metering, off-peak rates ARE load shaping. No cost mechanism ever needs to break the fourth wall.
 

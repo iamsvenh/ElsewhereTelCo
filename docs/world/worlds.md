@@ -4,6 +4,8 @@ The map of districts: what exists, what's dormant, what's a candidate, what's a 
 
 The **Exchange / Operator** is not a world — it's the connective frame that routes callers between them ("tonight, only the down trunk is open").
 
+Every world also has an **establishing style**: the pre-produced scene-setting you cross into it through (vision §5c) — ambient bed + optional narration, voice-only's stage directions. The smoky café before the philosopher; the typewriters and hold music before the Devil. Pre-produced (zero live cost), register per-world.
+
 **Status:** 🔨 building · 💤 dormant stub · 💡 candidate · 🌱 seed (needs design)
 
 Per-world: **register** (its tone), **Resident(s)**, **you enter with** (the caller's intent), **notes**.
@@ -54,6 +56,7 @@ The concrete doorway to the "meaning / why" theme that keeps recurring. Abstract
   - **Workaround (keeps the flavor, legally):** carry the absurdist/existentialist register through **invented Residents** — "the Absurdist," a nameless café philosopher who holds Camus-shaped views without being Camus; or personify **the Absurd itself** as a character. Diogenes + Kierkegaard also cover a lot of that ground by name. So the *philosophy* is fully available; only the *modern names* are off-limits.
 
 **Design questions to crack later (Sven: "needs a lot more thought"):**
+- **The establishing beat** (the trigger for §5c). You cross into each philosopher through a staged threshold: e.g., the nameless café philosopher is met in a smoky Left-Bank café down a wet alley — heard (accordion, murmur, a cup set down) and lightly narrated before he speaks. Pre-produced. This is where this world earns its depth.
 - **The routing mechanic.** How does the switchboard pass you between thinkers — you pick, or it decides based on your question, or they hand you off ("that's not my department, try Epictetus on 3")?
 - **What makes it *entertaining*, not a lecture?** The likely engine: thinkers in *tension* (a Stoic and an Absurdist arguing your question with you as the prize), sparring not sermonizing, and the wellbeing rule (introspective personas push toward real-world action, never claim to be a companion — rule 7).
 - **The "why" as the entry ritual** — the operator asks what you're really calling about; "why?" is the password to the deep lines.
