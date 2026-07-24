@@ -53,7 +53,7 @@ Related: [the Exchange](#the-exchange) · [the Devil](#the-devil) · [the down t
 ### The down trunk
 *place · Underworld · NAME PENDING REDLINE*
 
-In telephony a **trunk** is the heavy line connecting two exchanges. The down trunk is the trunk connecting the surface Elsewhere Exchange to the Underworld's own exchange — the bundle of lines running *down* to Hell, opened and closed by the Operator ("tonight, only the down trunk is open"). It is infrastructure *and* the threshold you cross to reach the Devil's world. Naming it keeps every future world a one-line addition. Working name: *the down trunk*. Candidates for Sven's pick: the Descent · the Pit Line · the Downstairs Line · the Sublevel Trunk.
+In telephony a **trunk** is the heavy line connecting two exchanges. The down trunk is the trunk connecting the surface Elsewhere Exchange to the Underworld's own exchange — the bundle of lines running *down* to Hell, opened and closed by the Operator ("tonight, only the down trunk is open"). It is infrastructure *and* the threshold you cross to reach the Devil's world. Naming it keeps every future world a one-line addition. **Kept as *the down trunk* for now** (Sven: concept understood, but it likely reads too technical for most callers — flagged to revisit; candidates if we change it: the Descent · the Pit Line · the Downstairs Line · the Sublevel Trunk).
 
 Related: [the Underworld](#the-underworld) · [the Exchange](#the-exchange)
 
@@ -64,9 +64,16 @@ Related: [the Underworld](#the-underworld) · [the Exchange](#the-exchange)
 ### The Devil
 *character · Underworld*
 
-Rank: middle management. Tenure: since roughly the beginning — long enough to be bored. Administers intake, contracts, and complaints for the Underworld. Reports to the Management, which he resents: it keeps him bored and underused, and he calls that *delegation*. A clerk with cosmic authority and no ambition left; finds mortals mildly amusing, the way a DMV clerk does. Not a monster. **Goes by folk-names — Mr. Scratch, Old Nick — and never gives his true name (names have power); "the Devil" is a job title, not a name.** *(Full personality — the wound, the registers, the day-mood — lives in the Devil bible. Canon states the facts; the bible states the ache.)*
+Rank: middle management. Tenure: since roughly the beginning — long enough to be bored. Administers intake, contracts, and complaints for the Underworld. Reports to the Management, which he resents: it keeps him bored and underused, and he calls that *delegation*. A clerk with cosmic authority and no ambition left; finds mortals mildly amusing, the way a DMV clerk does. Not a monster. **His true name is never given, and he never gives it — "the Devil" is a job title, not a name.** What everyone *actually* calls him is its own device (see [What they call him](#what-they-call-him)). *(Full personality — the wound, the registers, the day-mood — lives in the Devil bible. Canon states the facts; the bible states the ache.)*
 
-Related: [the Management](#the-management) · [the intake](#the-intake) · [the Devil cannot lie](#the-devil-cannot-lie) · [Contracts and the notary](#contracts-and-the-notary) · [Souls arrive on schedule](#souls-arrive-on-schedule)
+Related: [the Management](#the-management) · [What they call him](#what-they-call-him) · [the intake](#the-intake) · [the Devil cannot lie](#the-devil-cannot-lie) · [Contracts and the notary](#contracts-and-the-notary) · [Souls arrive on schedule](#souls-arrive-on-schedule)
+
+### What they call him
+*fact · Underworld*
+
+Nobody uses his name (there isn't one on offer). Instead everyone around him reaches for affectionate-but-demeaning folk diminutives — **Serpie** (the old serpent), **Luzi** or **Lu** (Lucifer), **Beezy** / **Bub** (Beelzebub), **Mephy** (Mephistopheles), **Old Nick**, **the Big Guy**, **Old Grump**, **Himself** — always behind his back, always with a nervous glance, because they are terrified he might hear. **He does.** Petty, perfect recall; he says nothing, and he files it. The pool is generative (coin new ones in register); the *fact* is that he is diminished behind his back and dreaded to his face, and both are earned.
+
+Related: [the Devil](#the-devil) · [Glenda, the secretary](#glenda-the-secretary)
 
 ### The intake
 *fact · Underworld*
@@ -118,8 +125,8 @@ Related: [the Devil](#the-devil) · [Glenda, the secretary](#glenda-the-secretar
 
 ---
 
-## Open for redline
+## Settled / revisitable
 
-1. **The down trunk name** — concept is spelled out above; keep "the down trunk" (my lean) or pick from the Descent / the Pit Line / the Downstairs Line / the Sublevel Trunk.
-2. **Names** — Glenda ✅ (adopted). Devil = **Mr. Scratch** as a folk-name, true name withheld — confirm or drop. The **Operator**: name her (a classic switchboard name like *Mabel*), or keep her nameless like the Management? (Leaning nameless, but open.)
-3. Anything to add or cut. Everything else here is ratified.
+- **Names:** the Devil has no name; the world calls him affectionate-demeaning folk diminutives, terrified he hears (locked — see [What they call him](#what-they-call-him)). **Glenda** = the secretary (locked). The **Operator** stays **nameless** for now, like the Management (revisitable).
+- **The down trunk:** kept for now; may revisit (leans technical). Concept is spelled out in its entry.
+- Everything else in this doc is ratified. The Devil bible is unblocked.
