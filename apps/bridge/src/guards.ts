@@ -58,3 +58,10 @@ export function admitCall(caller: string): string | null {
   perCaller.set(caller, hist);
   return null;
 }
+
+/** Test-only: clear the in-memory counters between cases (this state is a singleton). */
+export function __resetGuardsForTest(): void {
+  active = 0;
+  dayLog.length = 0;
+  perCaller.clear();
+}

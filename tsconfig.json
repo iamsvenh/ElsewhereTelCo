@@ -11,5 +11,5 @@
     "skipLibCheck": true,
     "verbatimModuleSyntax": true
   },
-  "include": ["apps/bridge/src", "packages/personas/src"]
+  "include": ["apps/bridge/src", "packages/personas/src", "tests"]
 }

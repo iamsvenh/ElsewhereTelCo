@@ -20,6 +20,7 @@ import {
 } from "./db";
 import { isValidTwilioRequest, isValidStreamToken, streamToken } from "./twilio-auth";
 import { admitCall, callSlotAvailable, acquireCall, activeCalls } from "./guards";
+import { maskNumber } from "./redact";
 import { join } from "node:path";
 
 assertRequiredEnv();
@@ -73,16 +74,16 @@ const server = Bun.serve<TwilioSocketData>({
       // F33: back off before opening a paid session if we're over a limit.
       // In-fiction, a busy signal IS the rate limit (vision §8) — <Reject busy>.
       if (!callSlotAvailable()) {
-        console.warn(`[guard] busy: ${activeCalls()} concurrent calls, refusing ${from}`);
+        console.warn(`[guard] busy: ${activeCalls()} concurrent calls, refusing ${maskNumber(from)}`);
         return twiml(`\n  <Reject reason="busy" />`);
       }
       const deny = admitCall(from);
       if (deny) {
-        console.warn(`[guard] ${deny}: refusing ${from}`);
+        console.warn(`[guard] ${deny}: refusing ${maskNumber(from)}`);
         return twiml(`\n  <Reject reason="busy" />`);
       }
 
-      console.log(`[webhook] incoming call to=${to} from=${from} -> persona=${persona}`);
+      console.log(`[webhook] incoming call to=${maskNumber(to)} from=${maskNumber(from)} -> persona=${persona}`);
       return new Response(
         connectStreamTwiml({ host, persona, from, to, callSid, token: streamToken(callSid) }),
         { headers: { "Content-Type": "text/xml" } },
@@ -99,7 +100,7 @@ const server = Bun.serve<TwilioSocketData>({
       const host = env.publicHost || req.headers.get("host") || url.host;
       const from = params.From ?? "unknown";
       const callSid = params.CallSid ?? "";
-      console.log(`[teaser] incoming call from=${from}`);
+      console.log(`[teaser] incoming call from=${maskNumber(from)}`);
       void recordTeaserCall(callSid, from);
       // teaser.mp3 is the full produced master: ringback + real-phone pickup
       // + operator VO over the living-switchboard bed, already telephone-

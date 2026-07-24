@@ -24,6 +24,7 @@ import {
   type TranscriptEntry,
 } from "./db";
 import { releaseCall } from "./guards";
+import { maskNumber } from "./redact";
 
 const CALL_CAP_MS = 5 * 60_000; // hard cap (rule 4)
 const WRAP_NUDGE_MS = CALL_CAP_MS - 30_000; // "please deposit another coin" moment
@@ -119,7 +120,7 @@ export class CallSession {
     this.model = env.model;
 
     console.log(
-      `[call] start persona=${persona.id} from=${this.callerNumber} stream=${this.streamSid}`,
+      `[call] start persona=${persona.id} from=${maskNumber(this.callerNumber)} stream=${this.streamSid}`,
     );
 
     // Rule 4: the cap belongs to the server, not the model.
@@ -381,7 +382,8 @@ export class CallSession {
     const trimmed = text.trim();
     if (!trimmed) return;
     this.transcript.push({ role, text: trimmed, at: Date.now() - this.startedAt });
-    console.log(`[${role}] ${trimmed}`);
+    // F7: transcript is persisted to Supabase above; the stdout copy is gated.
+    if (env.logTranscripts) console.log(`[${role}] ${trimmed}`);
   }
 
   // ---------- Twilio side ----------

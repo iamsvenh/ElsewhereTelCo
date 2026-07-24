@@ -15,4 +15,8 @@ The infra/ops and MVP-build workstreams. The always-on Bun bridge, the stack, th
 | ------ | ---------- |
 | **[production-tools/](production-tools/)** | The internal production systems: the content source-of-truth graph model + the production map over it. Design/recommendation docs. |
 
+## Testing
+
+The test suite and its philosophy live with the code, not here: **[`../../tests/TESTING_STRATEGY.md`](../../tests/TESTING_STRATEGY.md)** (Bun's native runner, layered unit/integration, test-driven from 2026-07-24, CI-gated). Run `bun run check` before every commit.
+
 See also: `../../CLAUDE.md` (stack decisions), the running code under `apps/` and `packages/`, and the schema under `supabase/`.

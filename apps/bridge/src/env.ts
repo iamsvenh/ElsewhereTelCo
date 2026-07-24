@@ -42,6 +42,11 @@ export const env = {
   maxCallsPerCallerPerWindow: Number(process.env.MAX_CALLS_PER_CALLER ?? 4),
   callerWindowMs: Number(process.env.CALLER_WINDOW_MS ?? 15 * 60_000),
 
+  // F7: verbatim caller/persona utterances go to Supabase (the governed store)
+  // always; this flag gates the stdout COPY, off by default so Railway logs
+  // aren't a shadow transcript corpus. Turn on locally to debug.
+  logTranscripts: process.env.LOG_TRANSCRIPTS === "true",
+
   // Optional server-VAD tuning for background-chatter sensitivity. Only sent to
   // the Realtime session when set, so the default is the API default (no change).
   // See the "turn-detection / background chatter" finding — tune empirically.

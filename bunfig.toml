@@ -1,0 +1,4 @@
+[test]
+# Deterministic env for the whole suite (see tests/setup.ts). Modules read
+# process.env at import time, so this must run before any test file loads.
+preload = ["./tests/setup.ts"]
