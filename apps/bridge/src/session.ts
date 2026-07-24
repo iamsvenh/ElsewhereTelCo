@@ -23,6 +23,7 @@ import {
   type PersonaOverride,
   type TranscriptEntry,
 } from "./db";
+import { releaseCall } from "./guards";
 
 const CALL_CAP_MS = 5 * 60_000; // hard cap (rule 4)
 const WRAP_NUDGE_MS = CALL_CAP_MS - 30_000; // "please deposit another coin" moment
@@ -73,9 +74,19 @@ export class CallSession {
   private latestMediaTimestamp = 0;
   private responseStartTimestamp: number | null = null;
   private lastAssistantItem: string | null = null;
+  // F29: one Twilio "mark" per audio chunk sent; the queue length tells us
+  // whether Twilio is STILL playing buffered assistant audio. response.done
+  // arrives while that buffer is draining, so this — not response.done — is
+  // what makes tail-of-turn barge-in flush correctly.
+  private markQueue: string[] = [];
+  private responseInProgress = false;
 
   // Logging / metrics
   private dbId: string | null = null;
+  // F30: keep the insert + recording promises so close() can await them —
+  // a fast hang-up must still finalize, and the recording_sid must still link.
+  private dbIdReady: Promise<string | null> = Promise.resolve(null);
+  private recordingReady: Promise<void> = Promise.resolve();
   private transcript: TranscriptEntry[] = [];
   private tokensIn = 0;
   private tokensOut = 0;
@@ -115,14 +126,15 @@ export class CallSession {
     this.wrapTimer = setTimeout(() => this.nudgeWrapUp(), WRAP_NUDGE_MS);
     this.capTimer = setTimeout(() => this.hitCap(), CALL_CAP_MS);
 
-    void insertCall({
+    this.dbIdReady = insertCall({
       called_number: this.calledNumber,
       caller_number: this.callerNumber,
       persona: persona.id,
       call_sid: this.callSid || null,
-    }).then((id) => (this.dbId = id));
+    });
+    this.dbIdReady.then((id) => (this.dbId = id)).catch(() => {});
 
-    if (env.recordCalls && this.callSid) void this.startRecording();
+    if (env.recordCalls && this.callSid) this.recordingReady = this.startRecording();
 
     // Resolve runtime config, then connect. On any failure fall back to
     // code defaults — config must never be able to kill a call.
@@ -215,6 +227,12 @@ export class CallSession {
     const reasoning = this.model.includes("realtime-2")
       ? { reasoning: { effort: "low" } }
       : {};
+    // server_vad, optionally tuned to ignore background chatter. Fields are
+    // added only when the env knob is set, so the default stays the API default.
+    const turnDetection: Record<string, unknown> = { type: "server_vad" };
+    if (env.vadThreshold != null) turnDetection.threshold = env.vadThreshold;
+    if (env.vadSilenceMs != null) turnDetection.silence_duration_ms = env.vadSilenceMs;
+    if (env.vadPrefixMs != null) turnDetection.prefix_padding_ms = env.vadPrefixMs;
     this.sendOpenAI({
       type: "session.update",
       session: {
@@ -226,7 +244,7 @@ export class CallSession {
           input: {
             format: { type: "audio/pcmu" },
             transcription: { model: env.transcribeModel },
-            turn_detection: { type: "server_vad" },
+            turn_detection: turnDetection,
           },
           output: {
             format: { type: "audio/pcmu" },
@@ -260,19 +278,32 @@ export class CallSession {
         if (this.responseStartTimestamp === null) {
           this.responseStartTimestamp = this.latestMediaTimestamp;
         }
+        this.responseInProgress = true;
         if (msg.item_id) this.lastAssistantItem = msg.item_id;
         this.sendTwilio({
           event: "media",
           streamSid: this.streamSid,
           media: { payload: msg.delta },
         });
+        // Mark this chunk so Twilio tells us when it finishes playing it.
+        this.sendTwilio({
+          event: "mark",
+          streamSid: this.streamSid,
+          mark: { name: "resp" },
+        });
+        this.markQueue.push("resp");
         break;
       }
 
-      // Caller barge-in: truncate what the model thinks it said to what the
-      // caller actually heard, and flush Twilio's buffered playback.
+      // Caller barge-in: only act if Twilio still has assistant audio queued
+      // (markQueue non-empty). This is what catches interruptions in the tail
+      // AFTER response.done, which the old response.done reset silently dropped.
       case "input_audio_buffer.speech_started": {
-        if (this.lastAssistantItem && this.responseStartTimestamp !== null) {
+        if (
+          this.markQueue.length > 0 &&
+          this.lastAssistantItem &&
+          this.responseStartTimestamp !== null
+        ) {
           const heardMs = Math.max(
             0,
             this.latestMediaTimestamp - this.responseStartTimestamp,
@@ -284,9 +315,10 @@ export class CallSession {
             audio_end_ms: heardMs,
           });
           this.sendTwilio({ event: "clear", streamSid: this.streamSid });
+          this.markQueue = [];
+          this.lastAssistantItem = null;
+          this.responseStartTimestamp = null;
         }
-        this.lastAssistantItem = null;
-        this.responseStartTimestamp = null;
         break;
       }
 
@@ -304,7 +336,10 @@ export class CallSession {
       }
 
       case "response.done": {
-        this.responseStartTimestamp = null;
+        // NOT responseStartTimestamp = null here — Twilio is still draining the
+        // buffer, and nulling it now is exactly what broke tail barge-in (F29).
+        // The bookkeeping resets when the last mark returns (see "mark" below).
+        this.responseInProgress = false;
         this.recordUsage(msg.response?.usage);
         break;
       }
@@ -370,11 +405,22 @@ export class CallSession {
         }
         break;
       }
+      case "mark": {
+        // Twilio finished playing one chunk. When the queue empties AND the
+        // response is fully sent, the turn has truly ended — reset the barge-in
+        // bookkeeping so the NEXT turn measures "heard" from its own start.
+        if (this.markQueue.length > 0) this.markQueue.shift();
+        if (this.markQueue.length === 0 && !this.responseInProgress) {
+          this.responseStartTimestamp = null;
+          this.lastAssistantItem = null;
+        }
+        break;
+      }
       case "stop": {
         this.close("caller-hangup");
         break;
       }
-      // "connected"/"mark" events: nothing to do.
+      // "connected" event: nothing to do.
     }
   }
 
@@ -405,6 +451,7 @@ export class CallSession {
     this.closed = true;
     clearTimeout(this.wrapTimer);
     clearTimeout(this.capTimer);
+    releaseCall(); // F33: free the concurrency slot
 
     const durationS = Math.round((Date.now() - this.startedAt) / 1000);
     const price = priceFor(this.model);
@@ -426,20 +473,27 @@ export class CallSession {
       this.twilio.close();
     } catch {}
 
-    if (this.dbId) {
-      void finalizeCall(this.dbId, {
-        ended_at: new Date().toISOString(),
-        duration_s: durationS,
-        completed: this.completed,
-        transcript: this.transcript,
-        tokens_in: this.tokensIn,
-        tokens_out: this.tokensOut,
-        cached_tokens: this.cachedTokens,
-        cost_estimate: Number(cost.toFixed(4)),
-        recording_sid: this.recordingSid,
-        model: this.model,
-      });
-    }
+    // F30: finalize even for calls that hang up before insertCall/startRecording
+    // resolve — await both so the row is completed and the recording is linked.
+    void this.finalize(durationS, Number(cost.toFixed(4)));
+  }
+
+  private async finalize(durationS: number, cost: number): Promise<void> {
+    const id = this.dbId ?? (await this.dbIdReady.catch(() => null));
+    if (!id) return;
+    await this.recordingReady.catch(() => {});
+    await finalizeCall(id, {
+      ended_at: new Date().toISOString(),
+      duration_s: durationS,
+      completed: this.completed,
+      transcript: this.transcript,
+      tokens_in: this.tokensIn,
+      tokens_out: this.tokensOut,
+      cached_tokens: this.cachedTokens,
+      cost_estimate: cost,
+      recording_sid: this.recordingSid,
+      model: this.model,
+    });
   }
 
   private sendOpenAI(obj: unknown): void {

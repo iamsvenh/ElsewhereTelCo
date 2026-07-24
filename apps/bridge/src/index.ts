@@ -18,12 +18,21 @@ import {
   setTeaserCallDetail,
   teaserStats,
 } from "./db";
+import { isValidTwilioRequest, isValidStreamToken, streamToken } from "./twilio-auth";
+import { admitCall, callSlotAvailable, acquireCall, activeCalls } from "./guards";
 import { join } from "node:path";
 
 assertRequiredEnv();
 
 function personaForNumber(to: string): string {
   return env.personaNumberMap[to] ?? env.defaultPersona;
+}
+
+/** Flatten a Twilio POST body into a plain record (also used for signature check). */
+async function formParams(req: Request): Promise<Record<string, string>> {
+  const p: Record<string, string> = {};
+  for (const [k, v] of (await req.formData()).entries()) p[k] = String(v);
+  return p;
 }
 
 function twiml(body: string): Response {
@@ -44,13 +53,16 @@ const server = Bun.serve<TwilioSocketData>({
       return ok ? undefined : new Response("Expected WebSocket upgrade", { status: 400 });
     }
 
-    // Twilio voice webhook. TODO before public launch: validate
-    // X-Twilio-Signature with TWILIO_AUTH_TOKEN.
+    // Twilio voice webhook (the persona line). F5: reject forged requests.
     if (url.pathname === "/incoming-call" && req.method === "POST") {
-      const form = await req.formData();
-      const from = String(form.get("From") ?? "unknown");
-      const to = String(form.get("To") ?? "unknown");
-      const callSid = String(form.get("CallSid") ?? "");
+      const params = await formParams(req);
+      if (!isValidTwilioRequest(req, url, params)) {
+        console.warn("[webhook] /incoming-call rejected: bad X-Twilio-Signature");
+        return new Response("Forbidden", { status: 403 });
+      }
+      const from = params.From ?? "unknown";
+      const to = params.To ?? "unknown";
+      const callSid = params.CallSid ?? "";
       const persona = personaForNumber(to);
       const host =
         env.publicHost ||
@@ -58,19 +70,35 @@ const server = Bun.serve<TwilioSocketData>({
         req.headers.get("host") ||
         url.host;
 
+      // F33: back off before opening a paid session if we're over a limit.
+      // In-fiction, a busy signal IS the rate limit (vision §8) — <Reject busy>.
+      if (!callSlotAvailable()) {
+        console.warn(`[guard] busy: ${activeCalls()} concurrent calls, refusing ${from}`);
+        return twiml(`\n  <Reject reason="busy" />`);
+      }
+      const deny = admitCall(from);
+      if (deny) {
+        console.warn(`[guard] ${deny}: refusing ${from}`);
+        return twiml(`\n  <Reject reason="busy" />`);
+      }
+
       console.log(`[webhook] incoming call to=${to} from=${from} -> persona=${persona}`);
-      return new Response(connectStreamTwiml({ host, persona, from, to, callSid }), {
-        headers: { "Content-Type": "text/xml" },
-      });
+      return new Response(
+        connectStreamTwiml({ host, persona, from, to, callSid, token: streamToken(callSid) }),
+        { headers: { "Content-Type": "text/xml" } },
+      );
     }
 
     // ---- Stage T: the teaser line (806) 666-1212 ----
     // Pure pre-recorded TwiML: zero AI cost. See docs/engineering/mvp-2-plan.md Stage T.
     if (url.pathname === "/teaser" && req.method === "POST") {
+      const params = await formParams(req);
+      if (!isValidTwilioRequest(req, url, params)) {
+        return new Response("Forbidden", { status: 403 });
+      }
       const host = env.publicHost || req.headers.get("host") || url.host;
-      const form = await req.formData();
-      const from = String(form.get("From") ?? "unknown");
-      const callSid = String(form.get("CallSid") ?? "");
+      const from = params.From ?? "unknown";
+      const callSid = params.CallSid ?? "";
       console.log(`[teaser] incoming call from=${from}`);
       void recordTeaserCall(callSid, from);
       // teaser.mp3 is the full produced master: ringback + real-phone pickup
@@ -89,10 +117,13 @@ const server = Bun.serve<TwilioSocketData>({
     }
 
     if (url.pathname === "/teaser-key" && req.method === "POST") {
-      const form = await req.formData();
-      const digit = String(form.get("Digits") ?? "");
-      const from = String(form.get("From") ?? "unknown");
-      const callSid = String(form.get("CallSid") ?? "");
+      const params = await formParams(req);
+      if (!isValidTwilioRequest(req, url, params)) {
+        return new Response("Forbidden", { status: 403 });
+      }
+      const digit = params.Digits ?? "";
+      const from = params.From ?? "unknown";
+      const callSid = params.CallSid ?? "";
       const host = env.publicHost || req.headers.get("host") || url.host;
       if (digit === "1") {
         void insertSignup(from);
@@ -123,10 +154,13 @@ const server = Bun.serve<TwilioSocketData>({
 
     // Twilio status callback (call completion) — carries CallDuration.
     if (url.pathname === "/teaser-status" && req.method === "POST") {
-      const form = await req.formData();
-      const callSid = String(form.get("CallSid") ?? "");
-      const duration = Number(form.get("CallDuration") ?? 0);
-      const status = String(form.get("CallStatus") ?? "");
+      const params = await formParams(req);
+      if (!isValidTwilioRequest(req, url, params)) {
+        return new Response("Forbidden", { status: 403 });
+      }
+      const callSid = params.CallSid ?? "";
+      const duration = Number(params.CallDuration ?? 0);
+      const status = params.CallStatus ?? "";
       console.log(`[teaser] call ${callSid} ${status} duration=${duration}s`);
       void setTeaserCallDetail(callSid, duration, status);
       return new Response("", { status: 204 });
@@ -185,6 +219,18 @@ const server = Bun.serve<TwilioSocketData>({
         const msg = JSON.parse(raw);
         if (msg.event === "start") {
           const p = msg.start?.customParameters ?? {};
+          // F5: only a stream minted by our own TwiML may open a paid session.
+          if (!isValidStreamToken(p.callSid ?? "", p.token ?? "")) {
+            console.warn("[ws] rejected media-stream: bad/missing token");
+            ws.close();
+            return;
+          }
+          // F33: hard concurrency ceiling on live sessions (defense in depth).
+          if (!callSlotAvailable()) {
+            console.warn(`[ws] rejected media-stream: at concurrency cap (${activeCalls()})`);
+            ws.close();
+            return;
+          }
           ws.data.session = new CallSession(ws, {
             streamSid: msg.start.streamSid,
             persona: p.persona ?? env.defaultPersona,
@@ -192,6 +238,7 @@ const server = Bun.serve<TwilioSocketData>({
             to: p.to ?? "unknown",
             callSid: p.callSid ?? "",
           });
+          acquireCall(); // released in CallSession.close()
         }
       } catch (err) {
         console.error("[ws] failed to handle pre-session frame:", err);

@@ -21,6 +21,8 @@ export function connectStreamTwiml(params: {
   from: string;
   to: string;
   callSid: string;
+  /** F5: HMAC token the /media-stream handler checks before opening a session. */
+  token: string;
 }): string {
   const url = escapeXml(`wss://${params.host}/media-stream`);
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -31,6 +33,7 @@ export function connectStreamTwiml(params: {
       <Parameter name="from" value="${escapeXml(params.from)}" />
       <Parameter name="to" value="${escapeXml(params.to)}" />
       <Parameter name="callSid" value="${escapeXml(params.callSid)}" />
+      <Parameter name="token" value="${escapeXml(params.token)}" />
     </Stream>
   </Connect>
 </Response>`;

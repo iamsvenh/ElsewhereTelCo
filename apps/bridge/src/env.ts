@@ -30,16 +30,36 @@ export const env = {
 
   publicHost: process.env.PUBLIC_HOST ?? "",
 
+  // F5: reject forged Twilio webhooks + unauthorized /media-stream sockets.
+  // Keyed on TWILIO_AUTH_TOKEN (already set), so it's live with no new secrets.
+  // Set TWILIO_VALIDATE=false only to debug a signature mismatch on a live line.
+  validateTwilio: process.env.TWILIO_VALIDATE !== "false",
+
+  // F33: in-memory runaway/abuse backstops (the $25/mo cap is not instantaneous).
+  // Generous defaults — a circuit breaker, not billing; reset on restart.
+  maxConcurrentCalls: Number(process.env.MAX_CONCURRENT_CALLS ?? 8),
+  maxCallsPerDay: Number(process.env.MAX_CALLS_PER_DAY ?? 100),
+  maxCallsPerCallerPerWindow: Number(process.env.MAX_CALLS_PER_CALLER ?? 4),
+  callerWindowMs: Number(process.env.CALLER_WINDOW_MS ?? 15 * 60_000),
+
+  // Optional server-VAD tuning for background-chatter sensitivity. Only sent to
+  // the Realtime session when set, so the default is the API default (no change).
+  // See the "turn-detection / background chatter" finding — tune empirically.
+  vadThreshold: process.env.VAD_THRESHOLD ? Number(process.env.VAD_THRESHOLD) : null,
+  vadSilenceMs: process.env.VAD_SILENCE_MS ? Number(process.env.VAD_SILENCE_MS) : null,
+  vadPrefixMs: process.env.VAD_PREFIX_MS ? Number(process.env.VAD_PREFIX_MS) : null,
+
   // Dual-channel Twilio call recording for persona/voice analysis.
   // RATIFIED ON for the seed phase (2026-07-24) — supersedes concept.md §8
   // "default off" while callers are all personally-invited testers and
   // recordings are used only internally to verify the system works.
   // This ratification EXPIRES at the first of: a caller not on the seed list,
   // the community/Artizen post, unsolicited press, payment, or hardware in a
-  // venue. Before that trigger, ship the TwiML "recorded" pre-roll so notice
-  // precedes capture (RECORD_CALLS=false is NOT the fix — the live transcript
-  // + audio relay to OpenAI are the interception surface). See tracker A + the
-  // 2026-07-24 review adjudication addendum.
+  // venue. The disclosure that precedes capture is DELIBERATELY in-fiction (not
+  // a generic pre-roll — Sven, 2026-07-24): it becomes the Operator's in-
+  // character cold-open line when the switchboard ships. (RECORD_CALLS=false is
+  // NOT the mitigation — the live transcript + audio relay to OpenAI are the
+  // interception surface.) See tracker A + the 2026-07-24 review addendum.
   recordCalls: process.env.RECORD_CALLS === "true",
 };
 
