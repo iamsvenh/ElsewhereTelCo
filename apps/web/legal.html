@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Fine Print · Elsewhere Telephone Company</title>
+<meta name="description" content="Tariffs, terms, and disclosures of the Elsewhere Exchange." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400;1,500;1,700&family=Special+Elite&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0c0b0d;
+    --cream: #f2ead8;
+    --dim: #9a8f77;
+    --chrome: #cfc9bb;
+    --neon: #ff7a3c;
+    --neon-soft: #ffb27a;
+    --line: rgba(242,234,216,0.16);
+    --memo: rgba(242,234,216,0.035);
+
+    --canvas: 70rem;
+    --measure: 46rem;
+
+    --t-display: clamp(3.6rem, 8vw, 7rem);
+    --t-h2:      clamp(1.7rem, 3.2vw, 2.4rem);
+    --t-lead:    clamp(1.5rem, 2.8vw, 2.2rem);
+    --t-body:    clamp(1.12rem, 1.4vw, 1.3rem);
+    --t-label:   clamp(0.78rem, 1.1vw, 0.86rem);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 42% at 50% 0%, rgba(255,122,60,0.10), transparent 58%),
+      var(--bg);
+    color: var(--cream);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    padding: clamp(3rem, 6vw, 5.5rem) clamp(1.4rem, 5vw, 3rem) 5rem;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
+    mix-blend-mode: overlay; opacity: 0.5; z-index: 2;
+  }
+  .page { width: 100%; max-width: var(--canvas); margin: 0 auto; position: relative; z-index: 3; }
+  .measure { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+
+  .masthead { text-align: center; margin-bottom: clamp(3rem, 7vw, 4.5rem); }
+  .seal {
+    width: clamp(7.5rem, 15vw, 10.5rem); height: auto; display: block; margin: 0 auto 1.8rem;
+    filter: drop-shadow(0 0 12px rgba(255,122,60,0.28));
+  }
+  .masthead h1 {
+    font-weight: 900; font-size: var(--t-display);
+    letter-spacing: -0.015em; line-height: 0.95; margin-bottom: 1.1rem;
+  }
+  .edition {
+    font-family: 'Special Elite', monospace;
+    font-size: var(--t-label); letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .head { display: flex; align-items: center; gap: 1.1rem; margin: clamp(3.5rem, 7vw, 5.5rem) 0 clamp(1.6rem, 3vw, 2.4rem); }
+  .head .label {
+    flex: none; font-family: 'Special Elite', monospace;
+    font-size: var(--t-label); letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--neon-soft);
+    border: 1px solid var(--line); padding: 0.55em 1.1em 0.5em; border-radius: 4px;
+    background: rgba(255,122,60,0.05);
+  }
+  .head .rule { flex: 1; height: 1px; background: var(--line); }
+
+  .opener { text-align: center; }
+  .opener p { font-style: italic; font-size: var(--t-lead); line-height: 1.6; color: var(--cream); }
+  .opener .glow { color: var(--neon-soft); text-shadow: 0 0 22px rgba(255,122,60,0.4); font-style: italic; }
+
+  /* honest, plain-language block — this one does real work, so it reads plainly */
+  .memo {
+    font-family: 'Special Elite', monospace;
+    font-size: clamp(1rem, 1.3vw, 1.16rem); line-height: 1.9;
+    color: var(--chrome);
+    background: var(--memo);
+    border-left: 3px solid rgba(255,122,60,0.45);
+    padding: clamp(1.6rem, 4vw, 2.4rem) clamp(1.4rem, 4vw, 2.6rem);
+    border-radius: 0 5px 5px 0;
+  }
+  .memo p + p { margin-top: 1.1rem; }
+  .memo h3 {
+    font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1rem, 1.4vw, 1.18rem); letter-spacing: 0.06em; color: var(--neon-soft);
+    margin: 1.8rem 0 0.6rem;
+  }
+  .memo h3:first-child { margin-top: 0; }
+  .memo ul { list-style: none; margin: 0.4rem 0 0; }
+  .memo li { position: relative; padding-left: 1.4rem; margin-bottom: 0.55rem; }
+  .memo li::before { content: "\2013"; position: absolute; left: 0; color: var(--neon-soft); }
+  .memo a { color: var(--neon-soft); text-decoration: none; border-bottom: 1px dotted rgba(255,178,122,0.5); }
+  .memo a:hover { color: #fff; border-bottom-color: #fff; }
+  .memo strong { color: var(--cream); font-weight: 400; }
+  .memo .sign { margin-top: 1.6rem; color: var(--dim); letter-spacing: 0.12em; }
+  .effective {
+    text-align: center; font-family: 'Special Elite', monospace;
+    font-size: var(--t-label); letter-spacing: 0.14em; color: var(--dim); margin-top: 1rem;
+  }
+
+  footer {
+    margin-top: clamp(4rem, 9vw, 6rem); padding-top: 2.2rem; border-top: 1px solid var(--line);
+    text-align: center; font-family: 'Special Elite', monospace;
+    color: var(--dim); font-size: 0.82rem; line-height: 2.1; letter-spacing: 0.05em;
+  }
+  footer a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted rgba(154,143,119,0.5); }
+  footer a:hover { color: var(--chrome); border-bottom-color: var(--chrome); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <img class="seal" src="logo-seal.svg" alt="Elsewhere Telephone Company" />
+    <h1>The Fine Print</h1>
+    <p class="edition">Tariffs, terms &amp; disclosures · first edition · subject to revision</p>
+  </header>
+
+  <section class="opener measure">
+    <p>
+      The Management records all calls. It always has. The word we are obliged
+      to use is <span class="glow">quality assurance.</span>
+    </p>
+  </section>
+
+  <div class="head"><span class="label">Plainly, out of character</span><span class="rule"></span></div>
+  <section class="memo measure">
+    <p>The rest of this company speaks in character. This page does not. Here is
+      exactly what happens when you call, in plain words.</p>
+
+    <h3>Who runs this</h3>
+    <p>Elsewhere Telephone Co. is a small interactive-fiction project. The voices
+      you reach are <strong>AI personas</strong> — not real people, not a real
+      afterlife, and not a helpline. It is entertainment.</p>
+
+    <h3>What we collect when you call</h3>
+    <ul>
+      <li>Your <strong>phone number</strong> (from caller ID), which is how a returning caller is recognized.</li>
+      <li>A <strong>recording</strong> of the call, both sides.</li>
+      <li>A <strong>text transcript</strong> of what was said.</li>
+    </ul>
+
+    <h3>What we do with it</h3>
+    <p>Right now, one thing only: <strong>we listen back ourselves to make the
+      personas better and check the system works.</strong> We do not sell it,
+      share it, train outside models on it, or publish any recording. We will
+      never make a call public without asking you first, on that specific call.</p>
+
+    <h3>How long we keep it, and getting it deleted</h3>
+    <p>We keep recordings and transcripts while we are building. If you want yours
+      deleted, email the address below from (or naming) the number you called
+      from, and we will remove it. No account, no forms.</p>
+
+    <h3>The rules of the line</h3>
+    <ul>
+      <li><strong>You must be 18 or older</strong> to call.</li>
+      <li>Don't share real personal data over the line — no SSNs, no card numbers, no addresses. The personas are told to refuse it.</li>
+      <li>Calls are capped at five minutes. Rates from your own carrier may apply; we don't charge you.</li>
+      <li>It's fiction and comedy. Nothing said on the line is medical, legal, financial, or safety advice. If you're in real distress, please contact a real service in your area.</li>
+      <li>We may change, pause, or withdraw any line at any time, and update this page as the project grows.</li>
+    </ul>
+
+    <h3>Reaching a human</h3>
+    <p>Questions, deletions, or anything else: <a href="mailto:hello@elsewheretel.co">hello@elsewheretel.co</a>.</p>
+
+    <p class="sign">— The management (a person, named Sven)</p>
+    <p class="effective">Effective 2026-07-24 · subject to revision</p>
+  </section>
+
+  <footer>
+    Rates apply. Calls may be monitored for quality assurance.<br />
+    The company is not responsible for what you hear. &nbsp;·&nbsp;
+    <a href="/">elsewheretel.co</a> &nbsp;·&nbsp; <a href="/directory">Directory</a><br />
+    First edition · subject to revision · est. 1666
+  </footer>
+
+</div>
+</body>
+</html>

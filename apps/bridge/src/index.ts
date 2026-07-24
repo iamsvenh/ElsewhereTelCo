@@ -147,6 +147,14 @@ const server = Bun.serve<TwilioSocketData>({
         headers: { "Content-Type": "text/html; charset=utf-8" },
       });
     }
+    // /legal, /privacy, /terms — the plain-language recording/AI disclosures +
+    // terms, in the two-voice style (fiction frame + honest section). One page,
+    // three routes so any footer/link target resolves. Discoverable pre-call.
+    if (["/legal", "/privacy", "/terms", "/legal.html"].includes(url.pathname)) {
+      return new Response(Bun.file(join(webDir, "legal.html")), {
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
+    }
     // favicon.svg/.ico/.png, apple-touch-icon.png — allowlisted static files.
     const staticAsset = url.pathname.slice(1);
     if (/^(favicon(-16|-32)?\.(svg|png|ico)|apple-touch-icon\.png|logo-seal\.svg)$/.test(staticAsset)) {
