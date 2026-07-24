@@ -92,7 +92,11 @@ Moving the live board from `tracker.md` to Linear. **One team** (`elsewhere`, al
 - **Ticket hygiene** is enforced by the `ticket-spec` + `ticket-verification` skills (spec-first, tests-first; a manual dev/prod call check for live-voice tickets).
 - **Access:** the `linear-server` MCP (Linear's hosted server) added per-project — `claude mcp add linear-server https://mcp.linear.app/mcp --transport http`, then restart.
 
-**Status:** structure + migration pending the MCP being wired. Until then `tracker.md` stays the live board; on migration its **open** items move to Linear and its **done** items stay as history in git.
+**Status: MIGRATED 2026-07-24.** Labels, projects, and all open tracker items are live in the Elsewhere team as ETC-1…ETC-25 (`tracker.md` is frozen history and carries the item→ticket map). Notes from the build:
+
+- Labels are Linear **label groups** scoped to the Elsewhere team (`area`, `world`, `type`) + standalone `needs:sven`. Two children are named `type:bug`/`type:feature` because workspace-level `Bug`/`Feature` labels (Borker era) reserve the plain names — rename to `bug`/`feature` if those workspace labels ever retire.
+- `needs:sven` issues are also assigned to Sven, so "My Issues" doubles as the decision queue.
+- **Views can't be created via the MCP** — create once in the UI: *Open for Sven* (label `needs:sven`, state ≠ Done/Canceled) · *Engineering*/*Creative*/*Production* (filter by `area` child) · *By world* (all issues, group by the `world` label group). Project boards come free with the projects. *Current cycle* needs cycles enabled in team settings first.
 
 ## Not doing yet (deliberately)
 
