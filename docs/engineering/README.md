@@ -9,4 +9,10 @@ The infra/ops and MVP-build workstreams. The always-on Bun bridge, the stack, th
 | **[mvp-2-plan.md](mvp-2-plan.md)** | The staged build plan toward World One (the Underworld). Each stage is call-testable, has a metric and a scope fence. The existing stack carries everything; nothing gets rebuilt. |
 | **[switchboard-v0.md](switchboard-v0.md)** | Work package: turn the single-option teaser line into a branching, instrumented, LLM-free **switchboard** (the prototype of the eventual real switchboard). Menu design, SMS/A2P compliance, the KPI/event-log model, production checklist, cost, and open decisions. Synthesized from three research legs. |
 
+## Subfolders
+
+| Folder | What it is |
+| ------ | ---------- |
+| **[production-tools/](production-tools/)** | The internal production systems: the content source-of-truth graph model + the production map over it. Design/recommendation docs. |
+
 See also: `../../CLAUDE.md` (stack decisions), the running code under `apps/` and `packages/`, and the schema under `supabase/`.

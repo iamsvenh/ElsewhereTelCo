@@ -1,0 +1,9 @@
+# engineering/production-tools/ — the internal production systems
+
+Design for the tooling that lets us (the production team of two) author, map, and stay-consistent across Elsewhere's growing content: worlds, personas, scripts, and production assets. As this grows it will likely hold several docs (the graph/source-of-truth model, the map/editor, the asset pipeline).
+
+| Doc | What it is |
+| --- | ---------- |
+| **[world-graph.md](world-graph.md)** | The content **source-of-truth** model (worlds / nodes / edges + the `node_config` runtime overlay) and the **production map** over it. Research-backed recommendation: git-first structured graph + a read-only map now, a full visual editor deferred behind explicit triggers. Includes the schema and a phased plan. |
+
+**Scope note (Sven's open question):** this folder is the *tooling/systems* design. The per-asset **production records** (how a specific piece of audio got made) currently live with their world — e.g. `world/switchboard/teaser-audio-production.md`. If the audio-production *pipeline itself* grows its own methodology docs, we'll decide then whether "production" (the making) wants a home separate from "production-tools" (the systems). Not split yet.
