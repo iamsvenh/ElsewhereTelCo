@@ -24,7 +24,7 @@ When a friend calls and comes back confused-but-intrigued (the intended reaction
 
 > Ha, that's the correct reaction 🖤
 >
-> Real version: it's Elsewhere Telephone Co., an interactive fiction company where the medium is the telephone. You call a number and it connects you somewhere. To a place, and to whoever lives there. First world I'm building is the Underworld (yeah, you'll be able to call the Devil). Eventually a whole universe you explore by voice, through old phones.
+> Real version: it's Elsewhere Telephone Co., an interactive fiction company where the medium is the telephone. You call a number and it connects you somewhere. To a place, and to whoever lives there. First world I'm building is the Underworld (yeah, you'll be able to call the Devil). Eventually a whole universe you explore by voice, one call at a time.
 >
 > The number you called is just the switchboard taking names while I build the rest. Peek if you want: elsewheretel.co
 >

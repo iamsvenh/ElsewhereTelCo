@@ -43,7 +43,7 @@
     background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
     mix-blend-mode: overlay; opacity: 0.6; z-index: 2;
   }
-  header, main, footer { width: 100%; max-width: 44rem; z-index: 3; }
+  header, main, footer { width: 100%; max-width: 50rem; z-index: 3; }
 
   /* ---- seal logo ---- */
   header { display: flex; justify-content: center; }
@@ -59,20 +59,20 @@
   .tagline {
     font-style: italic;
     font-weight: 500;
-    font-size: clamp(1.25rem, 5vw, 1.9rem);
-    line-height: 1.5;
-    margin-bottom: clamp(2.4rem, 8vw, 3.6rem);
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    line-height: 1.45;
+    margin-bottom: clamp(2.6rem, 8vw, 3.8rem);
     color: var(--cream);
   }
   .tagline em { font-style: italic; color: var(--neon-soft); text-shadow: 0 0 18px rgba(255,122,60,0.35); }
 
   .cta-label {
     font-family: 'Special Elite', monospace;
-    font-size: clamp(0.72rem, 2.6vw, 0.9rem);
+    font-size: clamp(0.8rem, 2.6vw, 1rem);
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--dim);
-    margin-bottom: 1.1rem;
+    margin-bottom: 1.25rem;
   }
 
   .number {
@@ -80,7 +80,7 @@
     width: fit-content; margin: 0 auto;
     font-family: 'Oswald', 'Arial Narrow', sans-serif;
     font-weight: 600;
-    font-size: clamp(2.4rem, 11vw, 4.6rem);
+    font-size: clamp(2.4rem, 11vw, 5.2rem);
     letter-spacing: 0.03em;
     color: var(--neon-soft);
     text-decoration: none;
@@ -104,10 +104,10 @@
 
   /* status line — FIXED height so rotating copy never shifts layout */
   .callhint {
-    margin-top: 1.4rem;
+    margin-top: 1.6rem;
     min-height: 1.4em;
     font-family: 'Special Elite', monospace;
-    font-size: 0.82rem;
+    font-size: 0.94rem;
     letter-spacing: 0.14em;
     color: var(--dim);
   }
@@ -116,7 +116,7 @@
   /* ---- footer ---- */
   footer {
     font-family: 'Special Elite', monospace;
-    color: var(--dim); font-size: 0.72rem; line-height: 2; padding-top: 2.5rem;
+    color: var(--dim); font-size: 0.82rem; line-height: 2.1; padding-top: 2.5rem;
   }
   footer .rule { width: 46px; height: 1px; background: var(--line); margin: 0 auto 1.2rem; }
   footer a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted rgba(154,143,119,0.5); cursor: pointer; }
