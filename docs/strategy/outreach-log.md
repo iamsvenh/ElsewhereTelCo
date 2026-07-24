@@ -30,8 +30,18 @@ When a friend calls and comes back confused-but-intrigued (the intended reaction
 >
 > Dead early still, but I'm a little obsessed. What did it actually make you feel?
 
+### Devil-line hand-off (engaged friends only)
+
+For friends who clearly bit and want more. Hands over the live Devil line (505) 551-3551 with heavy expectation-setting (rough draft, shallow persona, testing) so a thin first impression reads as "help me test" not "this is the product." **Send only to engaged friends** — live calls cost AI budget (unlike the teaser), keep it small. Consistent with the informed-seed-tester stance (recording on; crisis guardrails still deferred → this circle only). Feedback ask targets the cold open (first 10s = the product) and engagement (keep talking vs. hang up) — the signals the Devil rebuild needs.
+
+> Okay, you're clearly a little bit in 😈 Want to actually talk to someone in there? Direct line to the Devil himself:
+>
+> ☎ (505) 551-3551
+>
+> Big caveat: this one's held together with duct tape right now. His personality is still paper-thin and he might repeat himself or lose the thread. I'm rebuilding him properly next, so don't judge the depth. What I actually need to know: did the first 10-20 seconds land? Did you want to keep talking, or reach for the hook? That's the gold. 🖤
+
 Notable friend reactions (aggregate, not per-send):
-- **2026-07-23** — first friend sent the 1:1 DM: called the line, replied "Not sure what I just signed up for...." → intrigued/playful bewilderment, the intended reaction. Sent the reveal reply above.
+- **2026-07-23** — first friend sent the 1:1 DM: called the teaser line twice (full 67s listens), replied "Not sure what I just signed up for...." → engaged/intrigued but did NOT press 1 (no signup). "Signed up" was idiomatic. Sent the reveal reply. Watch: is the in-audio press-1 CTA landing?
 
 ---
 
