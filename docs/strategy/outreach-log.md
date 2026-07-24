@@ -18,7 +18,20 @@ Personalize `[name]`, and ideally add one line specific to that friend before th
 >
 > Would really love your read on it. 🖤
 
-Notable friend reactions (aggregate, not per-send): _
+### Follow-up reply — the "wait, what is this?" reveal
+
+When a friend calls and comes back confused-but-intrigued (the intended reaction), this pulls the curtain back a little: what it is, the plan, the link. Reveals the Underworld/Devil — fine for a friend who gave you their attention; the mystery is for the public surface. Deliberately ends on *their reaction*, not a share ask (unprompted sharing is the Stage-0 metric; don't prompt it).
+
+> Ha, that's the correct reaction 🖤
+>
+> Real version: it's Elsewhere Telephone Co., an interactive fiction company where the medium is the telephone. You call a number and it connects you somewhere. To a place, and to whoever lives there. First world I'm building is the Underworld (yeah, you'll be able to call the Devil). Eventually a whole universe you explore by voice, through old phones.
+>
+> The number you called is just the switchboard taking names while I build the rest. Peek if you want: elsewheretel.co
+>
+> Dead early still, but I'm a little obsessed. What did it actually make you feel?
+
+Notable friend reactions (aggregate, not per-send):
+- **2026-07-23** — first friend sent the 1:1 DM: called the line, replied "Not sure what I just signed up for...." → intrigued/playful bewilderment, the intended reaction. Sent the reveal reply above.
 
 ---
 
