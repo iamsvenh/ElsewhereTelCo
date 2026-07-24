@@ -23,20 +23,20 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 ## B. Strategy & concept
 The vision, positioning, business model, pitch. Mostly docs.
 
-- 🟢 Vision doc complete (`vision-world-company.md`) — world company, districts, ontology, production layers, economics
+- 🟢 **Vision v2 RATIFIED** (`vision-world-company.md`) — redlines resolved 2026-07-23. Terminology locked (Elsewhere/Exchange/Management/world/line/**Resident**/subscriber/Ledger/back-channel); Management = authorial mask + diegetic changelog; surveillance/observe-don't-lecture theme; cross-district shared timeline core; staged guardrails (call = unit of delivery not story); reachable vs referenced cast; feeling-first cost spectrum w/ characterized latency; phone-number identity (claim codes retired); knowledge-as-save-state; back-channel (async world→subscriber); two-channel diegetic marketing; hardware phones = dedicated physical object; Phreak district = future candidate
 - 🟢 World One locked: the Underworld
 - 🟢 Pitch drafted (one-liner / 30s / 90s) — tested informally, "good"
-- 🔴 **Vision redlines** (`vision-world-company.md` §8): Management cosmology · Mrs. Devil · terminology table · in-world name for the Underworld exchange — still open, gates all canon/Devil work
 - ⚪ Artizen framing (art-drop launch, funding, AR/VR collaborators) — later
 
 ## C. MVP build (World One)
 Per `mvp-2-plan.md`. The actual product.
 
 - 🟢 Runtime persona config (3 levers: model / voice / personality) — DB-driven, no redeploy
-- 🟡 Stage 2.0a — **Devil rebuilt**: canon v1 + Devil bible + mechanics (opener kit, silence timer, day-mood). BLOCKED on vision redlines (canon needs the cosmology decision)
-- ⚪ Stage 2.0b — Subscribers (identity: caller-ID + claim codes + memory)
+- 🟡 Stage 2.0a — **Devil rebuilt**: canon v1 + Devil bible + mechanics (opener kit, silence timer, day-mood). UNBLOCKED (vision v2 ratified) — next work block
+- ⚪ Stage 2.0b — Subscribers (identity = **phone number** + PIN on shared devices; per-district memory. NO claim codes)
 - ⚪ Stage 2.0c — First overworld pieces (one IVR, one voicemail box, one secret extension)
 - ⚪ Stage 2.0d — Launch surfaces (landing page, Yellow Pages v0)
+- ⚪ Back-channel (async world→subscriber: text/voicemail/callback) — consent-gated (A2P/TCPA), lands w/ 2.1
 
 ## D. Persona & world writing
 The IP: prompts, canon, lore, the transcript flywheel.
@@ -45,16 +45,15 @@ The IP: prompts, canon, lore, the transcript flywheel.
 - 🟢 Devil dark-bait deflection added
 - 🟢 **Teaser SHIPPED (final production)** — ElevenLabs "Elsewhere Operator" (smoky-2 Voice Design) reading v2 script, over living-switchboard bed (eerie drone + chatter + laugh + weep + dial tone), intro'd by real vintage-phone pickup foley (Sven's recording) + synth ringback. Mixed in Audacity by Sven, telephone-mastered. confirm + goodbye also in operator voice. Live on (806) 666-1212
 - 🟢 Teaser script DECIDED v2 — depth pass: elsewhere-as-universe, agency, scale, ambience
-- 🟡 Devil bible — waiting on canon (see 2.0a)
-- ⚪ Canon v1 (`canon.md`) — postcard: Exchange, Management, Devil personnel file — waiting on redlines
-- ⚪ Weekly transcript-review loop (lore harvest → ratify → canon)
+- 🟡 Devil bible — UNBLOCKED (vision v2 ratified). Core/registers/mood; resolve reachable-cast roster (secretary? notary?) here; Mrs. Devil stays an undefined slot
+- ⚪ Canon v1 (`canon.md`) — postcard: Exchange, Management, Devil personnel file. Structured entries w/ causal-link fields from entry #1 (markdown until ~50 entries)
+- ⚪ Weekly transcript-review loop (lore harvest → thin-wall detection → ratify → canon)
 
 ---
 
 ## Open for Sven (consolidated decision queue)
-1. **Landing page** — approve the proposed approach (see below / chat), then I build
-2. **Vision redlines:** Management cosmology · Mrs. Devil · terminology · Underworld exchange name — unblocks ALL canon/Devil-bible work
-3. **Send the teaser** — text (806) 666-1212 to a few people, watch `/teaser-stats` (the pitch test)
+1. **Send the teaser** — text (806) 666-1212 to a few people, watch `/teaser-stats` (the pitch test)
+2. **World One kickoff** — greenlight starting the Devil bible + canon v1 (vision v2 ratified; next work block)
 
 ## Cadence
 Commit per change set; push in intervals; this tracker updated each working session. Real hygiene (branches/CI/PRs) when we exit prototype phase.
