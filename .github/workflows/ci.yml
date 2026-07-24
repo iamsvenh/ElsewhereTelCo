@@ -1,19 +1,19 @@
-name: CI — typecheck & test
+name: CI — typecheck, lint & test
 
+# PR gate. Pushes to main are handled by deploy.yml (which re-runs check before
+# deploying), so we don't double-run here.
 on:
-  push:
-    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
+    branches: [main]
 
-# Cancel a superseded run when a newer commit lands on the same ref.
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
   check:
-    name: typecheck + test
+    name: typecheck + lint + format + test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,8 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # typecheck + lint + unit + integration. The integration layer boots the
-      # bridge in a hermetic cwd (no .env, no Supabase) — no external services.
+      # typecheck + eslint + prettier --check + unit + integration. The
+      # integration layer boots the bridge in a hermetic cwd (no .env, no
+      # Supabase) — no external services, no spend.
       - name: Check
         run: bun run check

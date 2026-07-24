@@ -29,7 +29,9 @@ Single source of truth: `.env.example` at repo root. Local dev reads `.env` (run
 
 ## Day-2 operations
 
-- **Deploy:** `railway up` from repo root.
+> **Deploy is now CD (2026-07-24).** Merges to `main` auto-deploy via GitHub Actions (`deploy.yml`: check → migrate → `railway up`). Local dev runs against **local** Supabase + a tunnel + a dev number — see [dev-workflow.md](dev-workflow.md). Manual `railway up` below is the break-glass fallback.
+
+- **Deploy (fallback):** `railway up` from repo root.
 - **Logs:** `railway logs`, or the Railway dashboard. Watch for `[usage] CACHE FAILURE?` warnings (rule 8).
 - **Transcripts:** Supabase Studio → `calls` table.
 - **New migration:** add `supabase/migrations/<timestamp>_<name>.sql` → `supabase db push`.

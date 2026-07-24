@@ -7,6 +7,11 @@
   ],
   "scripts": {
     "dev": "bun run --watch apps/bridge/src/index.ts",
+    "dev:all": "bun run scripts/dev-all.ts",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:status": "supabase status",
+    "db:reset": "supabase db reset",
     "start": "bun run apps/bridge/src/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
