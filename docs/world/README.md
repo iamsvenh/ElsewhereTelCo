@@ -18,7 +18,7 @@ The persona & world-writing workstream. The prompts are the IP; this is where th
 | Folder | World | Status |
 | ------ | ----- | ------ |
 | **[switchboard/](switchboard/)** | The Switchboard — World Zero (the hub, the Operator, the teaser) | 🔨 designed, build pending |
-| _(future)_ underworld/ | The Underworld — the Devil bible + Underworld canon | 🟡 canon v1 in redline; bible next |
+| **[underworld/](underworld/)** | The Underworld — World One. The Devil's visual aesthetic (locked) + poster series; the Devil bible lands here | 🟡 visual locked; canon v1 in redline; bible next |
 
 New worlds get a folder here as they graduate from a seed in `worlds.md` into real design.
 

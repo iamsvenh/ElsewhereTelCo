@@ -57,6 +57,7 @@ Per `engineering/mvp-2-plan.md`. The actual product.
 The IP: prompts, canon, lore, the transcript flywheel.
 
 - 🟢 Persona format + 4 stubs; design process v1; design notes (calls 1-3)
+- 🟢 **Devil visual aesthetic LOCKED** (`world/underworld/devil-visual-aesthetic.md`) — the weary amber-lit mid-century clerk with the horned shadow (human, sinister-charming, not a cartoon devil). Derived a style guide + kept the "Call Me Maybe" poster series (v1-v3, v3=hero) and the exact reproduction prompts, all version-controlled. New `world/underworld/` folder seeded (World One)
 - 🟢 Devil dark-bait deflection added
 - 🟢 **Teaser SHIPPED (final production)** — ElevenLabs "Elsewhere Operator" (smoky-2 Voice Design) reading v2 script, over living-switchboard bed (eerie drone + chatter + laugh + weep + dial tone), intro'd by real vintage-phone pickup foley (Sven's recording) + synth ringback. Mixed in Audacity by Sven, telephone-mastered. confirm + goodbye also in operator voice. Live on (806) 666-1212
 - 🟢 Teaser script DECIDED v2 — depth pass: elsewhere-as-universe, agency, scale, ambience
