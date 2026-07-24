@@ -38,6 +38,8 @@ The lineage is ilovebees / Cicada 3301 (vision §12): the fiction leaks into rea
 
 The uncanny 60-second **video** (fundraising §3) is the shared asset across the investor and partner decks — voice-only doesn't pitch on a static slide.
 
+Every deliberate push into one of these channels gets logged in **[outreach-log.md](outreach-log.md)** — exact copy, intent, and the `/teaser-stats` window after — so each send teaches us something instead of vanishing.
+
 ## 5. Discipline gate
 
 From the vision: **build the announcement pipe (cheap, we have it); don't build a marketing machine before the sharing signal exists. Leak, don't spray.** The decks and the traction plan are cheap to *prepare* now and worth having ready — but the *splash* fires after the call is proven fun and shared, not before. Preparing ≠ launching.

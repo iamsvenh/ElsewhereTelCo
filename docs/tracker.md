@@ -27,6 +27,8 @@ The vision, positioning, business model, pitch. Mostly docs.
 - 🟢 **Business model + economics** captured (`strategy/business-model.md`) — revenue streams, pricing fiction, unit economics; **in-lore native sponsorship** idea recorded (the Devil shills Pepsi, resents it)
 - 🟢 **Fundraising** captured (`strategy/fundraising.md`) — media-company thesis, Gimlet-lineage comps + strategic-partner/investor angle, raise-on-retention, timing
 - 🟢 **Go-to-market** captured (`strategy/go-to-market.md`) — mystery-as-marketing, the (806) line as the pipe, channels, the 3 pitch decks (public/investor/partner), discipline gate
+- 🔴 **Artizen Telegram teaser** — draft ready (`strategy/outreach-log.md`), framed light for the Renee/investor optic. Sven to send, then log `/teaser-stats` + feedback. First non-seed audience test
+- 🟢 Outreach log started (`strategy/outreach-log.md`) — track every community push + results
 - 🟢 **Vision v2 RATIFIED** (`strategy/vision-world-company.md`) — redlines resolved 2026-07-23. Terminology locked (Elsewhere/Exchange/Management/world/line/**Resident**/subscriber/Ledger/back-channel); Management = authorial mask + diegetic changelog; surveillance/observe-don't-lecture theme; cross-district shared timeline core; staged guardrails (call = unit of delivery not story); reachable vs referenced cast; feeling-first cost spectrum w/ characterized latency; phone-number identity (claim codes retired); knowledge-as-save-state; back-channel (async world→subscriber); two-channel diegetic marketing; hardware phones = dedicated physical object; Phreak district = future candidate
 - 🟢 World One locked: the Underworld
 - 🟢 Pitch drafted (one-liner / 30s / 90s) — tested informally, "good"
@@ -56,8 +58,9 @@ The IP: prompts, canon, lore, the transcript flywheel.
 ---
 
 ## Open for Sven (consolidated decision queue)
-1. **Send the teaser** — text (806) 666-1212 to a few people, watch `/teaser-stats` (the pitch test)
-2. **World One kickoff** — greenlight starting the Devil bible + canon v1 (vision v2 ratified; next work block)
+1. **Send the Artizen teaser** — approve/tweak the draft (`strategy/outreach-log.md`) and post to the Artizen Telegram; then log results. First non-seed audience test
+2. **Send to friends too** — text (806) 666-1212 to a few people, watch `/teaser-stats` (the pitch test)
+3. **World One kickoff** — greenlight starting the Devil bible + canon v1 (vision v2 ratified; next work block)
 
 ## Cadence
 Commit per change set; push in intervals; this tracker updated each working session. Real hygiene (branches/CI/PRs) when we exit prototype phase.
