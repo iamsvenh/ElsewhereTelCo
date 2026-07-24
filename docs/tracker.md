@@ -64,13 +64,13 @@ The IP: prompts, canon, lore, the transcript flywheel.
 - 🟡 Devil bible — UNBLOCKED (vision v2 ratified). Core/registers/mood; resolve reachable-cast roster (secretary? notary?) here; Mrs. Devil stays an undefined slot
 - 🟢 **Establishing layer** added to universe architecture (vision §5c/§5-ontology/§8) — pre-produced scene-setting (ambient bed + optional narration) that stages the threshold into a Resident; voice-only's stage directions. Zero live cost, bookends live encounters (short live time → rich scene). Open: per-world narrator vs one signature narrator; Operator does the handoff
 - 🟢 Worlds register started (`world/worlds.md`) — all districts (Underworld/Kitchen/2036/divine/Phreak) + NEW seed: **the Philosophical realm** (Sven's — big questions, philosophers as sparring Residents; flagged: modern names Camus/Sartre legally out, flavor via invented Residents). Needs a proper brainstorm later
-- 🔴 Canon v1 DRAFTED (`world/canon.md`) — postcard: universe (Exchange/Management/Ledger/monitored) + Underworld + Devil personnel file + cast seeds. Structured entries w/ links. Awaiting Sven's redline: down-trunk name · "Devil cannot lie" · secretary in/out · add/cut. Unblocks the bible
+- 🟡 Canon v2 REDLINED (`world/canon.md`) — Sven's pass folded in. THE ONE RULE: canon is facts/stances, never scripts (examples illustrate voice, never recited; the thin-Devil ping-pong failure). Locked: subscriber's phone number = their line = effectively their soul; "calls monitored for quality assurance"; Devil cannot lie (never self-admitted); prices/souls-on-schedule = generative seasoning not cornerstones; intake = procedure not storyline; Glenda the secretary IN v1 (= the switchboard receptionist wall; may-or-may-not be Mrs. Devil, never confirmed); Devil folk-name Mr. Scratch (true name withheld). Dead `[[ ]]` links → working anchor links. OPEN: down-trunk name · confirm Mr. Scratch + Operator-name. Bible now unblocked
 - ⚪ Weekly transcript-review loop (lore harvest → thin-wall detection → ratify → canon)
 
 ---
 
 ## Open for Sven (consolidated decision queue)
-1. **Redline canon v1** (`world/canon.md`) — 4 decisions: down-trunk name · adopt "the Devil cannot lie" · secretary in/out · add/cut. Unblocks the Devil bible
+1. **Canon redlined (v2 in)** — 2 small opens left: the down-trunk name · confirm Devil folk-name "Mr. Scratch" + whether to name the Operator. Then the Devil bible is fully unblocked
 2. **Switchboard brainstorm** (`world/switchboard/switchboard.md` §Decisions) — menu set/order (A) · Devil-wall copy (B) · fall-through (C) · easter egg (D) · Operator name (E) · data-model sign-off. Then build phase 1
 3. **Send the Artizen teaser** — approve/tweak the draft (`strategy/outreach-log.md`) and post to the Artizen Telegram; then log results
 4. **Re-ping Erick + the Meow Wolf friend** — their press-1 was lost to the (now-fixed) capture bug; ask them to call once more so it records
