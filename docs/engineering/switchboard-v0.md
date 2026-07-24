@@ -12,7 +12,7 @@ The current funnel is **linear and back-loaded**: ~56s of pitch, then one weak a
 
 Greet fast, offer choices **early**, lead with the **strongest hook**, make "subscribe" one of several exits. Every keypress is simultaneously an experience and a data point.
 
-**The strongest hook is the Devil — but NOT live yet (Sven, 2026-07-24).** Two problems with connecting live now: the Devil line is still a rough draft (bad first impression on the hook), and it's our biggest cost center. So option 1 = "the Devil" but it hits a **receptionist wall**: the Operator says he's out ("gallivanting, as usual") and plays the receptionist pitch — which is the current teaser, nearly verbatim — then captures the caller. The switchboard still *sounds* like it connects to the Devil; we defer the cost and the thin-Devil impression; and pressing 1 becomes a strong intent signal. Live transfer flips on later (after the Devil rebuild), optionally behind a subscriber gate. The creative design of this beat lives in `docs/world/switchboard.md` (the switchboard-as-a-world pass).
+**The strongest hook is the Devil — but NOT live yet (Sven, 2026-07-24).** Two problems with connecting live now: the Devil line is still a rough draft (bad first impression on the hook), and it's our biggest cost center. So option 1 = "the Devil" but it hits a **receptionist wall**: the Operator says he's out ("gallivanting, as usual") and plays the receptionist pitch — which is the current teaser, nearly verbatim — then captures the caller. The switchboard still *sounds* like it connects to the Devil; we defer the cost and the thin-Devil impression; and pressing 1 becomes a strong intent signal. Live transfer flips on later (after the Devil rebuild), optionally behind a subscriber gate. The creative design of this beat lives in `docs/world/switchboard/switchboard.md` (the switchboard-as-a-world pass).
 
 ## 3. The menu (v0 design)
 
@@ -26,7 +26,7 @@ Greet fast, offer choices **early**, lead with the **strongest hook**, make "sub
 - Intro ≤8s; each option line ≤4s (~8-12 words); cut *words*, not pace (the bored-operator cadence is on-brand).
 
 **The menu (4 + hidden), ordered by value:**
-1. **The Devil** — hits the receptionist wall (he's out) → the teaser pitch → capture. Primacy slot; live transfer flips on post-rebuild. See `docs/world/switchboard.md`.
+1. **The Devil** — hits the receptionist wall (he's out) → the teaser pitch → capture. Primacy slot; live transfer flips on post-rebuild. See `docs/world/switchboard/switchboard.md`.
 2. **"What is this place"** — short recorded explainer (audio cousin of the directory), buried mid-list (curious callers still find it); ends by offering the link.
 3. **The link** — deliver the directory/site URL (recited now, SMS after 10DLC — see §4).
 4. **Leave your number** — the mailing list (today's "press 1"), in the recency slot where it's best remembered.
@@ -148,9 +148,9 @@ Build the menu as **config-driven data**, not hardcoded TwiML: a tree of nodes, 
 - **SMS deferred** — recite the vanity URL now; register 10DLC later if/when worth it.
 - **Record the whole journey** (event log + user-journey view; two POVs).
 - **Operator pre-produced now, high production value, designed to go live later.**
-- **Infra fix carried in:** ring 2-3× and confirm the media connection is established before the Operator speaks (fixes the current cut-off intro).
+- **Infra fix carried in:** **one ring** (enough — verified on the live line), then confirm the media connection is established before the Operator speaks (fixes the current cut-off intro).
 
-**Still open — creative brainstorm, in `docs/world/switchboard.md` §Decisions** (propose→pick): the menu set/order (A), the Devil-wall copy (B), the fall-through default (C), the hidden easter egg (D), Operator nameless-vs-named (E). Plus the data-model sign-off (journey view vs materialized table).
+**Still open — creative brainstorm, in `docs/world/switchboard/switchboard.md` §Decisions** (propose→pick): the menu set/order (A), the Devil-wall copy (B), the fall-through default (C), the hidden easter egg (D), Operator nameless-vs-named (E). Plus the data-model sign-off (journey view vs materialized table).
 
 **Then:** greenlight build phase 1 (migration + config-driven menu + `/switchboard-stats` + recite-URL + receptionist wall).
 

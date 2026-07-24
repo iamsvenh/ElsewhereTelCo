@@ -4,7 +4,7 @@
 
 ## Why it's a world
 
-The switchboard is where **every caller lands first** — the hub, the lobby, World Zero. The first ~20 seconds decide everything (concept rule 5 / the cold-opener law, at system scale). If it feels like a phone menu, we've lost; if it feels like a *place* staffed by a *character*, we've won. So: the Exchange floor is a location, the Operator is a Resident, and the caller is routed *through* her to every other world. Designing it as a world also means the connective frame and the eventual real switchboard are the same thing, built with the same principles (worlds.md).
+The switchboard is where **every caller lands first** — the hub, the lobby, World Zero. The first ~20 seconds decide everything (concept rule 5 / the cold-opener law, at system scale). If it feels like a phone menu, we've lost; if it feels like a *place* staffed by a *character*, we've won. So: the Exchange floor is a location, the Operator is a Resident, and the caller is routed *through* her to every other world. Designing it as a world also means the connective frame and the eventual real switchboard are the same thing, built with the same principles (`../worlds.md`).
 
 ## The place — the Exchange floor
 
@@ -16,13 +16,13 @@ Grounded in what's already decided (teaser delivery note: "1950s switchboard ope
 
 > **Want:** to get you connected and off her board — it's a busy night and she's seen everyone. **Worldview:** nothing is unusual; the strange is the routine; the Company frame is absolute and the Management is to be revered. **Status:** she holds the power — she decides which lines are open tonight, and whether she puts you through. **To the caller:** you are one of thousands on a lit board; she's brisk, a half-beat impatient, never cruel, and every so often lets slip something that hints at the vastness behind her.
 
-She runs the same "assertive by structure" engine as the Devil (persona-design-notes): she conducts the call — she's the one connecting you, not the one being interviewed. That's what makes a passive or confused caller feel guided instead of lost.
+She runs the same "assertive by structure" engine as the Devil (`../persona-design-notes.md`): she conducts the call — she's the one connecting you, not the one being interviewed. That's what makes a passive or confused caller feel guided instead of lost.
 
 **Open:** nameless (like the Management — adds mystique; my lean) vs. named (humanizes). Recommend nameless for now.
 
 ## The experience flow
 
-**Beat 0 — Connection (infra, settled fix).** Ring **2-3 times**, confirm the media connection is fully established, let a beat of the exchange bed breathe, *then* she speaks. This fixes the live bug Sven logged (the VO currently starts before connection and the intro cuts off / jumbles). The establishing bed lives here. Non-negotiable: the first words must always land clean.
+**Beat 0 — Connection (infra, settled fix).** **One ring** — that's enough (more feels slow); confirm the media connection is fully established, let a beat of the exchange bed breathe, *then* she speaks. This fixes the live bug Sven logged (the VO currently starts before connection and the intro cuts off / jumbles). The establishing bed lives here. Non-negotiable: the first words must always land clean.
 
 **Beat 1 — The Operator's cold-open (3-job law, ≤8s).** Establish who she is (operator, the exchange), cast the caller (you've reached the switchboard; you want something), hand them the keypad. Grounded in "Elsewhere Telephone Company, operator speaking." Then straight into the menu (barge-in on).
 
