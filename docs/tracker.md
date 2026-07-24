@@ -11,6 +11,7 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 
 - 🟢 Signup capture window FIXED + DEPLOYED (2026-07-24) — teaser is 56s; old single `<Gather>` window (56+4s) missed any "press 1" during the ~7s goodbye. This silently ate EVERY real friend press (Erick +505-204 and ≥1 other both pressed; `signups` was empty). Goodbye now has its own `<Gather>`, main timeout 6s. ⚠️ conversion numbers to date are undercounts
 - 🟢 Signup funnel VERIFIED live — press-1 records correctly (`signups` + `teaser_calls.outcome=signup` both landing; confirmed via Sven's own test call). Hardened `setTeaserOutcome` to upsert (was update) so outcome records even if the pickup insert races/fails
+- 🔴 **v0 Switchboard DESIGNED** (`engineering/switchboard-v0.md`) — work package to evolve the teaser into a branching, instrumented, LLM-free switchboard (menu w/ live-Devil transfer as the hook + hidden easter egg; recite-URL now / SMS after Sole-Prop 10DLC; event-log KPI model). Researched (compliance · IVR-UX · KPIs). Awaiting Sven's 6 decisions → then build phase 1
 - 🟢 Teaser analytics — logs EVERY call (teaser_calls: outcome, duration, status, repeat callers via caller_number+created_at). Twilio status callback → duration for dropoff analysis. `/teaser-stats` = calls · unique · repeat · signups · conversion% · avg duration
 - 🟢 Teaser timing tuned to Sven's ear — one ring, minimal gap (dropped `<Pause>`, 0.35s lead silence), barge-in "press one at any time"
 - 🟢 Teaser line **(806) 666-1212** live — routes, signups table, deployed
