@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Directory — Elsewhere Telephone Company</title>
+<meta name="description" content="The opening pages of the Directory of the Elsewhere Exchange." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=Special+Elite&family=Oswald:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0c0b0d;
+    --cream: #f2ead8;
+    --dim: #9a8f77;
+    --chrome: #cfc9bb;
+    --neon: #ff7a3c;
+    --neon-soft: #ffb27a;
+    --line: rgba(242,234,216,0.16);
+    --memo: rgba(242,234,216,0.035);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,122,60,0.09), transparent 60%),
+      var(--bg);
+    color: var(--cream);
+    font-family: 'Playfair Display', Georgia, serif;
+    line-height: 1.6;
+    padding: clamp(2.4rem, 7vw, 4.5rem) clamp(1.4rem, 5vw, 2rem) 4rem;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
+    mix-blend-mode: overlay; opacity: 0.55; z-index: 2;
+  }
+  .page { width: 100%; max-width: 42rem; margin: 0 auto; position: relative; z-index: 3; }
+
+  /* ---- masthead ---- */
+  .masthead { text-align: center; margin-bottom: clamp(2.6rem, 8vw, 3.6rem); }
+  .seal {
+    width: clamp(6.5rem, 22vw, 8.5rem); height: auto; display: block; margin: 0 auto 1.4rem;
+    filter: drop-shadow(0 0 9px rgba(255,122,60,0.26));
+  }
+  .masthead h1 {
+    font-weight: 900; font-size: clamp(2.4rem, 10vw, 3.6rem);
+    letter-spacing: 0.02em; line-height: 1; margin-bottom: 0.7rem;
+  }
+  .edition {
+    font-family: 'Special Elite', monospace;
+    font-size: clamp(0.62rem, 2.4vw, 0.74rem); letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ---- section tab (directory divider) ---- */
+  .tab {
+    font-family: 'Special Elite', monospace;
+    font-size: 0.7rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--neon-soft); opacity: 0.9;
+    display: inline-block;
+    border: 1px solid var(--line); border-bottom: none;
+    padding: 0.5em 1.1em 0.45em; border-radius: 4px 4px 0 0;
+    margin: clamp(2.8rem, 8vw, 3.8rem) 0 0;
+    background: rgba(255,122,60,0.04);
+  }
+  .tab + * { border-top: 1px solid var(--line); padding-top: 1.6rem; }
+
+  /* ---- in-fiction beats (Playfair, centered, elegant) ---- */
+  .fiction { text-align: center; }
+  .opener p {
+    font-style: italic; font-size: clamp(1.15rem, 4.4vw, 1.5rem); line-height: 1.7;
+    color: var(--cream);
+  }
+  .opener p .glow { color: var(--neon-soft); text-shadow: 0 0 18px rgba(255,122,60,0.35); font-style: italic; }
+
+  /* ---- honest memo (typewriter, left, an inserted note) ---- */
+  .memo {
+    font-family: 'Special Elite', monospace;
+    font-size: clamp(0.86rem, 3.2vw, 0.98rem); line-height: 1.85;
+    color: var(--chrome);
+    background: var(--memo);
+    border-left: 2px solid rgba(255,122,60,0.4);
+    padding: 1.5rem clamp(1.1rem, 4vw, 1.6rem);
+    border-radius: 0 4px 4px 0;
+  }
+  .memo p + p { margin-top: 1rem; }
+  .memo .what {
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+    font-size: clamp(1.1rem, 4vw, 1.35rem); line-height: 1.5; color: var(--cream);
+    margin: 1.3rem 0; letter-spacing: 0.01em;
+  }
+  .memo .sign { margin-top: 1.4rem; color: var(--dim); letter-spacing: 0.1em; }
+
+  /* ---- why cards ---- */
+  .why { display: grid; gap: 1.4rem; }
+  .why-item .q {
+    display: block; font-family: 'Special Elite', monospace;
+    font-size: 0.9rem; letter-spacing: 0.06em; color: var(--neon-soft); margin-bottom: 0.35rem;
+  }
+  .why-item p { font-size: clamp(1rem, 3.6vw, 1.12rem); color: var(--cream); }
+
+  /* ---- cosmology listing ---- */
+  .cosmos .lede {
+    font-style: italic; font-size: clamp(1.1rem, 4vw, 1.35rem); text-align: center;
+    color: var(--neon-soft); margin-bottom: 1.8rem; line-height: 1.5;
+  }
+  .cosmos dl { display: grid; gap: 1.1rem; }
+  .cosmos .row { display: grid; grid-template-columns: minmax(6.5rem, 9rem) 1fr; gap: 0.4rem 1.2rem; align-items: baseline; }
+  .cosmos dt {
+    font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase;
+    font-size: 0.82rem; letter-spacing: 0.08em; color: var(--neon-soft);
+  }
+  .cosmos dd { font-size: clamp(0.98rem, 3.6vw, 1.1rem); color: var(--cream); }
+  .cosmos dd em { color: var(--dim); font-style: italic; }
+  @media (max-width: 30rem) { .cosmos .row { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+  /* ---- status bulletin ---- */
+  .status-card {
+    font-family: 'Special Elite', monospace; font-size: clamp(0.8rem, 3vw, 0.92rem);
+    border: 1px solid var(--line); border-top: 1px solid var(--line);
+    border-radius: 0 4px 4px 4px; padding: 1.3rem clamp(1.1rem, 4vw, 1.5rem);
+    background: rgba(0,0,0,0.25);
+  }
+  .status-card ul { list-style: none; display: grid; gap: 0.8rem; }
+  .status-card li { display: grid; grid-template-columns: minmax(6rem, 8rem) 1fr; gap: 0.3rem 1rem; align-items: baseline; }
+  .status-card li span:first-child { color: var(--neon-soft); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.72rem; }
+  .status-card li span:last-child { color: var(--chrome); line-height: 1.5; }
+  .status-card .status-note {
+    margin-top: 1.2rem; padding-top: 1rem; border-top: 1px dotted var(--line);
+    font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; color: var(--cream); text-align: center;
+  }
+  @media (max-width: 30rem) { .status-card li { grid-template-columns: 1fr; gap: 0.1rem; } }
+
+  /* ---- invitation listings ---- */
+  .invite { display: grid; gap: 1.6rem; }
+  .listing { text-align: center; }
+  .listing-name {
+    font-family: 'Special Elite', monospace; font-size: 0.82rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem;
+  }
+  .listing-name b { color: var(--cream); font-weight: 400; }
+  .line {
+    display: inline-flex; align-items: center; gap: 0.4em;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif; font-weight: 600;
+    font-size: clamp(1.7rem, 8vw, 2.5rem); letter-spacing: 0.03em;
+    color: var(--neon-soft); text-decoration: none;
+    text-shadow: 0 0 8px rgba(255,122,60,0.5), 0 0 24px rgba(255,122,60,0.28);
+    transition: color 0.2s, text-shadow 0.2s; white-space: nowrap;
+  }
+  .line .rcv { font-size: 0.62em; }
+  .line:hover, .line:focus {
+    color: #fff; outline: none;
+    text-shadow: 0 0 10px rgba(255,122,60,0.95), 0 0 34px rgba(255,122,60,0.5);
+  }
+  .invite .closer {
+    text-align: center; font-style: italic; font-size: clamp(1.02rem, 3.8vw, 1.18rem);
+    color: var(--cream); margin-top: 0.6rem; line-height: 1.6;
+  }
+  .invite .closer .glow { color: var(--neon-soft); }
+
+  /* ---- footer ---- */
+  footer {
+    margin-top: clamp(3rem, 9vw, 4.4rem); padding-top: 1.8rem; border-top: 1px solid var(--line);
+    text-align: center; font-family: 'Special Elite', monospace;
+    color: var(--dim); font-size: 0.68rem; line-height: 2; letter-spacing: 0.04em;
+  }
+  footer a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted rgba(154,143,119,0.5); }
+  footer a:hover { color: var(--chrome); border-bottom-color: var(--chrome); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <img class="seal" src="logo-seal.svg" alt="Elsewhere Telephone Company" />
+    <h1>The Directory</h1>
+    <p class="edition">of the Elsewhere Exchange · first edition · subject to revision</p>
+  </header>
+
+  <section class="fiction opener">
+    <p>
+      You are holding the directory of the Elsewhere Telephone Company.<br />
+      Most of the numbers within have been disconnected. Several were never
+      connected at all.<br />
+      <span class="glow">One of them answers.</span>
+    </p>
+  </section>
+
+  <div class="tab">A note, out of character</div>
+  <section class="memo">
+    <p>Hi. If you're reading this, you probably called a strange number and want to
+      know what you stumbled into. So, plainly, no fiction:</p>
+    <p class="what">Elsewhere Telephone Co. is an interactive-fiction company whose
+      medium is the telephone.</p>
+    <p>You call a number. It connects you to a place — and to whoever lives there.
+      A whole world, explored entirely by voice, through old phones. The personas
+      aren't the product; they're doorways into it.</p>
+    <p>I build it at night. It's the opposite of my day job and I'm a little obsessed.</p>
+    <p class="sign">— Sven</p>
+  </section>
+
+  <div class="tab">Why build this</div>
+  <section class="why">
+    <div class="why-item">
+      <span class="q">Why only voice?</span>
+      <p>A world you can only <em>hear</em> — through a handset, eyes free — is more
+        intimate than any screen. And nobody is building it.</p>
+    </div>
+    <div class="why-item">
+      <span class="q">Why phones?</span>
+      <p>A vintage phone is the perfect door: obsolete as technology, perfect as a
+        threshold. You already know exactly how to use it.</p>
+    </div>
+    <div class="why-item">
+      <span class="q">Why worlds, not characters?</span>
+      <p>Novelty wears off. People don't revisit a punchline — they revisit a place.
+        A gag persona decays; a world you can get lost in keeps its pull.</p>
+    </div>
+  </section>
+
+  <div class="tab">The shape of it</div>
+  <section class="cosmos">
+    <p class="lede">One universe. Many worlds. One exchange connecting them all.</p>
+    <dl>
+      <div class="row"><dt>Elsewhere</dt><dd>the universe. Everything reachable by the line.</dd></div>
+      <div class="row"><dt>The worlds</dt><dd>districts you call into, each with its own tone and clock. First open line: <em>the Underworld.</em></dd></div>
+      <div class="row"><dt>The Exchange</dt><dd>the company that connects them — the deadpan telephone outfit you actually meet.</dd></div>
+      <div class="row"><dt>The Management</dt><dd>above all of it. Never met, never explained. <em>"Calls may be monitored for quality by the Management."</em></dd></div>
+    </dl>
+  </section>
+
+  <div class="tab">Service status — honest edition</div>
+  <section class="status-card">
+    <ul>
+      <li><span>Stage</span><span>very early. Software only — proving the calls are fun before any hardware.</span></li>
+      <li><span>Teaser line</span><span>live. It takes names for what's coming.</span></li>
+      <li><span>The Underworld</span><span>answering — but rough. The Devil is a first draft; I'm rebuilding him properly now.</span></li>
+      <li><span>Everything else</span><span>coming, one world at a time, only where callers push.</span></li>
+    </ul>
+    <p class="status-note">The most fun I've had building anything in years.</p>
+  </section>
+
+  <div class="tab">If you want in</div>
+  <section class="invite">
+    <div class="listing">
+      <div class="listing-name"><b>The Front Desk</b> · press 1 to be notified</div>
+      <a class="line" href="tel:+18066661212"><span class="rcv">&#9742;</span>(806)&nbsp;666&nbsp;1212</a>
+    </div>
+    <div class="listing">
+      <div class="listing-name"><b>The Devil</b> · direct line · a rough draft, be gentle</div>
+      <a class="line" href="tel:+15055513551"><span class="rcv">&#9742;</span>(505)&nbsp;551&nbsp;3551</a>
+    </div>
+    <p class="closer">And if this is your kind of weird — this world is going to need
+      worldbuilders, storytellers, and the creatively unhinged.<br />
+      <span class="glow">That could be you.</span></p>
+  </section>
+
+  <footer>
+    Rates apply. Calls may be monitored for quality by the Management.<br />
+    The company is not responsible for what you hear. &nbsp;·&nbsp;
+    <a href="/">elsewheretel.co</a><br />
+    First edition · subject to revision · est. 1666
+  </footer>
+
+</div>
+</body>
+</html>

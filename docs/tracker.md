@@ -18,6 +18,7 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 - 🟢 Domain **elsewheretel.co** purchased
 - 🟢 ElevenLabs Starter active — "Elsewhere Operator" voice saved to library; key uncapped
 - 🟢 **Landing page LIVE** — served by the bridge from apps/web (not Vercel; one-system decision). Seal logo (vectorized rotary phone + Special Elite curved text), favicons, click-to-call number, 5 easter eggs. brand-voice tariff card
+- 🟡 **`/directory` lore page** — v0 built + screenshotted (hidden, noindex, shareable for 1:1 follow-ups). In-world Directory front-matter + two-voice split (fiction ↔ honest memo). Route wired in bridge. Awaiting Sven's read → then deploy
 - 🟢 **elsewheretel.co LIVE over HTTPS** (root + www, valid certs, Namecheap→Railway). The landing page is publicly reachable
 - ⚪ Signup notification mechanism (outbound SMS/call = A2P/TCPA) — defer, manual round at friend-scale
 

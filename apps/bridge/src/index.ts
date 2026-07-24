@@ -134,6 +134,14 @@ const server = Bun.serve<TwilioSocketData>({
         headers: { "Content-Type": "text/html; charset=utf-8" },
       });
     }
+    // /directory — the hidden "opening pages of the Directory" lore page.
+    // Not linked from the landing nav; shareable by URL for 1:1 follow-ups.
+    // noindex meta keeps it out of search. See docs/strategy/go-to-market.md.
+    if (url.pathname === "/directory" || url.pathname === "/directory.html") {
+      return new Response(Bun.file(join(webDir, "directory.html")), {
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
+    }
     // favicon.svg/.ico/.png, apple-touch-icon.png — allowlisted static files.
     const staticAsset = url.pathname.slice(1);
     if (/^(favicon(-16|-32)?\.(svg|png|ico)|apple-touch-icon\.png|logo-seal\.svg)$/.test(staticAsset)) {
