@@ -370,7 +370,7 @@ c118 -31 215 -90 215 -131 0 -34 -61 -90 -144 -130 -159 -78 -353 -80 -511 -6
   <div class="rule"></div>
   Rates apply. Calls may be monitored for quality by the Management.<br />
   The company is not responsible for what you hear. &nbsp;&middot;&nbsp;
-  <a id="directory">Directory</a>
+  <a href="directory.html">Directory</a>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -411,19 +411,7 @@ c118 -31 215 -90 215 -131 0 -34 -61 -90 -144 -130 -159 -78 -353 -80 -511 -6
     toastTimer = setTimeout(() => toastEl.classList.remove("show"), 4200);
   });
 
-  // Egg 3 — the Directory is mostly disconnected
-  document.getElementById("directory").addEventListener("click", (e) => {
-    e.preventDefault();
-    alert(
-      "ELSEWHERE TELEPHONE COMPANY — DIRECTORY\n\n" +
-      "Most numbers in this directory have been disconnected.\n" +
-      "Several were never connected at all.\n" +
-      "One of them answers.\n\n" +
-      "You already have it."
-    );
-  });
-
-  // Egg 4 — a notice for the curious (console)
+  // Egg 3 — a notice for the curious (console)
   console.log("%c ELSEWHERE TELEPHONE COMPANY ",
     "background:#0c0b0d;color:#ff7a3c;font-size:14px;letter-spacing:3px;padding:4px;");
   console.log("%cThis line is monitored. If you have come this far, you are the curious sort.\nThe curious sort makes the best subscribers. Dial (806) 666-1212. — The Management",

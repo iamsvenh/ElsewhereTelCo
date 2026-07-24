@@ -134,9 +134,9 @@ const server = Bun.serve<TwilioSocketData>({
         headers: { "Content-Type": "text/html; charset=utf-8" },
       });
     }
-    // /directory — the hidden "opening pages of the Directory" lore page.
-    // Not linked from the landing nav; shareable by URL for 1:1 follow-ups.
-    // noindex meta keeps it out of search. See docs/strategy/go-to-market.md.
+    // /directory — the "opening pages of the Directory" lore/vision page.
+    // Linked from the landing-page footer (discoverable) + shareable by URL.
+    // noindex meta keeps it out of search for now. See docs/strategy/go-to-market.md.
     if (url.pathname === "/directory" || url.pathname === "/directory.html") {
       return new Response(Bun.file(join(webDir, "directory.html")), {
         headers: { "Content-Type": "text/html; charset=utf-8" },

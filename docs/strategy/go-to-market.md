@@ -38,7 +38,7 @@ The lineage is ilovebees / Cicada 3301 (vision §12): the fiction leaks into rea
 
 The uncanny 60-second **video** (fundraising §3) is the shared asset across the investor and partner decks — voice-only doesn't pitch on a static slide.
 
-**The public/press teaser deck is realized as a web page, not slides:** `elsewheretel.co/directory` (hidden — not linked from the landing nav, `noindex`, shareable by URL for 1:1 follow-ups). Framed in-world as the opening pages of the Directory of Elsewhere, with a deliberate two-voice split — elegant in-fiction beats vs. a typed-memo honest section ("what this really is / where we are / why"). It's the web version of the friend reveal-reply: the thing you send after someone's intrigued but before they'd read the docs.
+**The public/press teaser deck is realized as a web page, not slides:** `elsewheretel.co/directory` (linked from the landing-page footer so it's discoverable; `noindex` for now — out of search but reachable from the site; also shareable by direct URL for 1:1 follow-ups). Framed in-world as the opening pages of the Directory of Elsewhere, with a deliberate two-voice split — elegant in-fiction beats vs. a typed-memo honest section ("what this really is / where we are / why"). It's the web version of the friend reveal-reply: the thing you send after someone's intrigued but before they'd read the docs.
 
 Every deliberate push into one of these channels gets logged in **[outreach-log.md](outreach-log.md)** — exact copy, intent, and the `/teaser-stats` window after — so each send teaches us something instead of vanishing.
 
