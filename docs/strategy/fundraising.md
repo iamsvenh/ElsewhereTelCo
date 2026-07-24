@@ -24,7 +24,7 @@ Two ways to approach the money:
 
 Comp set to research and name properly for a deck:
 - **Narrative audio:** the Gimlet lineage and its peers/successors; the funds and angels behind them.
-- **Immersive / experiential:** Meow Wolf (also a potential *customer* — physical portals into our universe) and its investor base.
+- **Immersive / experiential:** Meow Wolf (also a potential *customer* — physical portals into our universe) and its investor base. **Ministry of Awe** (Philadelphia — per a tester, a Meow Wolf-like immersive venue already doing phone-based experiences): research as a closer-scale comp/inspiration and possible precedent for the medium.
 - **Interactive fiction / AI-native storytelling:** the current wave; who's funding it and on what thesis.
 - **Artizen:** testing pool AND funding fit (match rounds, art-drop launch framing) AND future collaborators for the eventual visual layer (vision §8).
 

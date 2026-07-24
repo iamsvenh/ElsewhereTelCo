@@ -40,8 +40,10 @@ For friends who clearly bit and want more. Hands over the live Devil line (505) 
 >
 > Big caveat: this one's held together with duct tape right now. His personality is still paper-thin and he might repeat himself or lose the thread. I'm rebuilding him properly next, so don't judge the depth. What I actually need to know: did the first 10-20 seconds land? Did you want to keep talking, or reach for the hook? That's the gold. 🖤
 
-Notable friend reactions (aggregate, not per-send):
-- **2026-07-23** — first friend sent the 1:1 DM: called the teaser line twice (full 67s listens), replied "Not sure what I just signed up for...." → engaged/intrigued but did NOT press 1 (no signup). "Signed up" was idiomatic. Sent the reveal reply. Watch: is the in-audio press-1 CTA landing?
+Notable friend reactions (aggregate):
+- **Strong early signal (2026-07-23/24).** Multiple friends "very intriguing"; two independently associated it with **Meow Wolf** (our stated comp — vision §12). One: _"It was fun. I pressed 1. Reminded me of a Meow Wolf-like place in Philadelphia called the **Ministry of Awe** that was doing some similar things with phones."_ → new comp/inspiration to research (logged in `fundraising.md`). This is the Stage-0 signal we wanted: not "novelty conversation" but "immersive-world thing."
+- **⚠️ The signup-capture bug silently ate EVERY real press.** Erick (+1 505-204) and at least one other friend both said they pressed 1; none recorded (`outcome=null` across their rows; `signups` empty after removing Sven's own test). Cause: pressing 1 during the ~7s goodbye fell outside the single `<Gather>` window (56s audio + 4s). **FIXED + deployed 2026-07-24** — goodbye now wrapped in its own `<Gather>`, main timeout widened to 6s. Correction: the earlier read ("friend didn't press 1, 'signed up' was idiomatic") was WRONG — they pressed; the bug lost it.
+- **Watch next:** with the window fixed, re-check `signups` after the next round of sends — conversion numbers to date are not trustworthy (they undercounted).
 
 ---
 

@@ -9,7 +9,7 @@ The working board until we move to a real ticketing system. Updated as things mo
 ## A. Infra & ops
 Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 
-- 🟢 Signup capture window FIXED — teaser is 56s but the old single `<Gather>` window was 56+4s, so a "press 1" during the ~7s goodbye (outside the Gather) never recorded (this is why Erick's press was lost). Now the goodbye is wrapped in its own `<Gather>` + main timeout widened to 6s → late presses count
+- 🟢 Signup capture window FIXED + DEPLOYED (2026-07-24) — teaser is 56s; old single `<Gather>` window (56+4s) missed any "press 1" during the ~7s goodbye. This silently ate EVERY real friend press (Erick +505-204 and ≥1 other both pressed; `signups` was empty). Goodbye now has its own `<Gather>`, main timeout 6s. ⚠️ conversion numbers to date are undercounts
 - 🟢 Signup funnel VERIFIED live — press-1 records correctly (`signups` + `teaser_calls.outcome=signup` both landing; confirmed via Sven's own test call). Hardened `setTeaserOutcome` to upsert (was update) so outcome records even if the pickup insert races/fails
 - 🟢 Teaser analytics — logs EVERY call (teaser_calls: outcome, duration, status, repeat callers via caller_number+created_at). Twilio status callback → duration for dropoff analysis. `/teaser-stats` = calls · unique · repeat · signups · conversion% · avg duration
 - 🟢 Teaser timing tuned to Sven's ear — one ring, minimal gap (dropped `<Pause>`, 0.35s lead silence), barge-in "press one at any time"
@@ -19,7 +19,8 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 - 🟢 Domain **elsewheretel.co** purchased
 - 🟢 ElevenLabs Starter active — "Elsewhere Operator" voice saved to library; key uncapped
 - 🟢 **Landing page LIVE** — served by the bridge from apps/web (not Vercel; one-system decision). Seal logo (vectorized rotary phone + Special Elite curved text), favicons, click-to-call number, 5 easter eggs. brand-voice tariff card
-- 🟡 **`/directory` lore page** — now DISCOVERABLE (linked from landing footer; `noindex` for now, shareable by URL). In-world Directory front-matter + two-voice split (fiction ↔ honest memo). v1 redesign per modern type-scale research: 70rem/1120px canvas, 20px base, fluid clamp scale w/ weight contrast, multi-column. "old phones" copy removed (user-facing). Route wired. Awaiting Sven's read → then deploy landing + directory together
+- 🟢 **`/directory` lore page LIVE** (deployed 2026-07-24) — discoverable via landing footer; `noindex` (flippable to search-public). In-world Directory front-matter + two-voice split (fiction ↔ honest memo). Modern type-scale redesign (70rem canvas, 20px base, fluid scale, multi-column), "old phones" copy removed, em-dash/AIism sweep
+- 🟢 **Landing page widened + rescaled** (deployed) — bigger hero tagline, larger number, 50rem frame, legibility bumps. Per type-scale research
 - 🟢 **elsewheretel.co LIVE over HTTPS** (root + www, valid certs, Namecheap→Railway). The landing page is publicly reachable
 - ⚪ Signup notification mechanism (outbound SMS/call = A2P/TCPA) — defer, manual round at friend-scale
 
@@ -33,6 +34,7 @@ The vision, positioning, business model, pitch. Mostly docs.
 - 🔴 **Artizen Telegram teaser** — draft ready (`strategy/outreach-log.md`), framed light for the Renee/investor optic. Sven to send, then log `/teaser-stats` + feedback. First non-seed audience test
 - 🟢 Outreach log started (`strategy/outreach-log.md`) — track every community push + results
 - 🟢 **Vision v2 RATIFIED** (`strategy/vision-world-company.md`) — redlines resolved 2026-07-23. Terminology locked (Elsewhere/Exchange/Management/world/line/**Resident**/subscriber/Ledger/back-channel); Management = authorial mask + diegetic changelog; surveillance/observe-don't-lecture theme; cross-district shared timeline core; staged guardrails (call = unit of delivery not story); reachable vs referenced cast; feeling-first cost spectrum w/ characterized latency; phone-number identity (claim codes retired); knowledge-as-save-state; back-channel (async world→subscriber); two-channel diegetic marketing; hardware phones = dedicated physical object; Phreak district = future candidate
+- 🟢 Early tester signal (2026-07-24): "very intriguing" ×multiple; spontaneous **Meow Wolf** association (our comp), one "it was fun, I pressed 1." New comp surfaced: **Ministry of Awe** (Philadelphia, phone-based immersive). This is the "understood there's a world" signal, not novelty
 - 🟢 World One locked: the Underworld
 - 🟢 Pitch drafted (one-liner / 30s / 90s) — tested informally, "good"
 - ⚪ Artizen framing (art-drop launch, funding, AR/VR collaborators) — later
