@@ -50,6 +50,8 @@ Light flow (the "real hygiene later" is now):
 5. Merge only when CI is green.
 6. Merge → **CD (`deploy.yml`)** runs: check → migrate → deploy.
 
+**Docs & tooling are exempt from the PR flow (Sven, 2026-07-24).** PRs + CI exist to gate *shipping*; changes to `docs/**`, any `*.md`, or `.claude/**` (skills/hooks) don't deploy and don't need CI. Just commit them on the current working branch — they ride along with the next code PR. Don't open a dedicated PR for them. `deploy.yml` also `paths-ignore`s those paths, so even a docs-only commit that reaches main won't trigger a pointless prod deploy. (If a docs change happens with no feature branch in flight, put it on a short branch that the next PR absorbs, rather than pushing straight to main.)
+
 **Enforcement — solo-merge discipline (free GitHub, no branch protection).** Branch protection isn't available, so the rule is procedural, same as Borker: **Sven is the only one who merges to `main`, and only when the PR's CI is green.** Two things make this safe without protection: (a) `deploy.yml` re-runs `check` as its first gated stage, so **even a direct/red push to main will not deploy** — a red commit is at worst cosmetic, never shipped; (b) always work on a branch + PR so CI runs before the merge. When the repo goes to a paid plan or gains collaborators, add a branch-protection rule requiring the CI `check`.
 
 ## CI/CD

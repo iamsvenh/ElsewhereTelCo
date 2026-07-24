@@ -6,6 +6,14 @@ name: Deploy (main → production)
 on:
   push:
     branches: [main]
+    # Docs- and tooling-only changes don't affect the running bridge, so they
+    # don't trigger a prod deploy. They ride along with the next code PR (which
+    # touches non-ignored files and deploys normally). See dev-workflow.md
+    # "Docs & tooling are exempt from the PR flow".
+    paths-ignore:
+      - "docs/**"
+      - "**/*.md"
+      - ".claude/**"
 
 concurrency:
   group: deploy-production
