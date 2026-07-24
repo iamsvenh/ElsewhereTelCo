@@ -75,10 +75,23 @@ export async function recordTeaserCall(callSid: string, from: string): Promise<v
   if (error) console.error("[db] recordTeaserCall failed:", error.message);
 }
 
-/** Set the outcome once the caller presses a key. */
-export async function setTeaserOutcome(callSid: string, outcome: string): Promise<void> {
+/**
+ * Set the outcome once the caller presses a key. Upsert (not update) so the
+ * outcome is recorded even if the pickup insert (recordTeaserCall) failed or
+ * raced — otherwise a real press-1 could leave outcome blank. Passing `from`
+ * backfills caller_number when the upsert has to create the row.
+ */
+export async function setTeaserOutcome(
+  callSid: string,
+  outcome: string,
+  from?: string,
+): Promise<void> {
   if (!client || !callSid) return;
-  const { error } = await client.from("teaser_calls").update({ outcome }).eq("call_sid", callSid);
+  const row: Record<string, string> = { call_sid: callSid, outcome };
+  if (from) row.caller_number = from;
+  const { error } = await client
+    .from("teaser_calls")
+    .upsert(row, { onConflict: "call_sid" });
   if (error) console.error("[db] setTeaserOutcome failed:", error.message);
 }
 

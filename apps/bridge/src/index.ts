@@ -91,11 +91,11 @@ const server = Bun.serve<TwilioSocketData>({
       const host = env.publicHost || req.headers.get("host") || url.host;
       if (digit === "1") {
         void insertSignup(from);
-        void setTeaserOutcome(callSid, "signup");
+        void setTeaserOutcome(callSid, "signup", from);
         return twiml(`\n  <Play>https://${host}/audio/teaser-confirm.mp3</Play>`);
       }
       console.log(`[teaser] non-1 digit: ${digit}`);
-      void setTeaserOutcome(callSid, "other-key");
+      void setTeaserOutcome(callSid, "other-key", from);
       return twiml(`\n  <Play>https://${host}/audio/teaser-goodbye.mp3</Play>`);
     }
 
