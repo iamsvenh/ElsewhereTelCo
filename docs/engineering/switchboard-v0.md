@@ -12,7 +12,7 @@ The current funnel is **linear and back-loaded**: ~56s of pitch, then one weak a
 
 Greet fast, offer choices **early**, lead with the **strongest hook**, make "subscribe" one of several exits. Every keypress is simultaneously an experience and a data point.
 
-**The strongest hook we now have is the live Devil.** "To be connected to someone right now, press 1" beats "press 1 to be notified." Immediate value > deferred value, and it's technically almost free: the teaser line can **transfer the call** to the Devil (TwiML `<Dial>` / re-route to `/incoming-call`). That turns the teaser number from a mailing-list capture into a **live gateway to the product** — and live AI cost is incurred only when a caller chooses that branch.
+**The strongest hook is the Devil — but NOT live yet (Sven, 2026-07-24).** Two problems with connecting live now: the Devil line is still a rough draft (bad first impression on the hook), and it's our biggest cost center. So option 1 = "the Devil" but it hits a **receptionist wall**: the Operator says he's out ("gallivanting, as usual") and plays the receptionist pitch — which is the current teaser, nearly verbatim — then captures the caller. The switchboard still *sounds* like it connects to the Devil; we defer the cost and the thin-Devil impression; and pressing 1 becomes a strong intent signal. Live transfer flips on later (after the Devil rebuild), optionally behind a subscriber gate. The creative design of this beat lives in `docs/world/switchboard.md` (the switchboard-as-a-world pass).
 
 ## 3. The menu (v0 design)
 
@@ -26,7 +26,7 @@ Greet fast, offer choices **early**, lead with the **strongest hook**, make "sub
 - Intro ≤8s; each option line ≤4s (~8-12 words); cut *words*, not pace (the bored-operator cadence is on-brand).
 
 **The menu (4 + hidden), ordered by value:**
-1. **The Devil, live, now** — transfer to the Devil line. Primacy slot, the money option.
+1. **The Devil** — hits the receptionist wall (he's out) → the teaser pitch → capture. Primacy slot; live transfer flips on post-rebuild. See `docs/world/switchboard.md`.
 2. **"What is this place"** — short recorded explainer (audio cousin of the directory), buried mid-list (curious callers still find it); ends by offering the link.
 3. **The link** — deliver the directory/site URL (recited now, SMS after 10DLC — see §4).
 4. **Leave your number** — the mailing list (today's "press 1"), in the recency slot where it's best remembered.
@@ -100,7 +100,7 @@ create index on switchboard_events (caller_hash, occurred_at);
 create index on switchboard_events (node, event_type);
 alter table switchboard_events enable row level security;  -- no policies: bridge (secret key) + Studio only
 ```
-Plus a `switchboard_call_summary` view (per-call rollup: presses, nodes_visited, subscribed, connected, requested_link, exit_node) so the old wide-row convenience survives with zero dual-write.
+**Two points of view over the one log (Sven's ask):** `switchboard_call_summary` (per-call rollup: presses, nodes_visited, subscribed, connected, requested_link, exit_node) = the **switchboard's** POV; and a per-`caller_hash` chronological **user-journey view** across all their calls = the **caller's** POV, replayable to draw conclusions. Both are **views/materialized views over the event log, not separately-written tables** — a dual-write table drifts; a projection can't. One source of truth, two windows.
 
 **The KPIs that matter (definitions):**
 - **`interaction_rate`** = calls with ≥1 keypress ÷ all calls. *The* top number: did the menu land at all.
@@ -141,14 +141,18 @@ Build the menu as **config-driven data**, not hardcoded TwiML: a tree of nodes, 
 2. **Fast-follow:** register Sole-Prop 10DLC; light up the SMS link branch (option 3) + consent capture.
 3. **Later:** establishing-layer hooks; more worlds as menu options; rotary/voice-branch fallback in the hardware spec.
 
-## 10. Open decisions for Sven
+## 10. Decisions — status
 
-1. **Menu set & order** — ratify 1=Devil / 2=what-is-this / 3=link / 4=leave-number, plus a hidden egg? Or adjust.
-2. **Is the live-Devil transfer the #1 option now**, or hold it until the Devil rebuild ships (he's still a rough draft — a bad first impression on the hook option cuts both ways)? Big one.
-3. **Fall-through default** on repeated no-input: recite-URL + goodbye (my lean) vs auto-connect to the Devil.
-4. **SMS now or recite-URL first?** Recommendation: recite-URL first, register 10DLC in parallel, add SMS as fast-follow.
-5. **The hidden easter egg** — what's behind `0`/`★`? (Highest-leverage fun element for the sharing metric.)
-6. **Greenlight to build phase 1** once 1-5 are settled (migration + bridge menu + stats).
+**Settled (Sven, 2026-07-24):**
+- **No live Devil now** — option 1 hits the receptionist wall (deferred cost + thin-Devil impression). Subscriber-gating deferred (too much friction pre-value).
+- **SMS deferred** — recite the vanity URL now; register 10DLC later if/when worth it.
+- **Record the whole journey** (event log + user-journey view; two POVs).
+- **Operator pre-produced now, high production value, designed to go live later.**
+- **Infra fix carried in:** ring 2-3× and confirm the media connection is established before the Operator speaks (fixes the current cut-off intro).
+
+**Still open — creative brainstorm, in `docs/world/switchboard.md` §Decisions** (propose→pick): the menu set/order (A), the Devil-wall copy (B), the fall-through default (C), the hidden easter egg (D), Operator nameless-vs-named (E). Plus the data-model sign-off (journey view vs materialized table).
+
+**Then:** greenlight build phase 1 (migration + config-driven menu + `/switchboard-stats` + recite-URL + receptionist wall).
 
 ---
 

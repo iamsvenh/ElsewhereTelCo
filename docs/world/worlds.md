@@ -2,7 +2,7 @@
 
 The map of districts: what exists, what's dormant, what's a candidate, what's a seed still needing design. `canon.md` holds the ratified *facts* of built worlds; this holds the *register* and the seeds for planned ones. A world graduates from here into canon only when we actually build it (vision §3: behind caller pull, never speculatively ahead).
 
-The **Exchange / Operator** is not a world — it's the connective frame that routes callers between them ("tonight, only the down trunk is open").
+The **Exchange / Operator** is the connective frame that routes callers between worlds ("tonight, only the down trunk is open") — and, as of 2026-07-24, we treat it as **World Zero** (the hub every caller lands in first) so it gets the same craft as any district. Full experience design: `switchboard.md`.
 
 Every world also has an **establishing style**: the pre-produced scene-setting you cross into it through (vision §5c) — ambient bed + optional narration, voice-only's stage directions. The smoky café before the philosopher; the typewriters and hold music before the Devil. Pre-produced (zero live cost), register per-world.
 
@@ -11,6 +11,12 @@ Every world also has an **establishing style**: the pre-produced scene-setting y
 Per-world: **register** (its tone), **Resident(s)**, **you enter with** (the caller's intent), **notes**.
 
 ---
+
+## 🔨 The Switchboard — World Zero (the hub)
+- **register:** deadpan, mysterious, the endless night shift; a board lit with lines to everywhere.
+- **residents:** the Operator (pre-produced now, designed to go live later).
+- **you enter with:** arrival — "where am I, what can I do." Every caller lands here first.
+- **notes:** the front door to everything; the first ~20s are the product. Experience/Operator design in `switchboard.md`; build spec in `../engineering/switchboard-v0.md`. Establishing bed already produced (the living-switchboard ambience).
 
 ## 🔨 The Underworld — World One
 - **register:** bureaucratic comedy — an understaffed administrative department, not fire and pitchforks.
