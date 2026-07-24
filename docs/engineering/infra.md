@@ -27,6 +27,16 @@ Twilio must come last: the webhook needs the Railway URL.
 
 Single source of truth: `.env.example` at repo root. Local dev reads `.env` (run from repo root); production reads Railway service variables. Keep them in sync manually when a var is added.
 
+## Asset storage (decided 2026-07-24)
+
+Audio triples once the switchboard starts. Where each kind of asset lives:
+
+- **Shipped masters** (the clips the bridge/Twilio play) → **Supabase Storage**, a public `audio` bucket, path-structured by world/node (`world-zero/operator/menu-01.mp3`). Twilio `<Play>`s the public URL directly (removes audio-serving from the bridge); the path is the world-graph join key. **Set up as the first switchboard step** (bucket + a small `publish-audio` script); until then the 3 teaser masters stay in git.
+- **Raw sources** (WAV/Audacity working files — ~88 MB and growing) → **Google Drive**, NOT git and NOT Supabase. The storage *rate* is cheap, but Supabase's free-tier **1 GB cap** would force a \$25/mo Pro upgrade just to hold cold files nobody serves; Drive has no such cap and is where they're edited/backed up anyway. Stay gitignored.
+- **Text** (the graph/config that references asset paths, production records like `../world/switchboard/teaser-audio-production.md`) → git.
+
+Why not git for masters: binaries never delta and every re-master is a permanent blob in history; growth is unbounded per world. Why not Git LFS: adds Railway/CI `git lfs pull` friction + quota cost for no gain over the Supabase bucket already in the stack. Cross-ref: `production-tools/production-pipeline.md` (produce → sign-off → **publish to the bucket**).
+
 ## Day-2 operations
 
 > **Deploy is now CD (2026-07-24).** Merges to `main` auto-deploy via GitHub Actions (`deploy.yml`: check → migrate → `railway up`). Local dev runs against **local** Supabase + a tunnel + a dev number — see [dev-workflow.md](dev-workflow.md). Manual `railway up` below is the break-glass fallback.
