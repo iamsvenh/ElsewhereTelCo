@@ -11,24 +11,24 @@ Every deliberate push of Elsewhere out into a community or channel, so we gather
 - **Channel / audience:** Artizen main community Telegram (creative / immersive-art-literate crowd; high-fit per GTM channels).
 - **Intent:** first real audience test of the teaser pitch. Get a handful to call (806) 666-1212 and press 1. First read on `/teaser-stats` from a non-seed group.
 - **Optics constraint:** Renee (Artizen founder) is an Incented investor. Frame as a light *evening creative side project*, NOT a launch/venture. Recently floated Borker-as-Artizen in the ~20-person Power User group, so avoid looking like "many projects." No Artizen-project hint this round (hold until there's signal).
-- **Target line:** the teaser line (806) 666-1212 (pre-recorded, zero AI cost, press-1 = signup). NOT the Devil line.
-- **Status:** DRAFT — pending Sven's send.
+- **Target line:** the teaser line (806) 666-1212 (pre-recorded, zero AI cost). No explicit "press 1" in the text — the recording already prompts it, so the opt-in still happens in-call while the copy stays uninstructed. Every call is logged regardless (`teaser_calls`).
+- **CTA decision:** phone number as hero (the call IS the product; the site only routes back to it; one CTA converts best). Website (elsewheretel.co) held as optional secondary "if you want to flex the craft to a creative crowd."
+- **Note:** copy names "The Elsewhere Telephone Company" (collab paragraph), so the brand reveal is deliberate — reinforces rather than spoils.
+- **Status:** DRAFT (Sven's iteration) — pending final CTA pick + send.
 
-**Copy (recommended draft):**
+**Copy (Sven's revision, number-only hero):**
 
-> Hey Artizen friends 👋
+> Hey friends 👋 To stop the creative side of my brain from atrophying while I'm buried in Incented and Borker, I started a silly little thing in the evenings.
 >
-> Confession: after months heads-down on Incented (and Borker), the creative half of my brain needed somewhere weird to go in the evenings. So I've quietly been building a tiny, slightly ridiculous side project just to keep it alive.
+> It's a phone number. You call it and there is (will be) a whole world quietly hiding behind it.
 >
-> It's a telephone company. For places that don't exist.
+> ☎ (806) 666-1212 — call it, see what happens.
 >
-> There's a number. You call it, and something answers. I'd rather you just find out than have me explain it. It's the most fun I've had making something in ages, and I'd love a few of you to pick up the receiver and tell me what you think.
+> Would genuinely love this crowd's read on it. 🖤
 >
-> ☎️ (806) 666-1212
->
-> (Press 1 at any point if you'd like me to let you know when the lines properly open.)
->
-> No pitch, no launch, nothing to buy. Just a strange little thing I made that I suspect this crowd, of all crowds, will get. 🖤
+> This could turn into quite a few collabs from this community if it goes somewhere. The Elsewhere Telephone Company will need you world builders, story tellers, creative geniuses and weirdos.
+
+_Optional secondary CTA (if flexing the craft): append_ `(there's a little site too, if you're nosy: elsewheretel.co)` _to the number line._
 
 **Results (fill in after send):**
 - Sent: _(date/time)_
