@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=Special+Elite&family=Oswald:wght@500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400;1,500;1,700&family=Special+Elite&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
     --bg: #0c0b0d;
@@ -22,154 +22,156 @@
     --neon-soft: #ffb27a;
     --line: rgba(242,234,216,0.16);
     --memo: rgba(242,234,216,0.035);
+
+    --canvas: 70rem;     /* wide page container (~1120px) */
+    --measure: 46rem;    /* readable text block (~68ch) */
+
+    /* fluid type scale (~1.33 ratio, marketing contrast) */
+    --t-display: clamp(3.6rem, 8vw, 7rem);
+    --t-h2:      clamp(1.7rem, 3.2vw, 2.4rem);
+    --t-lead:    clamp(1.5rem, 2.8vw, 2.2rem);
+    --t-body:    clamp(1.12rem, 1.4vw, 1.3rem);
+    --t-label:   clamp(0.78rem, 1.1vw, 0.86rem);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
     background:
-      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,122,60,0.09), transparent 60%),
+      radial-gradient(ellipse 70% 42% at 50% 0%, rgba(255,122,60,0.10), transparent 58%),
       var(--bg);
     color: var(--cream);
     font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;           /* 20px base */
     line-height: 1.6;
-    padding: clamp(2.4rem, 7vw, 4.5rem) clamp(1.4rem, 5vw, 2rem) 4rem;
+    padding: clamp(3rem, 6vw, 5.5rem) clamp(1.4rem, 5vw, 3rem) 5rem;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
   body::after {
     content: ""; position: fixed; inset: 0; pointer-events: none;
     background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
-    mix-blend-mode: overlay; opacity: 0.55; z-index: 2;
+    mix-blend-mode: overlay; opacity: 0.5; z-index: 2;
   }
-  .page { width: 100%; max-width: 42rem; margin: 0 auto; position: relative; z-index: 3; }
+  .page { width: 100%; max-width: var(--canvas); margin: 0 auto; position: relative; z-index: 3; }
+  .measure { max-width: var(--measure); margin-left: auto; margin-right: auto; }
 
   /* ---- masthead ---- */
-  .masthead { text-align: center; margin-bottom: clamp(2.6rem, 8vw, 3.6rem); }
+  .masthead { text-align: center; margin-bottom: clamp(3.5rem, 8vw, 5.5rem); }
   .seal {
-    width: clamp(6.5rem, 22vw, 8.5rem); height: auto; display: block; margin: 0 auto 1.4rem;
-    filter: drop-shadow(0 0 9px rgba(255,122,60,0.26));
+    width: clamp(7.5rem, 15vw, 10.5rem); height: auto; display: block; margin: 0 auto 1.8rem;
+    filter: drop-shadow(0 0 12px rgba(255,122,60,0.28));
   }
   .masthead h1 {
-    font-weight: 900; font-size: clamp(2.4rem, 10vw, 3.6rem);
-    letter-spacing: 0.02em; line-height: 1; margin-bottom: 0.7rem;
+    font-weight: 900; font-size: var(--t-display);
+    letter-spacing: -0.015em; line-height: 0.95; margin-bottom: 1.1rem;
   }
   .edition {
     font-family: 'Special Elite', monospace;
-    font-size: clamp(0.62rem, 2.4vw, 0.74rem); letter-spacing: 0.22em; text-transform: uppercase;
+    font-size: var(--t-label); letter-spacing: 0.24em; text-transform: uppercase;
     color: var(--dim);
   }
 
-  /* ---- section tab (directory divider) ---- */
-  .tab {
-    font-family: 'Special Elite', monospace;
-    font-size: 0.7rem; letter-spacing: 0.26em; text-transform: uppercase;
-    color: var(--neon-soft); opacity: 0.9;
-    display: inline-block;
-    border: 1px solid var(--line); border-bottom: none;
-    padding: 0.5em 1.1em 0.45em; border-radius: 4px 4px 0 0;
-    margin: clamp(2.8rem, 8vw, 3.8rem) 0 0;
-    background: rgba(255,122,60,0.04);
+  /* ---- section divider: [ TAB ]————— full-width rule ---- */
+  .head { display: flex; align-items: center; gap: 1.1rem; margin: clamp(4rem, 8vw, 6.5rem) 0 clamp(1.8rem, 3vw, 2.6rem); }
+  .head .label {
+    flex: none; font-family: 'Special Elite', monospace;
+    font-size: var(--t-label); letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--neon-soft);
+    border: 1px solid var(--line); padding: 0.55em 1.1em 0.5em; border-radius: 4px;
+    background: rgba(255,122,60,0.05);
   }
-  .tab + * { border-top: 1px solid var(--line); padding-top: 1.6rem; }
+  .head .rule { flex: 1; height: 1px; background: var(--line); }
 
-  /* ---- in-fiction beats (Playfair, centered, elegant) ---- */
-  .fiction { text-align: center; }
-  .opener p {
-    font-style: italic; font-size: clamp(1.15rem, 4.4vw, 1.5rem); line-height: 1.7;
-    color: var(--cream);
-  }
-  .opener p .glow { color: var(--neon-soft); text-shadow: 0 0 18px rgba(255,122,60,0.35); font-style: italic; }
+  /* ---- in-fiction opener ---- */
+  .opener { text-align: center; }
+  .opener p { font-style: italic; font-size: var(--t-lead); line-height: 1.6; color: var(--cream); }
+  .opener .glow { color: var(--neon-soft); text-shadow: 0 0 22px rgba(255,122,60,0.4); font-style: italic; }
 
-  /* ---- honest memo (typewriter, left, an inserted note) ---- */
+  /* ---- honest memo ---- */
   .memo {
     font-family: 'Special Elite', monospace;
-    font-size: clamp(0.86rem, 3.2vw, 0.98rem); line-height: 1.85;
+    font-size: clamp(1rem, 1.3vw, 1.16rem); line-height: 1.9;
     color: var(--chrome);
     background: var(--memo);
-    border-left: 2px solid rgba(255,122,60,0.4);
-    padding: 1.5rem clamp(1.1rem, 4vw, 1.6rem);
-    border-radius: 0 4px 4px 0;
+    border-left: 3px solid rgba(255,122,60,0.45);
+    padding: clamp(1.6rem, 4vw, 2.4rem) clamp(1.4rem, 4vw, 2.6rem);
+    border-radius: 0 5px 5px 0;
   }
-  .memo p + p { margin-top: 1rem; }
+  .memo p + p { margin-top: 1.1rem; }
   .memo .what {
     font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
-    font-size: clamp(1.1rem, 4vw, 1.35rem); line-height: 1.5; color: var(--cream);
-    margin: 1.3rem 0; letter-spacing: 0.01em;
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.4; color: var(--cream);
+    margin: 1.5rem 0; letter-spacing: 0.005em;
   }
-  .memo .sign { margin-top: 1.4rem; color: var(--dim); letter-spacing: 0.1em; }
+  .memo .sign { margin-top: 1.6rem; color: var(--dim); letter-spacing: 0.12em; }
 
-  /* ---- why cards ---- */
-  .why { display: grid; gap: 1.4rem; }
+  /* ---- why: multi-column ---- */
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: clamp(1.8rem, 3vw, 2.8rem); }
   .why-item .q {
     display: block; font-family: 'Special Elite', monospace;
-    font-size: 0.9rem; letter-spacing: 0.06em; color: var(--neon-soft); margin-bottom: 0.35rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem); letter-spacing: 0.04em; color: var(--neon-soft);
+    margin-bottom: 0.7rem;
   }
-  .why-item p { font-size: clamp(1rem, 3.6vw, 1.12rem); color: var(--cream); }
+  .why-item p { font-size: var(--t-body); color: var(--cream); line-height: 1.6; }
 
-  /* ---- cosmology listing ---- */
-  .cosmos .lede {
-    font-style: italic; font-size: clamp(1.1rem, 4vw, 1.35rem); text-align: center;
-    color: var(--neon-soft); margin-bottom: 1.8rem; line-height: 1.5;
-  }
-  .cosmos dl { display: grid; gap: 1.1rem; }
-  .cosmos .row { display: grid; grid-template-columns: minmax(6.5rem, 9rem) 1fr; gap: 0.4rem 1.2rem; align-items: baseline; }
+  /* ---- cosmology: 2-col grid of terms ---- */
+  .cosmos .lede { font-style: italic; font-size: var(--t-lead); text-align: center; color: var(--neon-soft); margin-bottom: clamp(2rem, 4vw, 3rem); line-height: 1.5; }
+  .cosmos dl { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.8rem, 3vw, 2.8rem) clamp(2.5rem, 5vw, 4rem); }
+  @media (max-width: 40rem) { .cosmos dl { grid-template-columns: 1fr; } }
   .cosmos dt {
-    font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase;
-    font-size: 0.82rem; letter-spacing: 0.08em; color: var(--neon-soft);
+    font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1.05rem, 1.5vw, 1.3rem); letter-spacing: 0.06em; color: var(--neon-soft);
+    margin-bottom: 0.35rem;
   }
-  .cosmos dd { font-size: clamp(0.98rem, 3.6vw, 1.1rem); color: var(--cream); }
+  .cosmos dd { font-size: var(--t-body); color: var(--cream); line-height: 1.55; }
   .cosmos dd em { color: var(--dim); font-style: italic; }
-  @media (max-width: 30rem) { .cosmos .row { grid-template-columns: 1fr; gap: 0.15rem; } }
 
   /* ---- status bulletin ---- */
   .status-card {
-    font-family: 'Special Elite', monospace; font-size: clamp(0.8rem, 3vw, 0.92rem);
-    border: 1px solid var(--line); border-top: 1px solid var(--line);
-    border-radius: 0 4px 4px 4px; padding: 1.3rem clamp(1.1rem, 4vw, 1.5rem);
-    background: rgba(0,0,0,0.25);
+    max-width: 54rem; margin: 0 auto;
+    font-family: 'Special Elite', monospace; font-size: clamp(0.94rem, 1.2vw, 1.08rem);
+    border: 1px solid var(--line); border-radius: 6px; padding: clamp(1.5rem, 4vw, 2.2rem) clamp(1.4rem, 4vw, 2.2rem);
+    background: rgba(0,0,0,0.28);
   }
-  .status-card ul { list-style: none; display: grid; gap: 0.8rem; }
-  .status-card li { display: grid; grid-template-columns: minmax(6rem, 8rem) 1fr; gap: 0.3rem 1rem; align-items: baseline; }
-  .status-card li span:first-child { color: var(--neon-soft); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.72rem; }
-  .status-card li span:last-child { color: var(--chrome); line-height: 1.5; }
+  .status-card ul { list-style: none; display: grid; gap: 1.1rem; }
+  .status-card li { display: grid; grid-template-columns: minmax(7rem, 10rem) 1fr; gap: 0.4rem 1.4rem; align-items: baseline; }
+  .status-card li span:first-child { color: var(--neon-soft); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem; }
+  .status-card li span:last-child { color: var(--chrome); line-height: 1.55; }
   .status-card .status-note {
-    margin-top: 1.2rem; padding-top: 1rem; border-top: 1px dotted var(--line);
-    font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; color: var(--cream); text-align: center;
+    margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px dotted var(--line);
+    font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.2rem, 2vw, 1.5rem); color: var(--cream); text-align: center;
   }
   @media (max-width: 30rem) { .status-card li { grid-template-columns: 1fr; gap: 0.1rem; } }
 
-  /* ---- invitation listings ---- */
-  .invite { display: grid; gap: 1.6rem; }
+  /* ---- invitation: two listings side by side ---- */
+  .invite-lines { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: clamp(2rem, 4vw, 3rem); align-items: start; }
   .listing { text-align: center; }
   .listing-name {
-    font-family: 'Special Elite', monospace; font-size: 0.82rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem;
+    font-family: 'Special Elite', monospace; font-size: clamp(0.82rem, 1.1vw, 0.92rem); letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 0.8rem; line-height: 1.5;
   }
   .listing-name b { color: var(--cream); font-weight: 400; }
   .line {
     display: inline-flex; align-items: center; gap: 0.4em;
     font-family: 'Oswald', 'Arial Narrow', sans-serif; font-weight: 600;
-    font-size: clamp(1.7rem, 8vw, 2.5rem); letter-spacing: 0.03em;
+    font-size: clamp(2.1rem, 4.5vw, 3.4rem); letter-spacing: 0.02em;
     color: var(--neon-soft); text-decoration: none;
-    text-shadow: 0 0 8px rgba(255,122,60,0.5), 0 0 24px rgba(255,122,60,0.28);
+    text-shadow: 0 0 9px rgba(255,122,60,0.5), 0 0 28px rgba(255,122,60,0.3);
     transition: color 0.2s, text-shadow 0.2s; white-space: nowrap;
   }
-  .line .rcv { font-size: 0.62em; }
-  .line:hover, .line:focus {
-    color: #fff; outline: none;
-    text-shadow: 0 0 10px rgba(255,122,60,0.95), 0 0 34px rgba(255,122,60,0.5);
+  .line .rcv { font-size: 0.6em; }
+  .line:hover, .line:focus { color: #fff; outline: none; text-shadow: 0 0 12px rgba(255,122,60,0.95), 0 0 40px rgba(255,122,60,0.5); }
+  .closer {
+    text-align: center; font-style: italic; font-size: var(--t-lead);
+    color: var(--cream); margin-top: clamp(2.4rem, 5vw, 3.4rem); line-height: 1.55;
   }
-  .invite .closer {
-    text-align: center; font-style: italic; font-size: clamp(1.02rem, 3.8vw, 1.18rem);
-    color: var(--cream); margin-top: 0.6rem; line-height: 1.6;
-  }
-  .invite .closer .glow { color: var(--neon-soft); }
+  .closer .glow { color: var(--neon-soft); text-shadow: 0 0 20px rgba(255,122,60,0.4); }
 
   /* ---- footer ---- */
   footer {
-    margin-top: clamp(3rem, 9vw, 4.4rem); padding-top: 1.8rem; border-top: 1px solid var(--line);
+    margin-top: clamp(4rem, 9vw, 6rem); padding-top: 2.2rem; border-top: 1px solid var(--line);
     text-align: center; font-family: 'Special Elite', monospace;
-    color: var(--dim); font-size: 0.68rem; line-height: 2; letter-spacing: 0.04em;
+    color: var(--dim); font-size: 0.82rem; line-height: 2.1; letter-spacing: 0.05em;
   }
   footer a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted rgba(154,143,119,0.5); }
   footer a:hover { color: var(--chrome); border-bottom-color: var(--chrome); }
@@ -184,17 +186,16 @@
     <p class="edition">of the Elsewhere Exchange · first edition · subject to revision</p>
   </header>
 
-  <section class="fiction opener">
+  <section class="opener measure">
     <p>
-      You are holding the directory of the Elsewhere Telephone Company.<br />
+      You are holding the directory of the Elsewhere Telephone Company.
       Most of the numbers within have been disconnected. Several were never
-      connected at all.<br />
-      <span class="glow">One of them answers.</span>
+      connected at all. <span class="glow">One of them answers.</span>
     </p>
   </section>
 
-  <div class="tab">A note, out of character</div>
-  <section class="memo">
+  <div class="head"><span class="label">A note, out of character</span><span class="rule"></span></div>
+  <section class="memo measure">
     <p>Hi. If you're reading this, you probably called a strange number and want to
       know what you stumbled into. So, plainly, no fiction:</p>
     <p class="what">Elsewhere Telephone Co. is an interactive-fiction company whose
@@ -206,7 +207,7 @@
     <p class="sign">— Sven</p>
   </section>
 
-  <div class="tab">Why build this</div>
+  <div class="head"><span class="label">Why build this</span><span class="rule"></span></div>
   <section class="why">
     <div class="why-item">
       <span class="q">Why only voice?</span>
@@ -225,18 +226,18 @@
     </div>
   </section>
 
-  <div class="tab">The shape of it</div>
+  <div class="head"><span class="label">The shape of it</span><span class="rule"></span></div>
   <section class="cosmos">
     <p class="lede">One universe. Many worlds. One exchange connecting them all.</p>
     <dl>
-      <div class="row"><dt>Elsewhere</dt><dd>the universe. Everything reachable by the line.</dd></div>
-      <div class="row"><dt>The worlds</dt><dd>districts you call into, each with its own tone and clock. First open line: <em>the Underworld.</em></dd></div>
-      <div class="row"><dt>The Exchange</dt><dd>the company that connects them — the deadpan telephone outfit you actually meet.</dd></div>
-      <div class="row"><dt>The Management</dt><dd>above all of it. Never met, never explained. <em>"Calls may be monitored for quality by the Management."</em></dd></div>
+      <div><dt>Elsewhere</dt><dd>the universe. Everything reachable by the line.</dd></div>
+      <div><dt>The worlds</dt><dd>districts you call into, each with its own tone and clock. First open line: <em>the Underworld.</em></dd></div>
+      <div><dt>The Exchange</dt><dd>the company that connects them — the deadpan telephone outfit you actually meet.</dd></div>
+      <div><dt>The Management</dt><dd>above all of it. Never met, never explained. <em>"Calls may be monitored for quality by the Management."</em></dd></div>
     </dl>
   </section>
 
-  <div class="tab">Service status — honest edition</div>
+  <div class="head"><span class="label">Service status — honest edition</span><span class="rule"></span></div>
   <section class="status-card">
     <ul>
       <li><span>Stage</span><span>very early. Software only — proving the calls are fun before any hardware.</span></li>
@@ -247,15 +248,17 @@
     <p class="status-note">The most fun I've had building anything in years.</p>
   </section>
 
-  <div class="tab">If you want in</div>
+  <div class="head"><span class="label">If you want in</span><span class="rule"></span></div>
   <section class="invite">
-    <div class="listing">
-      <div class="listing-name"><b>The Front Desk</b> · press 1 to be notified</div>
-      <a class="line" href="tel:+18066661212"><span class="rcv">&#9742;</span>(806)&nbsp;666&nbsp;1212</a>
-    </div>
-    <div class="listing">
-      <div class="listing-name"><b>The Devil</b> · direct line · a rough draft, be gentle</div>
-      <a class="line" href="tel:+15055513551"><span class="rcv">&#9742;</span>(505)&nbsp;551&nbsp;3551</a>
+    <div class="invite-lines">
+      <div class="listing">
+        <div class="listing-name"><b>The Front Desk</b><br />press 1 to be notified</div>
+        <a class="line" href="tel:+18066661212"><span class="rcv">&#9742;</span>(806)&nbsp;666&nbsp;1212</a>
+      </div>
+      <div class="listing">
+        <div class="listing-name"><b>The Devil</b><br />direct line · a rough draft, be gentle</div>
+        <a class="line" href="tel:+15055513551"><span class="rcv">&#9742;</span>(505)&nbsp;551&nbsp;3551</a>
+      </div>
     </div>
     <p class="closer">And if this is your kind of weird — this world is going to need
       worldbuilders, storytellers, and the creatively unhinged.<br />
