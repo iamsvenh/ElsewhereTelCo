@@ -57,15 +57,16 @@ The IP: prompts, canon, lore, the transcript flywheel.
 - 🟢 **Teaser SHIPPED (final production)** — ElevenLabs "Elsewhere Operator" (smoky-2 Voice Design) reading v2 script, over living-switchboard bed (eerie drone + chatter + laugh + weep + dial tone), intro'd by real vintage-phone pickup foley (Sven's recording) + synth ringback. Mixed in Audacity by Sven, telephone-mastered. confirm + goodbye also in operator voice. Live on (806) 666-1212
 - 🟢 Teaser script DECIDED v2 — depth pass: elsewhere-as-universe, agency, scale, ambience
 - 🟡 Devil bible — UNBLOCKED (vision v2 ratified). Core/registers/mood; resolve reachable-cast roster (secretary? notary?) here; Mrs. Devil stays an undefined slot
-- ⚪ Canon v1 (`world/canon.md`) — postcard: Exchange, Management, Devil personnel file. Structured entries w/ causal-link fields from entry #1 (markdown until ~50 entries)
+- 🔴 Canon v1 DRAFTED (`world/canon.md`) — postcard: universe (Exchange/Management/Ledger/monitored) + Underworld + Devil personnel file + cast seeds. Structured entries w/ links. Awaiting Sven's redline: down-trunk name · "Devil cannot lie" · secretary in/out · add/cut. Unblocks the bible
 - ⚪ Weekly transcript-review loop (lore harvest → thin-wall detection → ratify → canon)
 
 ---
 
 ## Open for Sven (consolidated decision queue)
-1. **Send the Artizen teaser** — approve/tweak the draft (`strategy/outreach-log.md`) and post to the Artizen Telegram; then log results. First non-seed audience test
-2. **Send to friends too** — text (806) 666-1212 to a few people, watch `/teaser-stats` (the pitch test)
-3. **World One kickoff** — greenlight starting the Devil bible + canon v1 (vision v2 ratified; next work block)
+1. **Redline canon v1** (`world/canon.md`) — 4 decisions: down-trunk name · adopt "the Devil cannot lie" · secretary in/out · add/cut. Unblocks the Devil bible
+2. **Send the Artizen teaser** — approve/tweak the draft (`strategy/outreach-log.md`) and post to the Artizen Telegram; then log results
+3. **Re-ping Erick + the Meow Wolf friend** — their press-1 was lost to the (now-fixed) capture bug; ask them to call once more so it records
+4. **Send to more friends** — text (806) 666-1212, watch `/teaser-stats` (now a clean measurement)
 
 ## Cadence
 Commit per change set; push in intervals; this tracker updated each working session. Real hygiene (branches/CI/PRs) when we exit prototype phase.
