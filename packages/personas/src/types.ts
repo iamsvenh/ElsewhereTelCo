@@ -5,7 +5,7 @@
  * evolve via the weekly transcript-review loop (read transcripts -> find the
  * real FAQ -> write tested material into the prompts).
  *
- * Non-negotiables (from docs/concept.md — do not relitigate casually):
+ * Non-negotiables (from docs/strategy/concept.md — do not relitigate casually):
  * - Invented/ancient personas only. No real people born after ~1850.
  * - Cold opener discipline: the first line must (a) establish who they are,
  *   (b) cast the caller in a role, (c) ask an easy question.
@@ -41,7 +41,7 @@ export interface VoiceConfig {
   /**
    * Performance direction: delivery, pacing, texture ("slow, gravel and
    * smoke, never salesman-energetic"). Kept SEPARATE from the personality
-   * prompt so the voice lever swaps independently (docs/architecture.md §4).
+   * prompt so the voice lever swaps independently (docs/engineering/architecture.md §4).
    * Assembled into the final instructions as a VOICE PERFORMANCE block.
    */
   direction?: string;
@@ -98,7 +98,7 @@ HOUSE RULES (Elsewhere Telephone Company — these override everything above):
  * Final instructions sent to the Realtime session, assembled from the
  * independent levers: personality + voice performance + house rules.
  * Anti-leak rule rides with the direction block: models narrate stage
- * directions aloud unless explicitly forbidden (persona-design-notes.md).
+ * directions aloud unless explicitly forbidden (docs/world/persona-design-notes.md).
  */
 export function buildInstructions(p: Persona): string {
   const parts = [p.systemPrompt.trim()];

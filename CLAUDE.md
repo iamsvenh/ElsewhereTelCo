@@ -1,6 +1,6 @@
 # CLAUDE.md — Elsewhere Telephone Company
 
-> Context for Claude Code sessions in this repo. Read `docs/concept.md` before making product decisions — it is the source of truth for everything decided so far.
+> Context for Claude Code sessions in this repo. Start at `docs/README.md` (the docs index). Read `docs/strategy/concept.md` before making product decisions — it is the source of truth for everything decided so far.
 
 ## What this is
 
@@ -27,13 +27,13 @@ apps/bridge/        Twilio ↔ OpenAI Realtime relay, call lifecycle, Supabase w
 apps/web/           Landing page
 packages/personas/  One file per persona: system prompt, cold opener, memory style, voice config
 supabase/           Migrations
-docs/               concept.md (source of truth), future specs/decisions
+docs/               README.md (index) · tracker.md (live board) · strategy/ · engineering/ · world/
 ```
 
 ## Non-negotiable product rules (from concept doc — do not relitigate casually)
 
 1. **Personas: invented/ancient only.** No real people living or dead born after ~1850 (ELVIS Act, CA AB 1836, right of publicity).
-2. **No voiceprint/biometric identification, ever** (BIPA). Returning callers = claim codes only.
+2. **No voiceprint/biometric identification, ever** (BIPA). Returning callers recognized by **phone number** (+ PIN on shared/hardware phones), never biometrics. (Claim codes retired 2026-07-23 — see `docs/strategy/vision-world-company.md` §7.)
 3. **Two-tier consent:** transcripts stored by default for persona improvement (disclosed in-character + ToS); any PUBLIC/marketing use of a recording requires explicit per-call opt-in.
 4. **Hard 5-minute call cap enforced server-side**, fresh Realtime session per block (kills history-cost compounding).
 5. **Cold opener discipline:** every persona's first line must (a) establish who they are, (b) cast the caller in a role, (c) ask an easy question. The first 10 seconds are the product.
@@ -46,12 +46,14 @@ docs/               concept.md (source of truth), future specs/decisions
 - Persona prompts are the IP: they live in `packages/personas/`, get reviewed like code, and evolve via the weekly transcript-review loop (read transcripts → find the real FAQ → write tested material into the prompts).
 - Doc conventions follow the ops repo: lowercase-hyphen filenames, escape `$` as `\$` in markdown (Sven's reader renders `$...$` as math).
 - Brand voice everywhere (docs, landing copy, error messages): deadpan telco officialese. The company never acknowledges anything is unusual.
-- Decisions worth keeping go in `docs/` as dated notes; `docs/concept.md` stays the index of record.
+- Decisions worth keeping go in `docs/` as dated notes (in the right domain folder — see `docs/README.md`); `docs/strategy/concept.md` stays the index of record.
 - **Keep `docs/tracker.md` current — always.** It is the live board across all four workstreams (infra/ops, strategy/concept, MVP build, persona/world writing). Update it as part of any work: mark items done, add new tasks as they arise, keep the "Open for Sven" decision queue accurate. Update it in the SAME change set as the work it describes, not as an afterthought. This is non-optional.
 
 ## Reference
 
-- Concept + roadmap + economics: `docs/concept.md`
-- System architecture (incl. runtime persona config, three levers): `docs/architecture.md`
+- Docs index (start here): `docs/README.md`
+- Concept + roadmap + economics: `docs/strategy/concept.md`
+- Vision (world company, terminology, business model source): `docs/strategy/vision-world-company.md`
+- System architecture (incl. runtime persona config, three levers): `docs/engineering/architecture.md`
 - OpenAI publishes a Twilio ↔ Realtime reference implementation (Node) — crib the wire protocol, port to Bun.
 - Related shelved idea: `~/git/ops/ideas/private-voice-journal/` (someday-funnel, not part of current plan).

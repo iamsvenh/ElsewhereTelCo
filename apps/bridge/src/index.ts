@@ -65,7 +65,7 @@ const server = Bun.serve<TwilioSocketData>({
     }
 
     // ---- Stage T: the teaser line (806) 666-1212 ----
-    // Pure pre-recorded TwiML: zero AI cost. See docs/mvp-2-plan.md Stage T.
+    // Pure pre-recorded TwiML: zero AI cost. See docs/engineering/mvp-2-plan.md Stage T.
     if (url.pathname === "/teaser" && req.method === "POST") {
       const host = env.publicHost || req.headers.get("host") || url.host;
       const form = await req.formData();

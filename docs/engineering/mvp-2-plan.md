@@ -1,6 +1,6 @@
 # MVP 2.0 — World One build plan
 
-2026-07-23. Stages toward the Underworld (vision: `vision-world-company.md`). Each stage is call-testable, has a metric, and a scope fence. Existing stack (bridge, config levers, logging, guardrails) carries everything; nothing gets rebuilt.
+2026-07-23. Stages toward the Underworld (vision: `docs/strategy/vision-world-company.md`). Each stage is call-testable, has a metric, and a scope fence. Existing stack (bridge, config levers, logging, guardrails) carries everything; nothing gets rebuilt.
 
 ## Stage T — The teaser line (days; first, cheapest, Sven wants it soon)
 

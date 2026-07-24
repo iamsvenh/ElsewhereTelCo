@@ -55,4 +55,4 @@ From two calls, already recurring:
 
 ### Voice status (for context, decided elsewhere)
 
-Live: `ash` + whisper/gravel direction on `gpt-realtime-2`, reasoning effort low. Acceptable for now, not final. ElevenLabs library round unloved; Voice Design needs the paid tier; STS-over-Realtime latency prototype pending. See `docs/infra.md` and session notes.
+Live: `ash` + whisper/gravel direction on `gpt-realtime-2`, reasoning effort low. Acceptable for now, not final. ElevenLabs library round unloved; Voice Design needs the paid tier; STS-over-Realtime latency prototype pending. See `docs/engineering/infra.md` and session notes.

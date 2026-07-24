@@ -8,7 +8,7 @@ Elsewhere is **a world explored by telephone** — an interactive fiction, not a
 
 ## The layer model
 
-Every persona's instructions are assembled from these layers (see `packages/personas`, `docs/architecture.md` §4):
+Every persona's instructions are assembled from these layers (see `packages/personas`, `docs/engineering/architecture.md` §4):
 
 1. **World canon** (shared): the Elsewhere universe — cosmology, the Management, fixed facts, cross-persona references. One source; every persona draws from it, so the world stays coherent across numbers and calls.
 2. **Character** (per persona): three-layer anatomy — **invariant core** (facts always true + the wound that gives depth), **registers** (the repertoire of faces, chosen live by what the caller brings; end each call one register deeper than it started), **day-mood** (bridge-injected line for per-day/per-call freshness).

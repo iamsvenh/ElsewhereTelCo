@@ -23,13 +23,17 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 ## B. Strategy & concept
 The vision, positioning, business model, pitch. Mostly docs.
 
-- 🟢 **Vision v2 RATIFIED** (`vision-world-company.md`) — redlines resolved 2026-07-23. Terminology locked (Elsewhere/Exchange/Management/world/line/**Resident**/subscriber/Ledger/back-channel); Management = authorial mask + diegetic changelog; surveillance/observe-don't-lecture theme; cross-district shared timeline core; staged guardrails (call = unit of delivery not story); reachable vs referenced cast; feeling-first cost spectrum w/ characterized latency; phone-number identity (claim codes retired); knowledge-as-save-state; back-channel (async world→subscriber); two-channel diegetic marketing; hardware phones = dedicated physical object; Phreak district = future candidate
+- 🟢 **Docs restructured by domain** — `docs/{strategy,engineering,world}/` + README index in each; `docs/README.md` is the front door; `tracker.md` stays at root. All cross-refs (CLAUDE.md, README, code comments) updated
+- 🟢 **Business model + economics** captured (`strategy/business-model.md`) — revenue streams, pricing fiction, unit economics; **in-lore native sponsorship** idea recorded (the Devil shills Pepsi, resents it)
+- 🟢 **Fundraising** captured (`strategy/fundraising.md`) — media-company thesis, Gimlet-lineage comps + strategic-partner/investor angle, raise-on-retention, timing
+- 🟢 **Go-to-market** captured (`strategy/go-to-market.md`) — mystery-as-marketing, the (806) line as the pipe, channels, the 3 pitch decks (public/investor/partner), discipline gate
+- 🟢 **Vision v2 RATIFIED** (`strategy/vision-world-company.md`) — redlines resolved 2026-07-23. Terminology locked (Elsewhere/Exchange/Management/world/line/**Resident**/subscriber/Ledger/back-channel); Management = authorial mask + diegetic changelog; surveillance/observe-don't-lecture theme; cross-district shared timeline core; staged guardrails (call = unit of delivery not story); reachable vs referenced cast; feeling-first cost spectrum w/ characterized latency; phone-number identity (claim codes retired); knowledge-as-save-state; back-channel (async world→subscriber); two-channel diegetic marketing; hardware phones = dedicated physical object; Phreak district = future candidate
 - 🟢 World One locked: the Underworld
 - 🟢 Pitch drafted (one-liner / 30s / 90s) — tested informally, "good"
 - ⚪ Artizen framing (art-drop launch, funding, AR/VR collaborators) — later
 
 ## C. MVP build (World One)
-Per `mvp-2-plan.md`. The actual product.
+Per `engineering/mvp-2-plan.md`. The actual product.
 
 - 🟢 Runtime persona config (3 levers: model / voice / personality) — DB-driven, no redeploy
 - 🟡 Stage 2.0a — **Devil rebuilt**: canon v1 + Devil bible + mechanics (opener kit, silence timer, day-mood). UNBLOCKED (vision v2 ratified) — next work block
@@ -46,7 +50,7 @@ The IP: prompts, canon, lore, the transcript flywheel.
 - 🟢 **Teaser SHIPPED (final production)** — ElevenLabs "Elsewhere Operator" (smoky-2 Voice Design) reading v2 script, over living-switchboard bed (eerie drone + chatter + laugh + weep + dial tone), intro'd by real vintage-phone pickup foley (Sven's recording) + synth ringback. Mixed in Audacity by Sven, telephone-mastered. confirm + goodbye also in operator voice. Live on (806) 666-1212
 - 🟢 Teaser script DECIDED v2 — depth pass: elsewhere-as-universe, agency, scale, ambience
 - 🟡 Devil bible — UNBLOCKED (vision v2 ratified). Core/registers/mood; resolve reachable-cast roster (secretary? notary?) here; Mrs. Devil stays an undefined slot
-- ⚪ Canon v1 (`canon.md`) — postcard: Exchange, Management, Devil personnel file. Structured entries w/ causal-link fields from entry #1 (markdown until ~50 entries)
+- ⚪ Canon v1 (`world/canon.md`) — postcard: Exchange, Management, Devil personnel file. Structured entries w/ causal-link fields from entry #1 (markdown until ~50 entries)
 - ⚪ Weekly transcript-review loop (lore harvest → thin-wall detection → ratify → canon)
 
 ---

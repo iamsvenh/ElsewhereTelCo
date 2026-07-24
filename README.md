@@ -6,7 +6,7 @@ Real vintage phones (payphones, rotary phones) connected to AI voice personas. P
 
 ## Status
 
-**Stage 0: software-only MVP.** Two phone numbers, three personas plus the Operator, analytics baked in. No hardware until the personas prove fun (unprompted-share test). Full staged roadmap with kill criteria in [docs/concept.md](docs/concept.md).
+**Stage 0: software-only MVP.** Two phone numbers, three personas plus the Operator, analytics baked in. No hardware until the personas prove fun (unprompted-share test). Full staged roadmap with kill criteria in [docs/strategy/concept.md](docs/strategy/concept.md).
 
 ## Architecture (MVP)
 
@@ -31,7 +31,7 @@ docs/               Concept, decisions, specs
 
 ## Key documents
 
-- [docs/concept.md](docs/concept.md) — the full concept: personas, legality, unit economics, worst-case cost, brand, tech spec, staged roadmap, open questions.
+- [docs/strategy/concept.md](docs/strategy/concept.md) — the full concept: personas, legality, unit economics, worst-case cost, brand, tech spec, staged roadmap, open questions.
 
 ---
 

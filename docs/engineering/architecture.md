@@ -1,6 +1,6 @@
 # System architecture
 
-Living document. Describes how the system works and where it extends. Started 2026-07-23; update alongside structural changes. Product decisions live in `concept.md`; infra identifiers in `infra.md`; persona learnings in `persona-design-notes.md`.
+Living document. Describes how the system works and where it extends. Started 2026-07-23; update alongside structural changes. Product decisions live in `docs/strategy/concept.md`; infra identifiers in `infra.md`; persona learnings in `docs/world/persona-design-notes.md`.
 
 ## 1. Overview
 

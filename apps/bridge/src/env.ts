@@ -33,7 +33,7 @@ export const env = {
   // Dual-channel Twilio call recording for persona/voice analysis.
   // ON during the informed-seed-tester phase (decision 2026-07-22).
   // Revisit before any public sharing: default stance is transcripts yes,
-  // audio off (or move into ToS) — see docs/concept.md §8.
+  // audio off (or move into ToS) — see docs/strategy/concept.md §8.
   recordCalls: process.env.RECORD_CALLS === "true",
 };
 

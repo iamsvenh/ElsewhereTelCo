@@ -25,7 +25,7 @@ if (env.supabaseUrl && env.supabaseSecretKey) {
   console.warn("[db] SUPABASE_URL / SUPABASE_SECRET_KEY not set — call logging disabled");
 }
 
-/** Runtime persona overrides (docs/architecture.md §4). All fields nullable. */
+/** Runtime persona overrides (docs/engineering/architecture.md §4). All fields nullable. */
 export interface PersonaOverride {
   model: string | null;
   voice: string | null;
