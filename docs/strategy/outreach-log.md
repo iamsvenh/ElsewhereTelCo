@@ -6,6 +6,22 @@ Every deliberate push of Elsewhere out into a community or channel, so we gather
 
 ---
 
+## Reusable templates
+
+### 1:1 friend DM (generic, works across friend types)
+
+Personalize `[name]`, and ideally add one line specific to that friend before the pitch — personalized 1:1s convert far better than obvious copy-paste. Points at the teaser line; the recording handles the opt-in.
+
+> Heya [name] 👋 Been tinkering at night on a little creative side project (nothing to do with work), and honestly getting pretty excited about it. Got a minute to poke at the first little piece of it?
+>
+> ☎ (806) 666-1212 — call it, see what happens. Just a number with (eventually) a whole world behind it.
+>
+> Would really love your read on it. 🖤
+
+Notable friend reactions (aggregate, not per-send): _
+
+---
+
 ## 2026-07-23 — Artizen community (Telegram)
 
 - **Channel / audience:** Artizen main community Telegram (creative / immersive-art-literate crowd; high-fit per GTM channels).
