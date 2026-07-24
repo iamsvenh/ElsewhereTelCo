@@ -45,12 +45,12 @@ Handy: `bun run db:status`, `bun run db:reset` (re-applies migrations to local),
 Light flow (the "real hygiene later" is now):
 1. Branch off `main` (`git switch -c feat/switchboard`).
 2. Work. `bun run check` locally (typecheck + lint + format + test) until green.
-3. `bun run dev:all` + a dev call to eyeball it end-to-end.
+3. `bun run dev:all` to eyeball the web/logic locally.
 4. Push the branch, open a PR → **CI (`ci.yml`) runs `check`** on the PR.
-5. Merge only when CI is green (branch protection enforces this — see setup).
+5. Merge only when CI is green.
 6. Merge → **CD (`deploy.yml`)** runs: check → migrate → deploy.
 
-`main` is always deployable, because nothing lands on it except through a green PR.
+**Enforcement — solo-merge discipline (free GitHub, no branch protection).** Branch protection isn't available, so the rule is procedural, same as Borker: **Sven is the only one who merges to `main`, and only when the PR's CI is green.** Two things make this safe without protection: (a) `deploy.yml` re-runs `check` as its first gated stage, so **even a direct/red push to main will not deploy** — a red commit is at worst cosmetic, never shipped; (b) always work on a branch + PR so CI runs before the merge. When the repo goes to a paid plan or gains collaborators, add a branch-protection rule requiring the CI `check`.
 
 ## CI/CD
 
@@ -64,19 +64,19 @@ Light flow (the "real hygiene later" is now):
 
 Migrations run **before** the code deploy on purpose, and our migrations are additive/idempotent (`if not exists`), so the ordering is safe.
 
-### First-time setup (one-time, in GitHub repo settings)
+### First-time setup — three GitHub secrets (one-time)
 
-Secrets (Settings → Secrets and variables → Actions):
-- `RAILWAY_TOKEN` — a Railway **project** token for the `elsewhere` project.
-- `SUPABASE_ACCESS_TOKEN` — a Supabase account access token.
-- `SUPABASE_PROJECT_ID` — `mtvlkjcdfluocapoyvdc`.
-- `SUPABASE_DB_PASSWORD` — the prod DB password.
+Add each at **repo → Settings → Secrets and variables → Actions → New repository secret** (or via `gh secret set <NAME>`, which prompts for the value):
 
-Branch protection (Settings → Branches → add rule for `main`):
-- Require a pull request before merging.
-- Require status checks to pass → select the CI `check` job.
+| Secret | Where to get it |
+| --- | --- |
+| `RAILWAY_TOKEN` | Railway → the **elsewhere** project → **Settings → Tokens** → create a token scoped to the **production** environment. (Project token, not an account token — least privilege; the CLI reads it as `RAILWAY_TOKEN`.) |
+| `SUPABASE_ACCESS_TOKEN` | Supabase → **Account → Access Tokens** (supabase.com/dashboard/account/tokens) → Generate. Authenticates the CLI for `db push`. |
+| `SUPABASE_DB_PASSWORD` | Supabase → the project → **Settings → Database → Database password**. If unknown, Reset it there (updates prod's password — set it in Railway vars too if the bridge uses it directly; today it doesn't, only the migration job does). |
 
-Until these exist, CI runs on PRs but `deploy.yml` will fail at the stage whose secret is missing — safe (nothing deploys), just red.
+The project ref is hardcoded in `deploy.yml` (not secret — it's in this repo already), so there's no fourth secret.
+
+Until these exist, CI still runs on PRs; `deploy.yml` will just fail at the stage whose secret is missing — safe (nothing deploys), only red.
 
 ## Not doing yet (deliberately)
 
