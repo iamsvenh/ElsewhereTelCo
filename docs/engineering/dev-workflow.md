@@ -78,6 +78,20 @@ The project ref is hardcoded in `deploy.yml` (not secret — it's in this repo a
 
 Until these exist, CI still runs on PRs; `deploy.yml` will just fail at the stage whose secret is missing — safe (nothing deploys), only red.
 
+## Work tracking — Linear (decided 2026-07-24)
+
+Moving the live board from `tracker.md` to Linear. **One team** (`elsewhere`, already created) to keep overhead low; the discipline-vs-deliverable cross-cut is modeled with labels + projects + views instead of multiple teams:
+
+- **Workflow states** (one generic set): Backlog → Todo → In Progress → In Review → Done (+ Canceled). Creative's "redline → ratified" and production's "master → sign-off → published" map onto In Review → Done.
+- **Labels** (grouped): `area:` (engineering / production / creative / strategy / infra) = the discipline lens; `world:` (switchboard / underworld / kitchen / 2036 / philosophical); `type:` (bug / feature / chore / spike / decision); `needs:sven` = the decision queue.
+- **Projects = deliverables** (cross-discipline): *World Zero — Switchboard*, *The Underworld — Devil*, *Stage 0 — Prove & Launch*.
+- **Views** (the lenses, so no single cluttered board): *Open for Sven* (`needs:sven`), *Engineering* / *Creative* / *Production* (by `area:`), each Project board, *By world* (group by `world:`), *Current cycle*.
+- **The split — Linear tracks WORK; git keeps CANON/SPECS/DECISIONS.** `concept.md`, `canon.md`, and dated notes stay the source of record; a ticket references a doc, it never replaces it.
+- **Ticket hygiene** is enforced by the `ticket-spec` + `ticket-verification` skills (spec-first, tests-first; a manual dev/prod call check for live-voice tickets).
+- **Access:** the `linear-server` MCP (Linear's hosted server) added per-project — `claude mcp add linear-server https://mcp.linear.app/mcp --transport http`, then restart.
+
+**Status:** structure + migration pending the MCP being wired. Until then `tracker.md` stays the live board; on migration its **open** items move to Linear and its **done** items stay as history in git.
+
 ## Not doing yet (deliberately)
 
 - **No local-call tunnel + no separate dev Twilio/OpenAI accounts** (Sven, 2026-07-24 — skip for now). What they'd unlock: calling a **dev** number that rings your laptop (`cloudflared` tunnel → `PUBLIC_HOST`), so you could E2E a real call locally against a dev OpenAI project with its own budget cap. Until then, local dev = Supabase + web + logic + tests, and live-call validation is a call to the prod number after deploy. Re-add when local call-testing is worth it: install `cloudflared`, provision a dev number + dev OpenAI project, and restore the tunnel step in `scripts/dev-all.ts` (it's in git history).
