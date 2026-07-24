@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # typecheck + unit + integration. The integration layer boots the bridge
-      # in a hermetic cwd (no .env, no Supabase) — no external services needed.
+      # typecheck + lint + unit + integration. The integration layer boots the
+      # bridge in a hermetic cwd (no .env, no Supabase) — no external services.
       - name: Check
         run: bun run check

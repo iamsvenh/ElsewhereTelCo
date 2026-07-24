@@ -32,7 +32,7 @@ function personaForNumber(to: string): string {
 /** Flatten a Twilio POST body into a plain record (also used for signature check). */
 async function formParams(req: Request): Promise<Record<string, string>> {
   const p: Record<string, string> = {};
-  for (const [k, v] of (await req.formData()).entries()) p[k] = String(v);
+  for (const [k, v] of (await req.formData()).entries()) {p[k] = String(v);}
   return p;
 }
 
@@ -139,9 +139,9 @@ const server = Bun.serve<TwilioSocketData>({
     // Pre-recorded audio assets (teaser VO, future overworld clips).
     if (url.pathname.startsWith("/audio/")) {
       const name = url.pathname.slice("/audio/".length);
-      if (!/^[\w-]+\.mp3$/.test(name)) return new Response("Not found", { status: 404 });
+      if (!/^[\w-]+\.mp3$/.test(name)) {return new Response("Not found", { status: 404 });}
       const file = Bun.file(join(import.meta.dir, "..", "assets", "audio", name));
-      if (!(await file.exists())) return new Response("Not found", { status: 404 });
+      if (!(await file.exists())) {return new Response("Not found", { status: 404 });}
       return new Response(file, { headers: { "Content-Type": "audio/mpeg" } });
     }
 
@@ -195,8 +195,13 @@ const server = Bun.serve<TwilioSocketData>({
     if (/^(favicon(-16|-32)?\.(svg|png|ico)|apple-touch-icon\.png|logo-seal\.svg)$/.test(staticAsset)) {
       const file = Bun.file(join(webDir, staticAsset));
       if (await file.exists()) {
-        const ext = staticAsset.split(".").pop()!;
-        const ct = ext === "svg" ? "image/svg+xml" : ext === "ico" ? "image/x-icon" : "image/png";
+        const ext = staticAsset.split(".").pop() ?? "";
+        const contentTypes: Record<string, string> = {
+          svg: "image/svg+xml",
+          ico: "image/x-icon",
+          png: "image/png",
+        };
+        const ct = contentTypes[ext] ?? "application/octet-stream";
         return new Response(file, { headers: { "Content-Type": ct } });
       }
     }

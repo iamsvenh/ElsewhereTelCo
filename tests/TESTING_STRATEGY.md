@@ -34,10 +34,14 @@ Run:
 
 | Layer | Owns | Fidelity | Files |
 | --- | --- | --- | --- |
-| **unit** | pure invariants + security logic: Twilio signature/token (F5), spend/rate guards (F33), log redaction (F7), TwiML building + XML-escaping, persona non-negotiables (openers, house rules, canon phrase, the fixed loops) | none needed — no I/O | `unit/twilio-auth`, `unit/guards`, `unit/redact`, `unit/twiml`, `unit/personas` |
+| **unit** | pure invariants + security logic: Twilio signature/token (F5), spend/rate guards (F33), log redaction (F7), TwiML building + XML-escaping, persona non-negotiables (openers, house rules, canon phrase, the fixed loops), and the **relay bookkeeping** (F29 barge-in tail + cost estimate, extracted from `session.ts` into `relay.ts`) | none needed — no I/O | `unit/twilio-auth`, `unit/guards`, `unit/redact`, `unit/twiml`, `unit/personas`, `unit/relay` |
 | **integration** | the bridge's HTTP contract: signature enforcement on `/incoming-call` (403 unsigned / 200 signed w/ token), the `/legal`·`/privacy`·`/terms` disclosures page, 404s | real server process; hermetic env (no `.env`, no Supabase) | `integration/bridge-routes` |
 
-44 tests green as of 2026-07-24.
+52 tests green as of 2026-07-24.
+
+## Linting
+
+Strict from day one (`eslint.config.mjs`, adapted from Borker minus its React/Next rules). Headline: **`@typescript-eslint/no-explicit-any` is an error** — type the wire events, don't `any` them. Also strict-config rules, `consistent-type-imports`, no-non-null-assertion (relaxed in tests), unused-imports, `prefer-const`/`no-var`/`eqeqeq`/`curly`. We enforce **zero** — Borker waited and now carries a ~1500-item backlog; we don't inherit that. `no-console` is off on purpose: this is a server, stdout is its observability (F7 governs *what* is logged, not whether). `bun run lint` runs it; it's part of `bun run check` and CI.
 
 ## Fidelity ladder (what's real vs. faked, and why)
 
@@ -48,7 +52,7 @@ Run:
 
 ## Known gaps (honest)
 
-- **Session relay logic (`session.ts`) is untested.** Barge-in (F29), the finalize race (F30), the cap timers, and cost estimation are verified only by manual calls. They're I/O-entangled today; the fix is to separate the state machine from the WebSockets so synthetic `response.done` / `mark` / `speech_started` sequences can drive it. Highest-value next test target.
+- **Session relay — the pure logic is now extracted + tested** (`relay.ts`: the F29 barge-in state machine and the cost estimate, driven by synthetic event sequences in `unit/relay.test.ts`). What's still untested is the **socket wiring and the timers** in `session.ts` — the 5-min cap / 4:30 nudge (need fake-timer support), the F30 finalize-await race, and the F31 config-ack flow end-to-end. Next: either fake timers, or extract the timer/finalize orchestration behind an injectable clock + sink so it too can be driven synthetically.
 - **No Supabase-layer tests** (see above).
 - **The three-job cold-opener law** is only partially machine-checkable — we assert an opener exists and asks a question; whether it *casts the caller in a role* is human-reviewed in the transcript loop.
 - **VAD / turn-detection tuning** (the background-chatter finding) has no automated oracle — it's inherently perceptual, tuned against real calls.

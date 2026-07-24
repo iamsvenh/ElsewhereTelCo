@@ -25,7 +25,7 @@ const all: [string, Persona][] = Object.entries(personas);
 
 describe("registry", () => {
   test("id keys match each persona's own id", () => {
-    for (const [key, p] of all) expect(p.id).toBe(key);
+    for (const [key, p] of all) {expect(p.id).toBe(key);}
   });
 
   test("getPersona returns undefined for an unknown id", () => {

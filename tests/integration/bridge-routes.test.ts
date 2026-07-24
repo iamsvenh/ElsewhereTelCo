@@ -51,7 +51,7 @@ beforeAll(async () => {
   for (let i = 0; i < 50; i++) {
     try {
       const r = await fetch(`${BASE}/health`);
-      if (r.ok) return;
+      if (r.ok) {return;}
     } catch {}
     await Bun.sleep(100);
   }

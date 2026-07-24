@@ -39,7 +39,7 @@ export interface PersonaOverride {
 const overrideCache = new Map<string, PersonaOverride | null>();
 
 export async function fetchPersonaOverride(persona: string): Promise<PersonaOverride | null> {
-  if (!client) return null;
+  if (!client) {return null;}
   try {
     const { data, error } = await client
       .from("persona_config")
@@ -47,7 +47,7 @@ export async function fetchPersonaOverride(persona: string): Promise<PersonaOver
       .eq("persona", persona)
       .abortSignal(AbortSignal.timeout(1_500))
       .maybeSingle();
-    if (error) throw new Error(error.message);
+    if (error) {throw new Error(error.message);}
     overrideCache.set(persona, data);
     return data;
   } catch (err) {
@@ -58,21 +58,21 @@ export async function fetchPersonaOverride(persona: string): Promise<PersonaOver
 
 /** Teaser-line press-1: add a number to the subscriber ledger (idempotent). */
 export async function insertSignup(number: string): Promise<void> {
-  if (!client) return;
+  if (!client) {return;}
   const { error } = await client
     .from("signups")
     .upsert({ number }, { onConflict: "number", ignoreDuplicates: true });
-  if (error) console.error("[db] insertSignup failed:", error.message);
-  else console.log(`[signup] ${number} entered in the subscriber ledger`);
+  if (error) {console.error("[db] insertSignup failed:", error.message);}
+  else {console.log(`[signup] ${number} entered in the subscriber ledger`);}
 }
 
 /** Log a teaser-line call at pickup (before we know the outcome). */
 export async function recordTeaserCall(callSid: string, from: string): Promise<void> {
-  if (!client || !callSid) return;
+  if (!client || !callSid) {return;}
   const { error } = await client
     .from("teaser_calls")
     .upsert({ call_sid: callSid, caller_number: from }, { onConflict: "call_sid", ignoreDuplicates: true });
-  if (error) console.error("[db] recordTeaserCall failed:", error.message);
+  if (error) {console.error("[db] recordTeaserCall failed:", error.message);}
 }
 
 /**
@@ -86,13 +86,13 @@ export async function setTeaserOutcome(
   outcome: string,
   from?: string,
 ): Promise<void> {
-  if (!client || !callSid) return;
+  if (!client || !callSid) {return;}
   const row: Record<string, string> = { call_sid: callSid, outcome };
-  if (from) row.caller_number = from;
+  if (from) {row.caller_number = from;}
   const { error } = await client
     .from("teaser_calls")
     .upsert(row, { onConflict: "call_sid" });
-  if (error) console.error("[db] setTeaserOutcome failed:", error.message);
+  if (error) {console.error("[db] setTeaserOutcome failed:", error.message);}
 }
 
 /** Record call duration + final status from Twilio's status callback. */
@@ -101,7 +101,7 @@ export async function setTeaserCallDetail(
   durationS: number,
   status: string,
 ): Promise<void> {
-  if (!client || !callSid) return;
+  if (!client || !callSid) {return;}
   // Row may not exist yet if the status callback races the /teaser hit; upsert.
   const { error } = await client
     .from("teaser_calls")
@@ -109,12 +109,12 @@ export async function setTeaserCallDetail(
       { call_sid: callSid, duration_s: durationS, call_status: status },
       { onConflict: "call_sid" },
     );
-  if (error) console.error("[db] setTeaserCallDetail failed:", error.message);
+  if (error) {console.error("[db] setTeaserCallDetail failed:", error.message);}
 }
 
 /** Quick funnel + engagement overview for the teaser line. */
 export async function teaserStats(): Promise<Record<string, unknown> | null> {
-  if (!client) return null;
+  if (!client) {return null;}
   const { data, error } = await client
     .from("teaser_calls")
     .select("outcome, caller_number, duration_s, created_at");
@@ -156,7 +156,7 @@ export async function insertCall(row: {
   persona: string;
   call_sid: string | null;
 }): Promise<string | null> {
-  if (!client) return null;
+  if (!client) {return null;}
   const { data, error } = await client
     .from("calls")
     .insert({ ...row, started_at: new Date().toISOString() })
@@ -184,7 +184,7 @@ export async function finalizeCall(
     model: string;
   },
 ): Promise<void> {
-  if (!client) return;
+  if (!client) {return;}
   const { error } = await client.from("calls").update(patch).eq("id", id);
-  if (error) console.error("[db] finalizeCall failed:", error.message);
+  if (error) {console.error("[db] finalizeCall failed:", error.message);}
 }

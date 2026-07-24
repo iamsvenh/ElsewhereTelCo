@@ -25,25 +25,18 @@ import {
 } from "./db";
 import { releaseCall } from "./guards";
 import { maskNumber } from "./redact";
+import {
+  PlaybackTracker,
+  estimateAudioCost,
+  type RealtimeEvent,
+  type RealtimeUsage,
+  type TwilioEvent,
+} from "./relay";
 
 const CALL_CAP_MS = 5 * 60_000; // hard cap (rule 4)
 const WRAP_NUDGE_MS = CALL_CAP_MS - 30_000; // "please deposit another coin" moment
 const CACHE_CHECK_MIN_TURNS = 3; // cache can't warm up before a few turns
-
-/**
- * Rough per-token audio pricing for cost_estimate (USD per token), selected
- * by model. Verify against the pricing page when models change — this is a
- * logging aid, not billing. (Learned 2026-07-23: a flat mini table under-
- * reported gpt-realtime-2 calls ~3x vs the real dashboard spend.)
- */
-const PRICE_BY_MODEL: Record<string, { audioIn: number; audioInCached: number; audioOut: number }> = {
-  mini: { audioIn: 10 / 1e6, audioInCached: 0.3 / 1e6, audioOut: 20 / 1e6 },
-  full: { audioIn: 32 / 1e6, audioInCached: 0.4 / 1e6, audioOut: 64 / 1e6 },
-};
-
-function priceFor(model: string) {
-  return model.includes("mini") ? PRICE_BY_MODEL.mini! : PRICE_BY_MODEL.full!;
-}
+const CONFIG_ACK_MS = 2_000; // F31: wait this long for session.updated before speaking anyway
 
 export interface TwilioSocketData {
   session?: CallSession;
@@ -68,19 +61,16 @@ export class CallSession {
   private closed = false;
   private completed = false; // true = hit the cap; false = caller hung up
 
-  // Interruption bookkeeping (from the reference implementation):
-  // Twilio media timestamps tell us how much audio the caller has actually
-  // heard, so on barge-in we truncate the assistant item to that point and
-  // clear Twilio's playback buffer.
+  // Barge-in / playback bookkeeping lives in the pure PlaybackTracker (F29).
+  // Twilio media timestamps tell us how much audio the caller has heard.
   private latestMediaTimestamp = 0;
-  private responseStartTimestamp: number | null = null;
-  private lastAssistantItem: string | null = null;
-  // F29: one Twilio "mark" per audio chunk sent; the queue length tells us
-  // whether Twilio is STILL playing buffered assistant audio. response.done
-  // arrives while that buffer is draining, so this — not response.done — is
-  // what makes tail-of-turn barge-in flush correctly.
-  private markQueue: string[] = [];
-  private responseInProgress = false;
+  private playback = new PlaybackTracker();
+
+  // F31: don't speak until the session.update is acked. A rejected update
+  // silently leaves the wrong audio format (pcm16) — 5 min of undecodable
+  // noise — so we surface it loudly instead of proceeding blind.
+  private openerSent = false;
+  private configAckTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Logging / metrics
   private dbId: string | null = null;
@@ -114,7 +104,7 @@ export class CallSession {
     this.callSid = opts.callSid;
 
     const persona = getPersona(opts.persona) ?? getPersona(env.defaultPersona);
-    if (!persona) throw new Error(`Unknown persona: ${opts.persona}`);
+    if (!persona) {throw new Error(`Unknown persona: ${opts.persona}`);}
     this.persona = persona;
     this.effective = persona; // replaced by resolveConfig() before connect
     this.model = env.model;
@@ -135,12 +125,12 @@ export class CallSession {
     });
     this.dbIdReady.then((id) => (this.dbId = id)).catch(() => {});
 
-    if (env.recordCalls && this.callSid) this.recordingReady = this.startRecording();
+    if (env.recordCalls && this.callSid) {this.recordingReady = this.startRecording();}
 
     // Resolve runtime config, then connect. On any failure fall back to
     // code defaults — config must never be able to kill a call.
     void this.resolveConfig().finally(() => {
-      if (!this.closed) this.connectOpenAI();
+      if (!this.closed) {this.connectOpenAI();}
     });
   }
 
@@ -188,9 +178,9 @@ export class CallSession {
           body: new URLSearchParams({ RecordingChannels: "dual" }),
         },
       );
-      const data: any = await res.json();
+      const data = (await res.json()) as { sid?: string; message?: string };
       if (res.ok) {
-        this.recordingSid = data.sid;
+        this.recordingSid = data.sid ?? null;
         console.log(`[rec] recording started ${data.sid}`);
       } else {
         console.error(`[rec] failed to start: ${data.message ?? res.status}`);
@@ -231,9 +221,9 @@ export class CallSession {
     // server_vad, optionally tuned to ignore background chatter. Fields are
     // added only when the env knob is set, so the default stays the API default.
     const turnDetection: Record<string, unknown> = { type: "server_vad" };
-    if (env.vadThreshold != null) turnDetection.threshold = env.vadThreshold;
-    if (env.vadSilenceMs != null) turnDetection.silence_duration_ms = env.vadSilenceMs;
-    if (env.vadPrefixMs != null) turnDetection.prefix_padding_ms = env.vadPrefixMs;
+    if (env.vadThreshold != null) {turnDetection.threshold = env.vadThreshold;}
+    if (env.vadSilenceMs != null) {turnDetection.silence_duration_ms = env.vadSilenceMs;}
+    if (env.vadPrefixMs != null) {turnDetection.prefix_padding_ms = env.vadPrefixMs;}
     this.sendOpenAI({
       type: "session.update",
       session: {
@@ -255,7 +245,27 @@ export class CallSession {
       },
     });
 
-    // Cold opener: the persona speaks first. The first 10 seconds are the product.
+    // F31: DON'T speak yet — wait for the session.updated ack (see
+    // handleOpenAIMessage). Fallback: if the ack never comes, speak anyway
+    // rather than hang, but log it so a silent-config bug is visible.
+    this.configAckTimer = setTimeout(() => {
+      if (!this.openerSent && !this.closed) {
+        console.warn("[openai] no session.updated within 2s — sending opener anyway");
+        this.sendColdOpener();
+      }
+    }, CONFIG_ACK_MS);
+  }
+
+  /** Cold opener: the persona speaks first. The first 10 seconds are the product. */
+  private sendColdOpener(): void {
+    if (this.openerSent) {
+      return;
+    }
+    this.openerSent = true;
+    if (this.configAckTimer) {
+      clearTimeout(this.configAckTimer);
+      this.configAckTimer = null;
+    }
     this.sendOpenAI({
       type: "response.create",
       response: {
@@ -265,22 +275,24 @@ export class CallSession {
   }
 
   private handleOpenAIMessage(raw: string): void {
-    let msg: any;
+    let msg: RealtimeEvent;
     try {
-      msg = JSON.parse(raw);
+      msg = JSON.parse(raw) as RealtimeEvent;
     } catch {
       return;
     }
 
     switch (msg.type) {
+      // F31: the session.update was accepted — NOW it's safe to speak.
+      case "session.updated": {
+        this.sendColdOpener();
+        break;
+      }
+
       // Assistant audio out -> Twilio. (GA name, then legacy beta name.)
       case "response.output_audio.delta":
       case "response.audio.delta": {
-        if (this.responseStartTimestamp === null) {
-          this.responseStartTimestamp = this.latestMediaTimestamp;
-        }
-        this.responseInProgress = true;
-        if (msg.item_id) this.lastAssistantItem = msg.item_id;
+        this.playback.onAudioDelta(msg.item_id, this.latestMediaTimestamp);
         this.sendTwilio({
           event: "media",
           streamSid: this.streamSid,
@@ -292,33 +304,22 @@ export class CallSession {
           streamSid: this.streamSid,
           mark: { name: "resp" },
         });
-        this.markQueue.push("resp");
         break;
       }
 
-      // Caller barge-in: only act if Twilio still has assistant audio queued
-      // (markQueue non-empty). This is what catches interruptions in the tail
-      // AFTER response.done, which the old response.done reset silently dropped.
+      // Caller barge-in. The tracker returns an action only if Twilio is still
+      // playing buffered audio — including the tail AFTER response.done, which
+      // is exactly the window the old response.done reset silently dropped.
       case "input_audio_buffer.speech_started": {
-        if (
-          this.markQueue.length > 0 &&
-          this.lastAssistantItem &&
-          this.responseStartTimestamp !== null
-        ) {
-          const heardMs = Math.max(
-            0,
-            this.latestMediaTimestamp - this.responseStartTimestamp,
-          );
+        const bargeIn = this.playback.onSpeechStarted(this.latestMediaTimestamp);
+        if (bargeIn) {
           this.sendOpenAI({
             type: "conversation.item.truncate",
-            item_id: this.lastAssistantItem,
+            item_id: bargeIn.truncateItemId,
             content_index: 0,
-            audio_end_ms: heardMs,
+            audio_end_ms: bargeIn.audioEndMs,
           });
           this.sendTwilio({ event: "clear", streamSid: this.streamSid });
-          this.markQueue = [];
-          this.lastAssistantItem = null;
-          this.responseStartTimestamp = null;
         }
         break;
       }
@@ -337,24 +338,28 @@ export class CallSession {
       }
 
       case "response.done": {
-        // NOT responseStartTimestamp = null here — Twilio is still draining the
-        // buffer, and nulling it now is exactly what broke tail barge-in (F29).
-        // The bookkeeping resets when the last mark returns (see "mark" below).
-        this.responseInProgress = false;
+        this.playback.onResponseDone();
         this.recordUsage(msg.response?.usage);
         break;
       }
 
       case "error": {
         console.error("[openai] error event:", JSON.stringify(msg.error ?? msg));
+        // F31: an error before the config was acked almost certainly means the
+        // session.update was rejected → the session is misconfigured (wrong
+        // audio format = undecodable noise). Fail fast rather than bill 5 min.
+        if (!this.openerSent) {
+          console.error("[openai] error before session.updated — aborting misconfigured call");
+          this.close("config-rejected");
+        }
         break;
       }
     }
   }
 
   /** Rule 8: verify cached_tokens on every turn — cache failure is silent. */
-  private recordUsage(usage: any): void {
-    if (!usage) return;
+  private recordUsage(usage: RealtimeUsage | undefined): void {
+    if (!usage) {return;}
     this.turns += 1;
     this.tokensIn += usage.input_tokens ?? 0;
     this.tokensOut += usage.output_tokens ?? 0;
@@ -380,18 +385,18 @@ export class CallSession {
 
   private addTranscript(role: "caller" | "persona", text: string): void {
     const trimmed = text.trim();
-    if (!trimmed) return;
+    if (!trimmed) {return;}
     this.transcript.push({ role, text: trimmed, at: Date.now() - this.startedAt });
     // F7: transcript is persisted to Supabase above; the stdout copy is gated.
-    if (env.logTranscripts) console.log(`[${role}] ${trimmed}`);
+    if (env.logTranscripts) {console.log(`[${role}] ${trimmed}`);}
   }
 
   // ---------- Twilio side ----------
 
   handleTwilioMessage(raw: string): void {
-    let msg: any;
+    let msg: TwilioEvent;
     try {
-      msg = JSON.parse(raw);
+      msg = JSON.parse(raw) as TwilioEvent;
     } catch {
       return;
     }
@@ -399,7 +404,7 @@ export class CallSession {
     switch (msg.event) {
       case "media": {
         this.latestMediaTimestamp = Number(msg.media?.timestamp ?? this.latestMediaTimestamp);
-        if (this.openai?.readyState === WebSocket.OPEN) {
+        if (msg.media?.payload && this.openai?.readyState === WebSocket.OPEN) {
           this.sendOpenAI({
             type: "input_audio_buffer.append",
             audio: msg.media.payload,
@@ -408,14 +413,9 @@ export class CallSession {
         break;
       }
       case "mark": {
-        // Twilio finished playing one chunk. When the queue empties AND the
-        // response is fully sent, the turn has truly ended — reset the barge-in
-        // bookkeeping so the NEXT turn measures "heard" from its own start.
-        if (this.markQueue.length > 0) this.markQueue.shift();
-        if (this.markQueue.length === 0 && !this.responseInProgress) {
-          this.responseStartTimestamp = null;
-          this.lastAssistantItem = null;
-        }
+        // Twilio finished playing one chunk; the tracker resets its barge-in
+        // bookkeeping once the buffer is fully drained and the response is done.
+        this.playback.onMark();
         break;
       }
       case "stop": {
@@ -449,18 +449,22 @@ export class CallSession {
   // ---------- Lifecycle ----------
 
   close(reason: string): void {
-    if (this.closed) return;
+    if (this.closed) {return;}
     this.closed = true;
     clearTimeout(this.wrapTimer);
     clearTimeout(this.capTimer);
+    if (this.configAckTimer) {clearTimeout(this.configAckTimer);}
     releaseCall(); // F33: free the concurrency slot
 
     const durationS = Math.round((Date.now() - this.startedAt) / 1000);
-    const price = priceFor(this.model);
-    const cost =
-      (this.audioTokensIn - this.cachedAudioTokensIn) * price.audioIn +
-      this.cachedAudioTokensIn * price.audioInCached +
-      this.audioTokensOut * price.audioOut;
+    const cost = estimateAudioCost(
+      {
+        audioTokensIn: this.audioTokensIn,
+        cachedAudioTokensIn: this.cachedAudioTokensIn,
+        audioTokensOut: this.audioTokensOut,
+      },
+      this.model,
+    );
 
     console.log(
       `[call] end persona=${this.persona.id} reason=${reason} duration=${durationS}s ` +
@@ -482,7 +486,7 @@ export class CallSession {
 
   private async finalize(durationS: number, cost: number): Promise<void> {
     const id = this.dbId ?? (await this.dbIdReady.catch(() => null));
-    if (!id) return;
+    if (!id) {return;}
     await this.recordingReady.catch(() => {});
     await finalizeCall(id, {
       ended_at: new Date().toISOString(),

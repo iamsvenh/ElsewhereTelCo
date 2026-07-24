@@ -5,7 +5,7 @@ function parseNumberMap(raw: string): Record<string, string> {
   const map: Record<string, string> = {};
   for (const pair of raw.split(",")) {
     const [number, persona] = pair.split("=").map((s) => s.trim());
-    if (number && persona) map[number] = persona;
+    if (number && persona) {map[number] = persona;}
   }
   return map;
 }
