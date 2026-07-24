@@ -11,7 +11,7 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 
 - 🟢 Signup capture window FIXED + DEPLOYED (2026-07-24) — teaser is 56s; old single `<Gather>` window (56+4s) missed any "press 1" during the ~7s goodbye. This silently ate EVERY real friend press (Erick +505-204 and ≥1 other both pressed; `signups` was empty). Goodbye now has its own `<Gather>`, main timeout 6s. ⚠️ conversion numbers to date are undercounts
 - 🟢 Signup funnel VERIFIED live — press-1 records correctly (`signups` + `teaser_calls.outcome=signup` both landing; confirmed via Sven's own test call). Hardened `setTeaserOutcome` to upsert (was update) so outcome records even if the pickup insert races/fails
-- 🔴 **v0 Switchboard — designed (arch + experience)**. Build spec `engineering/switchboard-v0.md`; experience/world design `world/switchboard/switchboard.md` (**Switchboard = World Zero**, Operator as a Resident). SETTLED: Devil option hits a **receptionist wall** (current teaser = the Devil's receptionist; no live Devil / no cost yet); SMS deferred (recite URL now); record whole journey (event log + user-journey view, two POVs); Operator pre-produced-now/live-later. Carry infra fix: one ring + confirm connection before VO (fixes cut-off intro). OPEN (brainstorm, `world/switchboard.md` §Decisions): menu set/order · Devil-wall copy · fall-through · easter egg · Operator name. Then build phase 1
+- 🔴 **v0 Switchboard — designed (arch + experience)**. Build spec `engineering/switchboard-v0.md`; experience/world design `world/switchboard/switchboard.md` (**Switchboard = World Zero**, Operator as a Resident). SETTLED: Devil option hits a **receptionist wall** (current teaser = the Devil's receptionist; no live Devil / no cost yet); SMS deferred (recite URL now); record whole journey (event log + user-journey view, two POVs); Operator pre-produced-now/live-later. Carry infra fix: one ring + confirm connection before VO (fixes cut-off intro). OPEN (brainstorm, `world/switchboard/switchboard.md` §Decisions): menu set/order · Devil-wall copy · fall-through · easter egg · Operator name. Then build phase 1
 - 🟢 Teaser analytics — logs EVERY call (teaser_calls: outcome, duration, status, repeat callers via caller_number+created_at). Twilio status callback → duration for dropoff analysis. `/teaser-stats` = calls · unique · repeat · signups · conversion% · avg duration
 - 🟢 Teaser timing tuned to Sven's ear — one ring, minimal gap (dropped `<Pause>`, 0.35s lead silence), barge-in "press one at any time"
 - 🟢 Teaser line **(806) 666-1212** live — routes, signups table, deployed
@@ -28,6 +28,7 @@ Numbers, hosting, DB, domains, the teaser plumbing, landing page.
 ## B. Strategy & concept
 The vision, positioning, business model, pitch. Mostly docs.
 
+- 🟢 **Docs: per-world subfolders** (2026-07-24) — `world/` root = generic cross-world docs (worlds/canon/persona-design ×2); each world gets its own folder (`world/switchboard/` = World Zero, holds switchboard + teaser docs). READMEs per folder; refs updated. Also standardized the connection lead-in to **one ring** everywhere (was 2-3)
 - 🟢 **Docs restructured by domain** — `docs/{strategy,engineering,world}/` + README index in each; `docs/README.md` is the front door; `tracker.md` stays at root. All cross-refs (CLAUDE.md, README, code comments) updated
 - 🟢 **Business model + economics** captured (`strategy/business-model.md`) — revenue streams, pricing fiction, unit economics; **in-lore native sponsorship** idea recorded (the Devil shills Pepsi, resents it)
 - 🟢 **Fundraising** captured (`strategy/fundraising.md`) — media-company thesis, Gimlet-lineage comps + strategic-partner/investor angle, raise-on-retention, timing
@@ -67,9 +68,11 @@ The IP: prompts, canon, lore, the transcript flywheel.
 
 ## Open for Sven (consolidated decision queue)
 1. **Redline canon v1** (`world/canon.md`) — 4 decisions: down-trunk name · adopt "the Devil cannot lie" · secretary in/out · add/cut. Unblocks the Devil bible
-2. **Send the Artizen teaser** — approve/tweak the draft (`strategy/outreach-log.md`) and post to the Artizen Telegram; then log results
-3. **Re-ping Erick + the Meow Wolf friend** — their press-1 was lost to the (now-fixed) capture bug; ask them to call once more so it records
-4. **Send to more friends** — text (806) 666-1212, watch `/teaser-stats` (now a clean measurement)
+2. **Switchboard brainstorm** (`world/switchboard/switchboard.md` §Decisions) — menu set/order (A) · Devil-wall copy (B) · fall-through (C) · easter egg (D) · Operator name (E) · data-model sign-off. Then build phase 1
+3. **Send the Artizen teaser** — approve/tweak the draft (`strategy/outreach-log.md`) and post to the Artizen Telegram; then log results
+4. **Re-ping Erick + the Meow Wolf friend** — their press-1 was lost to the (now-fixed) capture bug; ask them to call once more so it records
+5. **Send to more friends** — text (806) 666-1212, watch `/teaser-stats` (now a clean measurement)
+6. _(incoming)_ **V0 production tooling** — Sven to brief; will be added as a new workstream/section once scoped
 
 ## Cadence
 Commit per change set; push in intervals; this tracker updated each working session. Real hygiene (branches/CI/PRs) when we exit prototype phase.
