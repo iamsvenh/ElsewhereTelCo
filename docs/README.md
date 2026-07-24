@@ -8,7 +8,8 @@ Everything decided, specced, or in flight. Organized by the four workstreams fro
 | ------ | ---------- | --------------- |
 | **[strategy/](strategy/)** | Strategy & concept | what this is, where it goes, how it makes money and gets funded |
 | **[engineering/](engineering/)** | Infra/ops + MVP build | how the system works and how it's built |
-| **[world/](world/)** | Persona & world writing | the IP: persona craft, canon, the teaser production record |
+| **[world/](world/)** | Persona & world writing | the IP: persona craft, canon, per-world folders |
+| **[reviews/](reviews/)** | cross-cutting | dated audit passes over the whole repo. Findings only, never fixes |
 | _(root)_ | cross-cutting | [tracker.md](tracker.md) — the live board across all four |
 
 ## Reading order for a new session
@@ -16,6 +17,7 @@ Everything decided, specced, or in flight. Organized by the four workstreams fro
 1. **[tracker.md](tracker.md)** — current state, what's open for Sven, what's next.
 2. **[strategy/concept.md](strategy/concept.md)** — the operational source of truth (stages, economics, kill criteria).
 3. **[strategy/vision-world-company.md](strategy/vision-world-company.md)** — what the thing IS: the world company, locked terminology, the frame everything else fits.
+4. **[reviews/2026-07-24-full-repo-review.md](reviews/2026-07-24-full-repo-review.md)** — the open findings list (safety gates, doc contradictions, fiction holes). Read before trusting any single doc, since it records which ones are stale.
 
 ## Conventions
 
